@@ -57,9 +57,6 @@ h2 {
   width: 0px;
   background: transparent;
 }
-::-webkit-scrollbar-thumb {
-  background: rgba(100,100,100,1);
-}
 
 .header, .footer {
   position: fixed;
