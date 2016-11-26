@@ -50,7 +50,8 @@ h1 {
   font-size: 3em;
 }
 h2 {
-  font-size: 2em;
+  font-size: 1.5em;
+	margin-bottom: 5px;
 }
 
 ::-webkit-scrollbar {
