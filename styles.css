@@ -18,17 +18,17 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-body {
-	line-height: 1;
-}
+
 ol, ul {
 	list-style: none;
 }
+
 a {
   text-decoration: none;
   color: rgba(0,0,255,1);
@@ -49,9 +49,9 @@ body {
 h1 {
   font-size: 3em;
 }
+
 h2 {
   font-size: 1.5em;
-	margin-bottom: 5px;
 }
 
 ::-webkit-scrollbar {
@@ -112,7 +112,6 @@ img {
   -webkit-box-shadow: 1px 1px 10px rgba(0,0,0,0.5);
   box-shadow:         1px 1px 10px rgba(0,0,0,0.5);
 }
-
 
 
 /* Mobile Portrait */
