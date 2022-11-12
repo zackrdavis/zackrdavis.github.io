@@ -7,11 +7,13 @@ const xScrollContent = document.getElementById("x-scroll-content");
 
 /** Force window's Y scroll to match xScrollContainer's X scroll */
 function matchXYScrollHeight() {
-  // adjust for difference between window width and height
-  const windowXYDiff = window.innerWidth - window.innerHeight;
+  const winWidth = window.innerWidth;
+  const winHeight = window.innerHeight;
+  const contentWidth = xScrollContent.offsetWidth;
 
-  // new body height approximates xScrollContent width, with adjustment
-  const newHeight = xScrollContent.offsetWidth - windowXYDiff;
+  // new body height approximates content width
+  // adjusted for differeve between window width/height
+  const newHeight = contentWidth - (winWidth - winHeight);
 
   // set the style
   body.style.height = newHeight + "px";
