@@ -159,14 +159,14 @@ h2 {
   bottom: 15px;
 }
 
-.x-scroll-container {
+#x-scroll-container {
   position: fixed;
   width: 100%;
   height: 100%;
   overflow: auto;
 }
 
-.x-scroll-content {
+#x-scroll-content {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -215,7 +215,7 @@ img {
 
   .header,
   .footer,
-  .x-scroll-content {
+  #x-scroll-content {
     position: relative;
     width: 100%;
     top: auto;
@@ -225,7 +225,7 @@ img {
     margin: 50px 0 20px 0;
   }
 
-  .x-scroll-content {
+  #x-scroll-content {
     box-sizing: border-box;
     padding: 0 50px 0 50px;
   }

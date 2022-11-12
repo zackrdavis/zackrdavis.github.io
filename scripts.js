@@ -1,26 +1,38 @@
 var bodyScroll = 0;
 var matched = false;
 
-function matchHeightToWidth() {
-  $("body").height(
-    $(".x-scroll-content").width() - ($(window).width() - $(window).height())
-  );
+const body = document.body;
+const xScrollContainer = document.getElementById("x-scroll-container");
+const xScrollContent = document.getElementById("x-scroll-content");
+
+/** Force window's Y scroll to match xScrollContainer's X scroll */
+function matchXYScrollHeight() {
+  // adjust for difference between window width and height
+  const windowXYDiff = window.innerWidth - window.innerHeight;
+
+  // new body height approximates xScrollContent width, with adjustment
+  const newHeight = xScrollContent.offsetWidth - windowXYDiff;
+
+  // set the style
+  body.style.height = newHeight + "px";
 }
 
 // set where vertical scroll should jump to to match horz position
 function setBodyScroll() {
   //do nothing on mobile
-  if ($(window).width() <= 580) {
+  if (window.innerWidth <= 580) {
     return;
   }
 
-  bodyScroll = $(".x-scroll-container").scrollLeft();
+  bodyScroll = $("#x-scroll-container").scrollLeft();
   matched = false;
 }
 
 function scrollerMatchBody() {
+  const maxScroll = $("body").get(0).scrollHeight - $(window).height();
+
   //do nothing on mobile
-  if ($(window).width() <= 580) {
+  if ($(window).width() <= 580 || $(window).scrollTop() >= maxScroll) {
     return;
   }
 
@@ -28,15 +40,15 @@ function scrollerMatchBody() {
     $(window).scrollTop(bodyScroll);
   }
 
-  $(".x-scroll-container").scrollLeft($(window).scrollTop());
+  $("#x-scroll-container").scrollLeft($(window).scrollTop());
 
   matched = true;
 }
 
 $(document).ready(function () {
   scrollerMatchBody();
-  matchHeightToWidth();
+  matchXYScrollHeight();
 });
 
 $(window).on("scroll", scrollerMatchBody);
-$(".x-scroll-container").on("scroll", setBodyScroll);
+$("#x-scroll-container").on("scroll", setBodyScroll);
