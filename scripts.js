@@ -2,14 +2,9 @@ var bodyScroll = 0;
 var matched = false;
 
 function matchHeightToWidth() {
-  if (
-    $("body").height() !==
-    $("ul").width() - ($(window).width() - $(window).height())
-  ) {
-    $("body").height(
-      $("ul").width() - ($(window).width() - $(window).height())
-    );
-  }
+  $("body").height(
+    $(".x-scroll-content").width() - ($(window).width() - $(window).height())
+  );
 }
 
 // set where vertical scroll should jump to to match horz position
@@ -19,7 +14,7 @@ function setBodyScroll() {
     return;
   }
 
-  bodyScroll = $(".scroll-container").scrollLeft();
+  bodyScroll = $(".x-scroll-container").scrollLeft();
   matched = false;
 }
 
@@ -33,7 +28,7 @@ function scrollerMatchBody() {
     $(window).scrollTop(bodyScroll);
   }
 
-  $(".scroll-container").scrollLeft($(window).scrollTop());
+  $(".x-scroll-container").scrollLeft($(window).scrollTop());
 
   matched = true;
 }
@@ -44,4 +39,4 @@ $(document).ready(function () {
 });
 
 $(window).on("scroll", scrollerMatchBody);
-$(".scroll-container").on("scroll", setBodyScroll);
+$(".x-scroll-container").on("scroll", setBodyScroll);
