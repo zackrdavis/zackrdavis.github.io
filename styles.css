@@ -208,9 +208,14 @@ img {
     left: 0;
   }
 
+  .scroll-container {
+    position: relative;
+    height: auto;
+  }
+
   .header,
   .footer,
-  ul {
+  .x-scroll-content {
     position: relative;
     width: 100%;
     top: auto;
@@ -220,12 +225,7 @@ img {
     margin: 50px 0 20px 0;
   }
 
-  .scroll-container {
-    position: relative;
-    height: auto;
-  }
-
-  ul {
+  .x-scroll-content {
     box-sizing: border-box;
     padding: 0 50px 0 50px;
   }
