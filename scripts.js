@@ -13,49 +13,35 @@ const matchXYScrollHeight = () => {
 };
 
 /** decide target y-scroll when x-scrolling */
-const setBodyScroll = () => {
-  const winWidth = window.innerWidth;
-
+const yMatchX = () => {
   //do nothing on mobile
-  if (winWidth <= 580) return false;
+  if (window.innerWidth <= 580) return false;
 
   const scrollLeft = xScrollContainer.scrollLeft;
 
-  bodyScroll = scrollLeft;
-  matched = false;
+  document.documentElement.scrollTop = scrollLeft;
 };
 
-const scrollerMatchBody = () => {
-  const scrollHeight = body.scrollHeight;
-  const scrollTop = window.scrollY;
-  const winHeight = window.innerHeight;
-  const winWidth = window.innerWidth;
-
-  const maxScroll = scrollHeight - winHeight;
-
+const xMatchY = () => {
+  //const maxScroll = scrollHeight - winHeight;
   //do nothing on mobile
-  if (winWidth <= 580 || scrollTop >= maxScroll) {
-    return;
-  }
+  if (window.innerWidth <= 580) return false;
 
-  if (!matched) {
-    window.scrollTop = bodyScroll;
-  }
+  const scrollTop = window.scrollY;
 
   xScrollContainer.scrollLeft = scrollTop;
-
-  matched = true;
 };
-
-var bodyScroll = 0;
-var matched = false;
 
 const body = document.body;
 const xScrollContainer = document.getElementById("x-scroll-container");
 const xScrollContent = document.getElementById("x-scroll-content");
 
-scrollerMatchBody();
 matchXYScrollHeight();
+xMatchY();
+yMatchX();
 
-window.addEventListener("scroll", scrollerMatchBody);
-xScrollContainer.addEventListener("scroll", setBodyScroll);
+window.addEventListener("scroll", () => requestAnimationFrame(xMatchY));
+
+xScrollContainer.addEventListener("scroll", () =>
+  requestAnimationFrame(yMatchX)
+);
