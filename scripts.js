@@ -17,14 +17,11 @@ const setBodyScroll = () => {
   const winWidth = window.innerWidth;
 
   //do nothing on mobile
-  if (winWidth < 580) return false;
+  if (winWidth <= 580) return false;
 
   const scrollLeft = xScrollContainer.scrollLeft;
 
   bodyScroll = scrollLeft;
-
-  window.scrollTo = bodyScroll;
-
   matched = false;
 };
 
