@@ -1,47 +1,79 @@
-/** Force window's Y scroll to match xScrollContainer's X scroll */
-const matchXYScrollHeight = () => {
-  const winWidth = window.innerWidth;
-  const winHeight = window.innerHeight;
-  const contentWidth = xScrollContent.offsetWidth;
+// make all elements handy
+const body = document.body;
+const xScrollParent = document.querySelector("#xScrollParent");
+const xScrollChild = document.querySelector("#xScrollChild");
+const yScrollParent = document.querySelector("#yScrollParent");
+const yScrollChild = document.querySelector("#yScrollChild");
+
+// init variables
+let winWidth, winHeight, contentWidth, scrollBar;
+let xInit = false;
+let yInit = false;
+
+/**
+ * Precalculate all dimensions &
+ * Force y-scroll distance to match x-scroll
+ * */
+const setup = () => {
+  // precalc sizes
+  winWidth = window.innerWidth;
+  winHeight = window.innerHeight;
+  contentWidth = xScrollParent.scrollWidth;
+  scrollBar = xScrollParent.offsetHeight - xScrollParent.clientHeight;
 
   // new body height approximates content width
   // adjusted for difference between window width/height
-  const newHeight = contentWidth - (winWidth - winHeight);
+  // adjusted for scrollbar width
+  const newHeight = contentWidth - (winWidth - winHeight) + scrollBar;
 
   // set the style
-  body.style.height = newHeight + "px";
+  yScrollChild.style.height = newHeight + "px";
 };
 
-/** decide target y-scroll when x-scrolling */
-const yMatchX = () => {
-  //do nothing on mobile
-  if (window.innerWidth <= 580) return false;
+/** Set y-scroll when x-scrolling */
+const handleXScroll = () => {
+  // do nothing on mobile
+  if (winWidth <= 580) return false;
 
-  const scrollLeft = xScrollContainer.scrollLeft;
+  // don't re-trigger this function with the Y scroll we're about to cause
+  if (!yInit) {
+    xInit = true;
 
-  document.documentElement.scrollTop = scrollLeft;
+    yScrollParent.scrollTop = xScrollParent.scrollLeft;
+  }
+
+  // reset
+  yInit = false;
 };
 
-const xMatchY = () => {
-  //const maxScroll = scrollHeight - winHeight;
-  //do nothing on mobile
-  if (window.innerWidth <= 580) return false;
+/** Set x-scroll when y-scrolling */
+const handleYScroll = () => {
+  // do nothing on mobile
+  if (winWidth <= 580) return false;
 
-  const scrollTop = window.scrollY;
+  // don't re-trigger this function with the X scroll we're about to cause
+  if (!xInit) {
+    yInit = true;
 
-  xScrollContainer.scrollLeft = scrollTop;
+    xScrollParent.scrollLeft = yScrollParent.scrollTop;
+  }
+
+  // reset
+  xInit = false;
 };
 
-const body = document.body;
-const xScrollContainer = document.getElementById("x-scroll-container");
-const xScrollContent = document.getElementById("x-scroll-content");
+// set listeners
+window.addEventListener("resize", setup);
 
-matchXYScrollHeight();
-xMatchY();
-yMatchX();
+window.addEventListener("scroll", () => requestAnimationFrame(handleYScroll));
 
-window.addEventListener("scroll", () => requestAnimationFrame(xMatchY));
-
-xScrollContainer.addEventListener("scroll", () =>
-  requestAnimationFrame(yMatchX)
+xScrollParent.addEventListener("scroll", () =>
+  requestAnimationFrame(handleXScroll)
 );
+
+// size and measure things
+setup();
+
+// position based on possible saved scroll
+handleYScroll();
+handleXScroll();

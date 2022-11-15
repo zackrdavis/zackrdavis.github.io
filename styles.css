@@ -1,149 +1,32 @@
 @import url("https://fonts.googleapis.com/css?family=Mirza|Open+Sans:400,400i");
 
 html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
+body {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Open Sans", sans-serif;
 }
 
-/* HTML5 display-role reset for older browsers */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-  display: block;
+h1,
+h2 {
+  font-size: 3em;
+  font-family: "Mirza", cursive;
+  font-weight: normal;
+  margin: 0;
 }
 
-em {
-  font-style: italic;
-}
-
-ol,
-ul {
-  list-style: none;
+h2 {
+  font-size: 2em;
 }
 
 a {
   text-decoration: none;
   color: rgba(0, 0, 255, 1);
 }
-
-html {
-  width: 100%;
-  height: 100%;
-  -ms-overflow-style: none;
-}
-
-body {
-  width: 100%;
-  height: 100%;
-  font-family: "Open Sans", sans-serif;
-}
-
-h1 {
-  font-size: 3em;
-  font-family: "Mirza", cursive;
-}
-
-h2 {
-  font-size: 1.5em;
-  font-family: "Mirza", cursive;
-}
-
-/* ::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
-} */
 
 .header,
 .footer {
@@ -159,45 +42,42 @@ h2 {
   bottom: 15px;
 }
 
-#x-scroll-container {
+#xScrollParent {
   position: fixed;
+  top: 0px;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   overflow: auto;
 }
 
-#x-scroll-content {
+#xScrollChild {
+  display: inline-flex;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  white-space: nowrap;
-  padding: 0;
 }
 
-.thumb-link {
-  display: block;
-  margin: 10px 0 20px 0;
-  font-size: 0px;
+#yScrollParent {
+  overflow: auto;
 }
 
-li {
-  width: 500px;
-  list-style: none;
-  display: inline-block;
-  margin: 0 50px 0 50px;
+.project {
+  flex: 0 0 500px;
+  padding-right: 75px;
   vertical-align: top;
 }
 
-.info {
-  white-space: normal;
-  width: 100%;
+.project:first-child {
+  padding-left: 75px;
 }
 
 img {
+  display: block;
   width: 100%;
   -moz-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
 }
 
 /* Mobile Portrait */
