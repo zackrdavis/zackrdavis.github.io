@@ -4,6 +4,7 @@ const xScrollParent = document.querySelector("#xScrollParent");
 const xScrollChild = document.querySelector("#xScrollChild");
 const yScrollParent = document.querySelector("#yScrollParent");
 const yScrollChild = document.querySelector("#yScrollChild");
+const images = document.querySelectorAll("img");
 
 // init variables
 let winWidth, winHeight, contentWidth, scrollBar;
@@ -62,6 +63,15 @@ const handleYScroll = () => {
   xInit = false;
 };
 
+/** Replace img src with retina sizes */
+const retinaSizeImages = () => {
+  if (window.devicePixelRatio > 1) {
+    images.forEach((img) => {
+      img.src = img.src.replace(".", "_retina.");
+    });
+  }
+};
+
 // set listeners
 window.addEventListener("resize", setup);
 
@@ -72,6 +82,7 @@ xScrollParent.addEventListener("scroll", () =>
 );
 
 // size and measure things
+retinaSizeImages();
 setup();
 
 // position based on possible saved scroll
