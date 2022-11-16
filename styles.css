@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Mirza|Open+Sans:400,400i");
 
 :root {
-  --headHeight: 200px;
+  --headHeight: 150px;
   --footHeight: 100px;
 }
 
@@ -30,23 +30,25 @@ h2 {
 
 a {
   text-decoration: none;
-  color: rgba(0, 0, 255, 1);
+  color: rgb(0, 0, 255);
 }
 
 .header,
 .footer {
   position: sticky;
   left: 0;
-  text-align: center;
-  /* border: 1px solid yellow; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .header {
-  flex: 0 1 auto;
+  flex: 0 1 var(--headHeight);
 }
 
 .footer {
-  flex: 0 1 auto;
+  flex: 0 1 var(--footHeight);
 }
 
 #xScrollParent {
@@ -54,7 +56,8 @@ a {
   top: 0px;
   width: 100%;
   height: 100vh;
-  overflow: auto;
+  overflow-y: hidden;
+  overflow-x: scroll;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -62,11 +65,8 @@ a {
 
 #xScrollChild {
   height: calc(100% - (var(--headHeight) + var(--footHeight)));
-  max-height: 800px;
-
-  font-size: 0;
   white-space: nowrap;
-  /* border: 1px solid red; */
+  font-size: 0;
 }
 
 #yScrollParent {
@@ -89,7 +89,7 @@ img {
   -webkit-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
   width: auto;
-  height: 60%;
+  height: 55%;
   margin-bottom: 20px;
   margin-top: 10%;
 }
@@ -97,43 +97,49 @@ img {
 .info {
   white-space: normal;
   position: absolute;
-  /* height: 40%; */
   font-size: 16px;
 }
 
 /* Mobile Portrait */
 @media (max-width: 580px) {
-  body {
+  #yScrollChild {
     height: 100% !important;
-    top: 0;
-    left: 0;
   }
 
-  .scroll-container {
-    position: relative;
-    height: auto;
+  #xScrollParent {
+    overflow: auto;
   }
 
   .header,
   .footer,
-  #x-scroll-content {
+  #xScrollChild {
     position: relative;
-    width: 100%;
+    width: 100vw;
     top: auto;
     left: auto;
     bottom: auto;
     transform: none;
     margin: 50px 0 20px 0;
+    white-space: normal;
   }
 
-  #x-scroll-content {
+  #xScrollChild {
     box-sizing: border-box;
-    padding: 0 50px 0 50px;
   }
 
-  li {
+  .project {
     display: block;
-    margin: 0 0 50px 0;
+    margin: 0 !important;
     width: 100%;
+    height: auto;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  .info {
+    position: relative;
   }
 }
