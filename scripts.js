@@ -67,7 +67,9 @@ const handleYScroll = () => {
 const retinaSizeImages = () => {
   if (window.devicePixelRatio > 1) {
     images.forEach((img) => {
-      img.src = img.src.replace(".", "_retina.");
+      const oldSrc = img.src;
+      const dotIndex = oldSrc.lastIndexOf(".");
+      img.src = oldSrc.slice(0, dotIndex) + "_retina" + oldSrc.slice(dotIndex);
     });
   }
 };
