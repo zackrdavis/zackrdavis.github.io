@@ -103,7 +103,7 @@ video {
 }
 
 /* Mobile Portrait */
-@media (max-width: 580px) {
+@media screen and (max-width: 580px), screen and (max-height: 600px) {
   header,
   .project {
     display: block;
