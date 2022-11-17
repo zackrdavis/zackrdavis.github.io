@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Mirza|Open+Sans:400,400i");
 
+:root {
+  --headerHeight: 150px;
+}
+
 /* resets */
 html,
 body,
@@ -50,8 +54,8 @@ header {
   flex-direction: column;
   transform: translateX(-50%);
   text-align: center;
-  height: 100px;
-  justify-content: center;
+  height: var(--headerHeight);
+  justify-content: flex-end;
 }
 
 #xScrollParent {
@@ -63,7 +67,7 @@ header {
 
 #xScrollChild {
   position: absolute;
-  top: calc(50% + 50px);
+  top: calc(50% + var(--headerHeight) / 2);
   transform: translateY(-50%);
   white-space: nowrap;
 }
@@ -84,7 +88,7 @@ img,
 video {
   width: 500px;
   height: 313px;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 1);
   background-color: white;
   margin-bottom: 15px;
 }
