@@ -116,6 +116,12 @@ video {
     margin: 50px 0 20px 0 !important;
   }
 
+  img,
+  video {
+    width: 100%;
+    height: auto;
+  }
+
   #xScrollChild {
     top: 0;
     transform: none;
