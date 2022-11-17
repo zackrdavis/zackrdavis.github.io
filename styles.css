@@ -83,11 +83,17 @@ a {
   margin-left: 75px;
 }
 
-img {
-  width: 100%;
+img,
+video {
+  width: 500px;
+  height: 313px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
   background-color: white;
   margin-bottom: 15px;
+}
+
+video {
+  background-color: black;
 }
 
 .info {
