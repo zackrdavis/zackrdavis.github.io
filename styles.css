@@ -10,7 +10,6 @@ iframe,
 h1,
 h2,
 img,
-footer,
 header,
 video {
   margin: 0;
@@ -43,18 +42,16 @@ a {
   color: rgba(0, 0, 255, 1);
 }
 
-.header,
-.footer {
+header {
   position: fixed;
-  top: 30px;
+  top: 0;
   left: 50%;
+  display: flex;
+  flex-direction: column;
   transform: translateX(-50%);
   text-align: center;
-}
-
-.footer {
-  top: auto;
-  bottom: 50px;
+  height: 100px;
+  justify-content: center;
 }
 
 #xScrollParent {
@@ -66,7 +63,7 @@ a {
 
 #xScrollChild {
   position: absolute;
-  top: 50%;
+  top: calc(50% + 50px);
   transform: translateY(-50%);
   white-space: nowrap;
 }
@@ -103,8 +100,7 @@ video {
 
 /* Mobile Portrait */
 @media (max-width: 580px) {
-  .header,
-  .footer,
+  header,
   .project {
     display: block;
     position: relative;
