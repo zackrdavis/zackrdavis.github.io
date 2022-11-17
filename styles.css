@@ -104,7 +104,19 @@ video {
 
 /* Mobile Portrait */
 @media screen and (max-width: 580px), screen and (max-height: 600px) {
-  header,
+  #xScrollChild {
+    top: 0;
+    transform: none;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0 50px 0 50px;
+  }
+
+  header {
+    position: relative;
+    padding: 0 50px;
+  }
+
   .project {
     display: block;
     position: relative;
@@ -113,20 +125,13 @@ video {
     left: auto;
     bottom: auto;
     transform: none;
-    margin: 50px 0 20px 0 !important;
+    margin: 50px 0 !important;
+    /* margin: 50px 0 20px 0 !important; */
   }
 
   img,
   video {
     width: 100%;
     height: auto;
-  }
-
-  #xScrollChild {
-    top: 0;
-    transform: none;
-    position: relative;
-    box-sizing: border-box;
-    padding: 0 50px 0 50px;
   }
 }
