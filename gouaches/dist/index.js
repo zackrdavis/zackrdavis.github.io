@@ -117,7 +117,7 @@ var handleSwatchClick = function (e) {
     // set line color for canvas
     ctx.strokeStyle = "rgba(".concat(selectedColor.join(","), ")");
 };
-document.addEventListener("mousedown", handleMouseDown);
+canvas.addEventListener("mousedown", handleMouseDown);
 document.addEventListener("mouseup", handleMouseUp);
 canvas.addEventListener("mousemove", handleMouseMove);
 // listeners for palette swatches
