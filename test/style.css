@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+  padding: 50px;
+  font-size: 18px;
+}
+
+header {
+  margin-bottom: 50px;
+  display: flex;
+  gap: 20px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+thead {
+  font-weight: bold;
+}
