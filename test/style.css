@@ -15,6 +15,11 @@ main {
   /* gap: 50px; */
 }
 
+main.resources {
+  display: flex;
+  flex-direction: column;
+}
+
 img {
   width: 50dvw;
   /* height: calc(100dvh - 120.5px); */
