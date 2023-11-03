@@ -1,19 +1,23 @@
 body {
   margin: 0;
-  padding: 50px;
+  /* padding: 50px; */
   font-size: 18px;
 }
 
 header {
-  margin-bottom: 50px;
+  padding: 50px;
   display: flex;
   gap: 20px;
 }
 
 main {
   display: flex;
-  flex-direction: column;
-  gap: 50px;
+  /* gap: 50px; */
+}
+
+img {
+  width: 50dvw;
+  /* height: calc(100dvh - 120.5px); */
 }
 
 thead {
