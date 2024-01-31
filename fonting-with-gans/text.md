@@ -2,9 +2,9 @@
 
 1/30/2024
 
-During my virtual residency at the [Recurse Center](https://www.recurse.com/), one of my goals was to get comfortable with pyTorch and Jupyter notebooks. Another was to build some highly responsive UI around machine learning. I haven't seen a lot of projects running inference on the frontend, so I decided to try client-side image generators with [ONNX Runtime](https://onnxruntime.ai/docs/get-started/with-javascript.html).
+During my virtual residency at the [Recurse Center](https://www.recurse.com/), one of my goals was to get comfortable with PyTorch and Jupyter notebooks. Another was to build some highly responsive UI around machine learning. I haven't seen a lot of projects running inference on the frontend, so I decided to try client-side image generators with [ONNX Runtime](https://onnxruntime.ai/docs/get-started/with-javascript.html).
 
-My first was a Generative Adversarial Net with the EMNIST handwriting dataset. And putting the prize up front, it worked!
+My first was a Generative Adversarial Net with the EMNIST handwriting dataset. And, putting the prize up front, here it is, running in the browser fast enough animate latent-space-interpolation in real time:
 
 <iframe src="https://codesandbox.io/embed/7rd69j?view=Editor+%2B+Preview&module=%2Fsrc%2Findex.js&hidenavigation=1"
      style="width:100%; height: 500px; border:0; border-radius: 4px; overflow:hidden;"
@@ -18,11 +18,11 @@ Big picture, this involved:
 - training on a fast desktop with a Jupyter notebook
 - collecting inputs for desired outputs (62 alphanumeric characters)
 - exporting the trained network as .onnx
-- some math for interpolating between inputs
+- some math for lerping between inputs
 
-Unlike diffusion networks, GANs produce images in a single fast feedforward step, and their output makes up a smooth and [structured](https://machinelearningmastery.com/how-to-interpolate-and-perform-vector-arithmetic-with-faces-using-a-generative-adversarial-network/) latent space. So I thought they might be fast enough for animation, and their animation might be formally compelling.
+Unlike diffusion networks, GANs produce images in a single fast feedforward step, and their output makes up a smooth and [structured](https://machinelearningmastery.com/how-to-interpolate-and-perform-vector-arithmetic-with-faces-using-a-generative-adversarial-network/) latent space. This is why I thought they might be fast enough for animation, and their animation might be formally compelling.
 
-I used Diego Gomez's [Vanilla GAN in PyTorch](https://github.com/diegoalejogm/gans) as a starting point and swapped the MNIST dataset for EMNIST. After some weird results from training, I visualized the first batch of training data:
+I used Diego Gomez's [Vanilla GAN in PyTorch](https://github.com/diegoalejogm/gans) as a starting point and swapped the MNIST dataset for EMNIST. After some weird training results, I visualized the first batch of training data:
 
 ![a grid of handwritten numbers and letters with each one mirrored and rotated 90 degrees](twisted_samples.png "twisted")
 
@@ -40,7 +40,7 @@ compose = transforms.Compose([
 ])
 ```
 
-Everything worked as expected after that, and 200 training epochs later, the network was making letter-like images. Because I wasn't using labeled data, these random samples show a mix of recognizable characters and hybrid weirdos.
+Everything worked as expected after that, and 200 training epochs later, the network was making familiar shapes. Because I wasn't using labeled data, these random samples show a mix of recognizable characters and hybrid weirdos.
 
 ![Two rows of white glyphs on a black background. The letters are distorted and unreadable.](weirdos.png "Obageyix loernags!")
 
@@ -108,4 +108,4 @@ torch.onnx.export(
 )
 ```
 
-The sandbox at the beginning of this writeup uses `onnxruntime-web` to run the exported file, and the map is in `addresses.js`.
+The sandbox at the top of this writeup uses `onnxruntime-web` to run the exported file, and the map is in `addresses.js`.

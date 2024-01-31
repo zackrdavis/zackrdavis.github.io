@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Mirza|Open+Sans:400,400i");
 
 :root {
-  --headerHeight: 150px;
+  --headerHeight: 130px;
 }
 
 /* resets */
@@ -11,8 +11,6 @@ div,
 span,
 a,
 iframe,
-h1,
-h2,
 img,
 header,
 video {
@@ -31,13 +29,20 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+h1,
+h2,
+h3 {
+  font-weight: normal;
+  margin: 0;
+}
+
 h1 {
   font-size: 3em;
   font-family: "Mirza", cursive;
 }
 
 h2 {
-  font-size: 1.5em;
+  font-size: 2em;
   font-family: "Mirza", cursive;
 }
 
@@ -46,92 +51,113 @@ a {
   color: rgba(0, 0, 255, 1);
 }
 
+main.text {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 50px;
+
+  img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
 header {
-  position: fixed;
-  top: 0;
-  left: 50%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  transform: translateX(-50%);
   text-align: center;
   height: var(--headerHeight);
   justify-content: flex-end;
 }
 
-#xScrollParent {
-  position: fixed;
+.grid {
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
-  overflow: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  column-gap: 4dvw;
+  row-gap: 50px;
+  padding: 50px;
 }
 
-#xScrollChild {
-  position: absolute;
-  top: calc(50% + var(--headerHeight) / 2);
-  transform: translateY(-50%);
-  white-space: nowrap;
-}
+.block {
+  aspect-ratio: 4.5/4;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 
-.project {
-  width: 500px;
-  list-style: none;
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 75px;
-}
+  &.intro {
+    aspect-ratio: auto;
 
-.project:first-child {
-  margin-left: 75px;
-}
+    p {
+      font-size: 18px;
 
-img,
-video {
-  width: 500px;
-  height: 313px;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 1);
-  background-color: white;
-  margin-bottom: 15px;
-}
+      &:first-child {
+        margin-top: 0;
+      }
 
-video {
-  background-color: black;
-}
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 
-.info {
-  white-space: normal;
-  width: 100%;
+  .main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    .background {
+      flex-grow: 1;
+      position: relative;
+      background-color: black;
+      border: 1px solid black;
+      min-height: 150px;
+
+      img,
+      video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+
+        &.contain {
+          object-fit: contain;
+        }
+
+        &.center {
+          object-position: center center;
+        }
+      }
+    }
+
+    h2 {
+      padding-top: 20px;
+    }
+  }
+
+  a.main:not(a[href^="/"]) h2::after {
+    content: "↗";
+    font-size: 15px;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  .text {
+    margin-top: 3px;
+    flex-shrink: 1;
+    background-color: white;
+  }
 }
 
 /* Mobile Portrait */
-@media screen and (max-width: 580px), screen and (max-height: 600px) {
-  #xScrollChild {
-    top: 0;
-    transform: none;
-    position: relative;
-    box-sizing: border-box;
-    padding: 0 50px 0 50px;
-  }
-
-  header {
-    position: relative;
-    padding: 0 50px;
-  }
-
-  .project {
-    display: block;
-    position: relative;
-    width: 100%;
-    top: auto;
-    left: auto;
-    bottom: auto;
-    transform: none;
-    margin: 50px 0 !important;
-    /* margin: 50px 0 20px 0 !important; */
-  }
-
-  img,
-  video {
-    width: 100%;
-    height: auto;
+@media screen and (max-width: 580px) {
+  .grid {
+    display: flex;
+    flex-direction: column;
   }
 }

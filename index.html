@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" id="yScrollParent">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>zackrdavis</title>
@@ -14,46 +14,73 @@
     />
   </head>
 
-  <body id="yScrollChild">
-    <div id="xScrollParent">
-      <header>
-        <h1>Work</h1>
-        <div>
-          <a href="mailto:zackrdavis@gmail.com">zackrdavis@gmail.com</a> •
-          <a href="https://github.com/zackrdavis">GitHub</a> •
-          <a href="https://www.linkedin.com/in/zackrdavis">Linkedin</a>
+  <body>
+    <header>
+      <h1>Zack Davis</h1>
+    </header>
+    <main>
+      <div class="grid">
+        <div class="block intro">
+          <p>
+            I'm a software engineer with lots of experience building websites and UI. I usually work on the frontend, where I strive to make things that are fun, fast, and accessible. I also like machine learning and mysterious websites.
+          </p>
+          <p>
+            I live in Portland, Oregon. When I'm not programming, I'm an <a href="http://zackdavis.net">artist</a> and a gardener.
+          </p>
+          <p>
+            I'd love to hear from you:<br/>
+            <a href="mailto:zackrdavis@gmail.com">zackrdavis@gmail.com</a> • <a href="https://github.com/zackrdavis">GitHub</a> • <a href="https://www.linkedin.com/in/zackrdavis">Linkedin</a>
+          </p>
+          
         </div>
-      </header>
 
-      <div id="xScrollChild">
-        <div class="project">
-          <a href="https://museumofus.org/">
-            <img
-              loading="lazy"
-              src="images/mou.gif"
-              alt="Screen capture of museumofus.org. A palette of greens, yellow and orange. When the menu button is clicked, a full-screen orange menu slides into view."
-            />
-            <h2>Museum of Us</h2>
+        <div class="block">
+          <a class="main" href="/fonting-with-gans">
+            <div class="background">
+              <img
+                loading="lazy"
+                src="images/search.gif"
+                alt=""
+              />
+            </div>
+            <h2>Fonting with GANs</h2>
           </a>
-          <div class="info">
+          <div class="text">
+            Project writeup: Learning the space of handwritten letters and numbers with PyTorch,
+            then inverting to find the best match for specific images.
+          </div>
+        </div>
+        
+        <div class="block">
+          <a class="main" href="https://museumofus.org/">
+            <div class="background">
+              <img
+                loading="lazy"
+                src="images/mou.gif"
+                alt="Screen capture of museumofus.org. A palette of greens, yellow and orange. When the menu button is clicked, a full-screen orange menu slides into view."
+              />
+            </div>
+            <h2 >Museum of Us</h2>
+          </a>
+          <div class="text">
             A new website for the Museum of Us in San Diego, designed by Rebecca
             Friedman. Built for speed, accessibility, and pleasant editing with
             Next.js and Sanity CMS.
           </div>
         </div>
 
-        <div class="project">
-          <a
-            href="http://www.greenenaftaligallery.com/exhibitions/richard-maxwell#1"
-          >
-            <img
-              loading="lazy"
-              src="images/paradiso_robot.jpg"
-              alt="A minimalist robot stands in front of three actors and a pickup truck in a brightly-lit gallery during a play."
-            />
+        <div class="block">
+          <a class="main" href="https://greenenaftaligallery.com/exhibitions/richard-maxwell#1">
+            <div class="background">
+              <img
+                loading="lazy"
+                src="images/paradiso_robot.jpg"
+                alt="A minimalist robot stands in front of three actors and a pickup truck in a brightly-lit gallery during a play."
+              />
+            </div>
             <h2>A Robot Actor</h2>
           </a>
-          <div class="info">
+          <div class="text">
             Developed for Richard Maxwell's <em>Paradiso</em>, the robot
             delivers lines, visually tracks fellow actors, and generates a
             unique script during each performance. <em>Paradiso</em> was a
@@ -64,92 +91,87 @@
           </div>
         </div>
 
-        <div class="project">
-          <img
-            loading="lazy"
-            src="images/shared_space_demo.gif"
-            alt="Screen recording of an app-user creating a note containing a picture of a robot, then repositioning it within a square."
-          />
-          <h2>Shared Space</h2>
-          <div class="info">
-            A minimal platform for collaborative visual research. No longer in
-            use or development.
-          </div>
-        </div>
-
-        <div class="project">
-          <a href="http://nycplayers.org">
-            <img
-              loading="lazy"
-              src="images/nycp.gif"
-              alt="Screen recording of nycplayers.org, a website where every letter appears onscreen one-by-one, as if being typed."
-            />
+        <div class="block">
+          <a class="main" href="https://nycplayers.org/">
+            <div class="background">
+              <img
+                loading="lazy"
+                src="images/nycp.gif"
+                alt="Screen recording of nycplayers.org, a website where every letter appears onscreen one-by-one, as if being typed."
+              />
+            </div>
             <h2>New York City Players</h2>
           </a>
-          <div class="info">
+          <div class="text">
             Typed-while-you-watch homepage for the New York City Players theater
             company. Designed by Scott Ponik.
           </div>
         </div>
 
-        <div class="project">
-          <video autoplay muted loop playsinline>
-            <source src="images/homunculus_house.mp4" type="video/mp4" />
-          </video>
-          <h2>Homunculus House</h2>
-          <div class="info">
+        <div class="block">
+          <div class="main">
+            <div class="background">
+              <video autoplay muted loop playsinline class="contain">
+                <source src="images/homunculus_house.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <h2>Homunculus House</h2>
+          </a>
+          <div class="text">
             Simulated views and illumination for a house rolling downhill.
             Presented at the Portland2014 Biennial. 4-channel projected video,
             no sound.
           </div>
         </div>
+      </div>
 
-        <div class="project">
-          <a href="https://www.crunchbase.com/organization/fuisz-media">
+      <div class="block">
+        <a class="main" href="https://www.crunchbase.com/organization/fuisz-media">
+          <div class="background">
             <img
               loading="lazy"
               src="images/fuisz.png"
               alt="Screenshot of a Target ad in which two models sit on a couch. All of their clothes have red dots on them, and those same items are visible in a shopping cart on the right side of the screen."
             />
-            <h2>FuiszVideo</h2>
-          </a>
-          <div class="info">
-            Frontend engineering at FuiszVideo, an ad publishing platform that
-            used machine vision to make interactive videos.
           </div>
+          <h2>FuiszVideo</h2>
+        </a>
+        <div class="text">
+          Frontend engineering at FuiszVideo, an ad publishing platform that used machine vision to make interactive videos.
         </div>
+      </div>
 
-        <div class="project">
-          <a href="http://artspeak.ca">
+      <div class="block">
+        <a class="main" href="http://artspeak.ca">
+          <div class="background">
             <img
               loading="lazy"
               src="images/artspeak.png"
               alt="Screenshot of artspeak.ca, on the page for artist Hong-Kai Wang. Four columns present an artist bio, a stack of images from the artist's latest show, photos and text from an event they presented, and an image of their publication 'Violet Quartz', which has white text on a soft violet cover."
             />
-            <h2>Artspeak</h2>
-          </a>
-          <div class="info">
-            Website for a beloved Vancouver arts institution. Designed by Scott
-            Ponik and Julie Peeters.
           </div>
-        </div>
-
-        <div class="project">
-          <a href="http://zackdavis.net">
-            <img
-              loading="lazy"
-              src="images/blue_sprue.jpg"
-              alt="Closeup of a wall-hanging artwork composed from A group of flat, organically textured forms in various shades of blue."
-            />
-            <h2>More</h2>
-          </a>
-          <div class="info">
-            Pictured above, <em>Blue Sprue...</em>, wood, epoxy clay, acrylic.
-          </div>
+          <h2>Artspeak</h2>
+        </a>
+        <div class="text">
+          Website for a beloved Vancouver arts institution. Designed by Scott
+          Ponik and Julie Peeters.
         </div>
       </div>
-    </div>
-
-    <script src="scripts.js"></script>
+    </main>
+    <script>
+      
+      const retinaSizeImages = () => {
+  if (window.devicePixelRatio > 1) {
+    console.log('RETINA');
+    const images = document.querySelectorAll("img");
+    images.forEach((img) => {
+      const oldSrc = img.src;
+      const dotIndex = oldSrc.lastIndexOf(".");
+      img.src = oldSrc.slice(0, dotIndex) + "_retina" + oldSrc.slice(dotIndex);
+    });
+  }
+};
+retinaSizeImages()
+    </script>
   </body>
 </html>
