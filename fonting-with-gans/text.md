@@ -13,10 +13,10 @@ My first was a Generative Adversarial Net with the EMNIST handwriting dataset. A
      sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
    ></iframe>
 
-Big picture, this involved:
+You can find the code for the Python side of this project here: [VGAN-EMNIST Inversion](https://github.com/zackrdavis/VGAN-EMNIST-Inversion). Big picture, this involved:
 
 - training on a fast desktop with a Jupyter notebook
-- collecting inputs for desired outputs (62 alphanumeric characters)
+- searching out inputs for desired outputs (62 alphanumeric characters). I think this is called [inversion](https://arxiv.org/pdf/2101.05278.pdf)
 - exporting the trained network as .onnx
 - some math for lerping between inputs
 
@@ -109,3 +109,5 @@ torch.onnx.export(
 ```
 
 The sandbox at the top of this writeup uses `onnxruntime-web` to run the exported network, and feeds it inputs from `addresses.json`.
+
+[The Code](https://github.com/zackrdavis/VGAN-EMNIST-Inversion)
