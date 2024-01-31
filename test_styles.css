@@ -46,20 +46,6 @@ a {
   color: rgba(0, 0, 255, 1);
 }
 
-#xScrollParent {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-}
-
-#xScrollChild {
-  position: absolute;
-  top: calc(50% + var(--headerHeight) / 2);
-  transform: translateY(-50%);
-  white-space: nowrap;
-}
-
 .project {
   width: 500px;
   list-style: none;
@@ -91,6 +77,18 @@ video {
 }
 
 /* NEW STYLES  */
+
+main.text {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 50px;
+
+  img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+  }
+}
 
 header {
   margin: 0 auto;
