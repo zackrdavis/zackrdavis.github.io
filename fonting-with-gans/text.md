@@ -85,11 +85,11 @@ A silly bug almost made me give up on this, but it finally worked. Here's the se
 
 ![A grid black tiles, each with a white handwritten character on it, one for each alphanumeric character](reals.png "interesting 'm'")
 
-![A grid of black tiles with white forms that slowly become handwritten characters.](search.gif "twisted!")
+![A grid of black tiles with white forms that slowly become handwritten characters.](search.gif "satisfaction")
 
 ## Packaging for the Frontend
 
-With a map to every character I'd want to render, it was time to bring the generator network into the browser. `Torch.onnx` needs to actually run the model to export it, so I provided an input, then names for the data going in and out, which became object keys in JavaScript.
+With a map to every character I'd want to render, it was time to bring the generator network into the browser. `Torch.onnx` needs to actually run the model to export it, so I provided an input, then names for the data going in and out, which became object keys in JavaScript. I also exported the map to a JSON file.
 
 ```python
 torch.onnx.export(
@@ -108,4 +108,4 @@ torch.onnx.export(
 )
 ```
 
-The sandbox at the top of this writeup uses `onnxruntime-web` to run the exported file, and the map is in `addresses.js`.
+The sandbox at the top of this writeup uses `onnxruntime-web` to run the exported network, and feeds it inputs from `addresses.json`.
