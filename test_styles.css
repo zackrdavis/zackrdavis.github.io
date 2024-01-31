@@ -1,0 +1,188 @@
+@import url("https://fonts.googleapis.com/css?family=Mirza|Open+Sans:400,400i");
+
+:root {
+  --headerHeight: 130px;
+}
+
+/* resets */
+html,
+body,
+div,
+span,
+a,
+iframe,
+h1,
+h2,
+img,
+header,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-family: "Open Sans", sans-serif;
+}
+
+h1 {
+  font-size: 3em;
+  font-family: "Mirza", cursive;
+}
+
+h2 {
+  font-size: 2em;
+  font-family: "Mirza", cursive;
+}
+
+a {
+  text-decoration: none;
+  color: rgba(0, 0, 255, 1);
+}
+
+#xScrollParent {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+#xScrollChild {
+  position: absolute;
+  top: calc(50% + var(--headerHeight) / 2);
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+
+.project {
+  width: 500px;
+  list-style: none;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 75px;
+}
+
+.project:first-child {
+  margin-left: 75px;
+}
+
+/* img,
+video {
+  width: 500px;
+  height: 313px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 1);
+  background-color: white;
+  margin-bottom: 15px;
+} */
+
+video {
+  background-color: black;
+}
+
+.info {
+  white-space: normal;
+  width: 100%;
+}
+
+/* NEW STYLES  */
+
+header {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  height: var(--headerHeight);
+  justify-content: flex-end;
+}
+
+.grid {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  column-gap: 4dvw;
+  row-gap: 50px;
+  padding: 50px;
+}
+
+.block {
+  aspect-ratio: 5/4;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  &.intro p {
+    font-size: 18px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    .background {
+      flex-grow: 1;
+      position: relative;
+      background-color: black;
+      border: 1px solid black;
+      min-height: 150px;
+
+      img,
+      video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+
+        &.contain {
+          object-fit: contain;
+        }
+
+        &.center {
+          object-position: center center;
+        }
+      }
+    }
+
+    h2 {
+      padding-top: 20px;
+    }
+  }
+
+  a.main:not(a[href~="zackrdavis.github.io"]) h2::after {
+    content: "↗";
+    font-size: 15px;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  .text {
+    margin-top: 3px;
+    flex-shrink: 1;
+    background-color: white;
+  }
+}
+
+/* Mobile Portrait */
+@media screen and (max-width: 580px) {
+  .grid {
+    display: flex;
+    flex-direction: column;
+  }
+}
