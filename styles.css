@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Mirza|Open+Sans:400,400i");
+@import url("https://fonts.googleapis.com/css2?family=Rasa:ital,wght@0,300..700;1,300..700&display=swap");
 
 :root {
   --headerHeight: 130px;
@@ -32,23 +32,33 @@ body {
 h1,
 h2,
 h3 {
-  font-weight: normal;
-  margin: 0;
+  font-weight: 500;
+  font-family: "Rasa", serif;
 }
 
 h1 {
   font-size: 3em;
-  font-family: "Mirza", cursive;
 }
 
 h2 {
   font-size: 2em;
-  font-family: "Mirza", cursive;
 }
 
 a {
   text-decoration: none;
   color: rgba(0, 0, 255, 1);
+
+  /* thicken title link on hover */
+  h1,
+  h2,
+  h3 {
+    transition: all 0.25s;
+    font-weight: 500;
+    &:hover {
+      font-weight: 700;
+      letter-spacing: -0.25px;
+    }
+  }
 }
 
 main.text {
@@ -136,21 +146,20 @@ header {
     }
 
     h2 {
-      padding-top: 20px;
+      margin: 15px 0 5px;
     }
   }
 
+  /* outbound link arrow */
   a.main:not(a[href^="/"]) h2::after {
     content: "↗";
     font-size: 15px;
     margin-left: 10px;
-    vertical-align: middle;
   }
 
   .text {
     margin-top: 3px;
     flex-shrink: 1;
-    background-color: white;
   }
 }
 
