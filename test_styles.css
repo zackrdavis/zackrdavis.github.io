@@ -118,15 +118,19 @@ header {
   flex-direction: column;
   position: relative;
 
-  &.intro p {
-    font-size: 18px;
+  &.intro {
+    aspect-ratio: auto;
 
-    &:first-child {
-      margin-top: 0;
-    }
+    p {
+      font-size: 18px;
 
-    &:last-child {
-      margin-bottom: 0;
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 
