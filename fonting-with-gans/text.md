@@ -108,6 +108,6 @@ torch.onnx.export(
 )
 ```
 
-The sandbox at the top of this writeup uses `onnxruntime-web` to run the exported network, and feeds it inputs from `addresses.json`.
+The sandbox at the top of this writeup uses `onnxruntime-web` to run the exported network. Its character map is a combination of the best images from several runs of the inversion search, saved in `addresses.json`.
 
 [The Code](https://github.com/zackrdavis/VGAN-EMNIST-Inversion)
