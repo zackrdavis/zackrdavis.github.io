@@ -1,5 +1,7 @@
 ## Fonting with GANs
 
+1/30/2024
+
 During my virtual residency at the [Recurse Center](https://www.recurse.com/), one of my goals was to get comfortable with pyTorch and Jupyter notebooks. Another was to build some highly responsive UI around machine learning. I haven't seen a lot of projects running inference on the frontend, so I decided to try client-side image generators with [ONNX Runtime](https://onnxruntime.ai/docs/get-started/with-javascript.html).
 
 My first was a Generative Adversarial Net with the EMNIST handwriting dataset. And putting the prize up front, it worked!
@@ -20,11 +22,11 @@ Big picture, this involved:
 
 Unlike diffusion networks, GANs produce images in a single fast feedforward step, and their output makes up a smooth and [structured](https://machinelearningmastery.com/how-to-interpolate-and-perform-vector-arithmetic-with-faces-using-a-generative-adversarial-network/) latent space. So I thought they might be fast enough for animation, and their animation might be formally compelling.
 
-I used Diego Gomez's [Vanilla GAN in PyTorch](https://github.com/diegoalejogm/gans) as a starting point, swapped the MNIST dataset for EMNIST, and plotted out the first batch of training data, which looked odd:
+I used Diego Gomez's [Vanilla GAN in PyTorch](https://github.com/diegoalejogm/gans) as a starting point and swapped the MNIST dataset for EMNIST. After some weird results from training, I visualized the first batch of training data:
 
 ![a grid of handwritten numbers and letters with each one mirrored and rotated 90 degrees](twisted_samples.png "twisted")
 
-It turns out TorchVision's EMNIST data is mirrored and rotated -90 degrees. A couple extra transforms set things right:
+It turns out TorchVision's EMNIST data is mirrored and rotated -90 degrees. Two extra transforms set things right:
 
 ```python
 compose = transforms.Compose([
@@ -79,11 +81,11 @@ def inversion_search(target_img, generator, steps=100, rate=0.01):
     return input
 ```
 
-And here's the search for each character's perfect match, reals above, fakes below:
+A silly bug almost made me give up on this, but it finally worked. Here's the search, animated in order to convey a fraction of my dawning joy when I fixed the bug. Reals above, fakes below:
 
-![alt](reals.png "twisted!")
+![A grid black tiles, each with a white handwritten character on it, one for each alphanumeric character](reals.png "interesting 'm'")
 
-![alt](search.gif "twisted!")
+![A grid of black tiles with white forms that slowly become handwritten characters.](search.gif "twisted!")
 
 ## Packaging for the Frontend
 
@@ -106,4 +108,4 @@ torch.onnx.export(
 )
 ```
 
-The sandbox at the beginning of this writeup uses `onnxruntime-web` to run the exported file. Now ready to get weird with it in the browser.
+The sandbox at the beginning of this writeup uses `onnxruntime-web` to run the exported file, and the map is in `addresses.js`.
