@@ -1,10 +1,8 @@
 ## Fonting with GANs
 
-1/30/2024
+### 1/30/2024
 
-During my virtual residency at the [Recurse Center](https://www.recurse.com/), one of my goals was to get comfortable with PyTorch and Jupyter notebooks. Another was to build some highly responsive UI around machine learning. I haven't seen a lot of projects running inference on the frontend, so I decided to try client-side image generators with [ONNX Runtime](https://onnxruntime.ai/docs/get-started/with-javascript.html).
-
-My first was a Generative Adversarial Net with the EMNIST handwriting dataset. And, putting the prize up front, here it is, running in the browser fast enough animate latent-space-interpolation in real time:
+During my virtual residency at the [Recurse Center](https://www.recurse.com/), one of my goals was to get comfortable with PyTorch and Jupyter notebooks. Another was to build some highly responsive UI around machine learning. My first was a Generative Adversarial Net with the EMNIST handwriting dataset. And, putting the prize up front, here it is, running in the browser fast enough animate latent-space-interpolation in real time:
 
 <iframe src="https://codesandbox.io/embed/7rd69j?view=Editor+%2B+Preview&module=%2Fsrc%2Findex.js&hidenavigation=1"
      style="width:100%; height: 500px; border:0; border-radius: 4px; overflow:hidden;"
@@ -16,11 +14,11 @@ My first was a Generative Adversarial Net with the EMNIST handwriting dataset. A
 You can find the code for the Python side of this project here: [VGAN-EMNIST Inversion](https://github.com/zackrdavis/VGAN-EMNIST-Inversion). Big picture, this involved:
 
 - training on a fast desktop with a Jupyter notebook
-- searching out inputs for desired outputs (62 alphanumeric characters). I think this is called [inversion](https://arxiv.org/pdf/2101.05278.pdf)
-- exporting the trained network as .onnx
+- finding ideal inputs for all 62 alphanumeric characters, which I think is called [inversion](https://arxiv.org/pdf/2101.05278.pdf)
+- exporting the trained network for [ONNX Runtime](https://onnxruntime.ai/docs/get-started/with-javascript.html)
 - some math for lerping between inputs
 
-Unlike diffusion networks, GANs produce images in a single fast feedforward step, and their output makes up a smooth and [structured](https://machinelearningmastery.com/how-to-interpolate-and-perform-vector-arithmetic-with-faces-using-a-generative-adversarial-network/) latent space. This is why I thought they might be fast enough for animation, and their animation might be formally compelling.
+Unlike most diffusion networks, GANs produce images in a single fast feedforward step, and their output makes up a smooth and [structured](https://machinelearningmastery.com/how-to-interpolate-and-perform-vector-arithmetic-with-faces-using-a-generative-adversarial-network/) latent space. This is why I thought they might be fast enough for animation, and their animation might be formally compelling.
 
 I used Diego Gomez's [Vanilla GAN in PyTorch](https://github.com/diegoalejogm/gans) as a starting point and swapped the MNIST dataset for EMNIST. After some weird training results, I visualized the first batch of training data:
 
@@ -110,4 +108,4 @@ torch.onnx.export(
 
 The sandbox at the top of this writeup uses `onnxruntime-web` to run the exported network. Its character map is a combination of the best images from several runs of the inversion search, saved in `addresses.json`.
 
-[The Code](https://github.com/zackrdavis/VGAN-EMNIST-Inversion)
+[Project Repo](https://github.com/zackrdavis/VGAN-EMNIST-Inversion)
