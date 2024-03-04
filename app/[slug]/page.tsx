@@ -54,12 +54,7 @@ const pageSlugs = fs
   .map((f) => f.replace(".md", ""));
 
 export async function generateStaticParams() {
-  const pageSlugs = fs
-    .readdirSync("md-pages")
-    .filter((f) => f.endsWith(".md"))
-    .map((f) => f.replace(".md", ""));
-
-  return pageSlugs;
+  return pageSlugs.map((slug) => ({ slug }));
 }
 
 export default function Page({ params }: { params: { slug: string } }) {
