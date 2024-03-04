@@ -33,10 +33,11 @@ const renderers = {
       <SyntaxHighlighter
         {...rest}
         PreTag="div"
-        children={String(children).replace(/\n$/, "")}
         language={match[1]}
         style={oneDark}
-      />
+      >
+        {String(children).replace(/\n$/, "")}
+      </SyntaxHighlighter>
     ) : (
       <code {...rest} className={className}>
         {children}
