@@ -1,7 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Rasa:ital,wght@0,300..700;1,300..700&display=swap");
-
 :root {
-  --headerHeight: 130px;
   font-size: 62.5%;
 }
 
@@ -26,7 +23,7 @@ html,
 body {
   width: 100%;
   height: 100%;
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--open-sans);
   font-size: 1.8rem;
 }
 
@@ -34,7 +31,7 @@ h1,
 h2,
 h3 {
   font-weight: 500;
-  font-family: "Rasa", serif;
+  font-family: var(--rasa);
 }
 
 h1 {
@@ -79,12 +76,12 @@ main.text {
 }
 
 header {
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+  margin: 50px auto 0 auto;
   text-align: center;
-  height: var(--headerHeight);
-  justify-content: flex-end;
+
+  a {
+    display: inline-block;
+  }
 }
 
 .grid {
@@ -98,26 +95,18 @@ header {
   padding: 50px;
 }
 
+.block:first-child {
+  aspect-ratio: auto;
+}
+
 .block {
   aspect-ratio: 4.5/4;
   display: flex;
   flex-direction: column;
   position: relative;
 
-  &.intro {
-    aspect-ratio: auto;
-
-    p {
-      font-size: 18px;
-
-      &:first-child {
-        margin-top: 0;
-      }
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
+  p:first-child {
+    margin-top: 0;
   }
 
   .main {
@@ -156,6 +145,11 @@ header {
     }
   }
 
+  a.main:hover h2 {
+    font-weight: 700;
+    letter-spacing: -0.25px;
+  }
+
   /* outbound link arrow */
   a.main:not(a[href^="/"]) h2::after {
     content: "➚";
@@ -166,7 +160,6 @@ header {
   }
 
   .text {
-    margin-top: 3px;
     flex-shrink: 1;
   }
 }
