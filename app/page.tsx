@@ -24,7 +24,10 @@ export default function Home() {
 
         <Block
           title="Fonting with GANS"
-          media={{ src: "/images/search.gif", alt: "" }}
+          media={{
+            src: "/images/search.gif",
+            alt: "A grid of black tiles with white forms that slowly become handwritten characters.",
+          }}
           href="/fonting-with-gans"
         >
           Project writeup: Learning the space of handwritten letters and numbers
