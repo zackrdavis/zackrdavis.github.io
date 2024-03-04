@@ -65,6 +65,7 @@ export default function Home() {
         </Block>
 
         <Block
+          href="https://zackdavis.net/homunculus_house/"
           title="Homunculus House"
           media={{ src: "https://player.vimeo.com/video/91787237", alt: "" }}
         >
