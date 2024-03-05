@@ -11,7 +11,7 @@ gardener. I live in Portland, Oregon.
 
 I'd love to hear from you:
 
-[zackrdavis@gmail.com]("mailto:zackrdavis@gmail.com") • [GitHub]("https://github.com/zackrdavis") • [Linked]("https://www.linkedin.com/in/zackrdavis")
+[zackrdavis@gmail.com](mailto:zackrdavis@gmail.com) • [GitHub](https://github.com/zackrdavis) • [Linkedin](https://www.linkedin.com/in/zackrdavis)
 `;
 
 export default function Home() {
