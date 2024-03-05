@@ -36,6 +36,17 @@ export default function Home() {
         </Block>
 
         <Block
+          title="Fonting with GANS #2"
+          media={{
+            src: "/images/search.gif",
+            alt: "A grid of black tiles with white forms that slowly become handwritten characters.",
+          }}
+          href="/fonting-with-gans-2"
+        >
+          Project writeup: Typing with real-time generated glyphs.
+        </Block>
+
+        <Block
           title="Museum of Us"
           media={{ src: "/images/mou.gif", alt: "" }}
           href="https://museumofus.org/"
