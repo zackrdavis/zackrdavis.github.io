@@ -38,12 +38,13 @@ export default function Home() {
         <Block
           title="Fonting with GANS #2"
           media={{
-            src: "/images/search.gif",
-            alt: "A grid of black tiles with white forms that slowly become handwritten characters.",
+            src: "https://player.vimeo.com/video/919806625/",
+            alt: "White text appearing on a black background, reading 'Hello world'",
           }}
           href="/fonting-with-gans-2"
         >
-          Project writeup: Typing with real-time generated glyphs.
+          Project writeup: Typing and animating with real-time, client-side
+          generated glyphs.
         </Block>
 
         <Block
