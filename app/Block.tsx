@@ -34,12 +34,13 @@ export const Block = ({ media, title, children, href }: BlockProps) => {
 
   return (
     <div className="block">
-      {(media || title) && (
+      {(title || media) && (
         <WrapTag className="main" href={href}>
-          {mediaNode}
           {title && <h2>{title}</h2>}
+          {media && mediaNode}
         </WrapTag>
       )}
+
       <div className="text">{children}</div>
     </div>
   );
