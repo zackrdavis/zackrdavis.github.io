@@ -2,7 +2,7 @@
 
 ### 1/30/2024
 
-During my virtual residency at the [Recurse Center](https://www.recurse.com/), one of my goals was to get comfortable with PyTorch and Jupyter notebooks. Another was to build some highly responsive UI around machine learning. I've always been intrigued by [David Ha's formulation](https://otoro.net/ml/) that resource constraints drove the development of cognition's best tricks, and I hadn't seen a lot of inference executing in the browser. What kind of UI is possible with small models and no perceptible delay?
+During my virtual residency at the [Recurse Center](https://www.recurse.com/), one of my goals was to get comfortable with PyTorch and Jupyter notebooks. Another was to build some highly responsive UI around machine learning. I've always liked [David Ha's formulation](https://otoro.net/ml/) that resource constraints are behind cognition's best tricks, and I hadn't seen a lot of inference executing in the browser. What kind of UI is possible with small models and no perceptible delay?
 
 My first stab in this direction was an in-browser Generative Adversarial Net with the EMNIST handwriting dataset. And, putting the prize up front, here it is, running fast enough animate latent-space-interpolation in real time:
 
