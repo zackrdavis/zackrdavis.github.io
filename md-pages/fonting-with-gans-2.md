@@ -1,3 +1,7 @@
+## Fonting with GANs #2
+
+### 3/5/2024
+
 I got an itch to make weird interactions with client-side generative models. [Previously](/fonting-with-gans), I trained a GAN on unlabeled handwritten characters, found inputs to generate each character, and exported it for use in JS with [ONNX](https://onnxruntime.ai/docs/). On its own, though, the network was just turning numbers into numbers. To see anything I'd need to complete the pipeline from input to image.
 
 Where did I end up? Click in this black box and do some typing:
