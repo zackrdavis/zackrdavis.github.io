@@ -83,6 +83,7 @@ export default function Home() {
         </Block>
 
         <Block
+          href="https://artspeak.ca/"
           title="Artspeak"
           media={{ src: "/images/artspeak.png", alt: "" }}
         >

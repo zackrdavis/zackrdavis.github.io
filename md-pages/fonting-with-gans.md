@@ -76,7 +76,7 @@ def inversion_search(target_img, generator, steps=100, rate=0.01):
     return input
 ```
 
-A deeply silly bug almost made me give up on this: I had the inversion search working on the pre-transform mirrored and twisted data. Again, amazing how hard this was to see when I wasn't specifically looking for it. It wasn't until I visualized all the targets in order that I saw it. This hammered home the value of fluency with matpotlib. As long as it's a pain, I'm less likely to spot patterns that, at this level of abstraction, just have to be presented visually.
+A deeply silly bug almost made me give up on this: I had the inversion search working on the pre-transform mirrored and twisted data. Amazing how hard this was to see when I wasn't looking for it, even having dealt with it earlier. I had to plot the whole grid of targets before I spotted it, and it hammered home the value of easy fluency with matpotlib.
 
 Anyway, here's the working search, animated in order to convey a fraction of my dawning joy when I fixed the bug.
 

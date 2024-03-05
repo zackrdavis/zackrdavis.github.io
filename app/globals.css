@@ -50,15 +50,13 @@ a {
   text-decoration: none;
   color: rgba(0, 0, 255, 1);
 
-  /* thicken title link on hover */
-  h1,
-  h2,
-  h3 {
-    transition: all 0.25s;
-    font-weight: 500;
+  &,
+  & > * {
+    transition: all 0.2s;
+
     &:hover {
-      font-weight: 700;
-      letter-spacing: -0.25px;
+      text-shadow: -0.3px 0px 0px rgba(0, 0, 255, 1),
+        0.3px 0px 0px rgba(0, 0, 255, 1), 2px 2px 2px rgba(0, 0, 0, 0.2);
     }
   }
 }
@@ -78,6 +76,10 @@ main.text {
 header {
   margin: 50px auto 0 auto;
   text-align: center;
+
+  h1 {
+    margin: 0;
+  }
 
   a {
     display: inline-block;
@@ -143,11 +145,6 @@ header {
       margin: 15px 0 5px;
       position: relative;
     }
-  }
-
-  a.main:hover h2 {
-    font-weight: 700;
-    letter-spacing: -0.25px;
   }
 
   /* outbound link arrow */
