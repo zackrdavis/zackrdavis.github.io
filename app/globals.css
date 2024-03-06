@@ -159,6 +159,10 @@ header {
 
   .text {
     flex-shrink: 1;
+
+    &:first-child {
+      margin-top: 46px;
+    }
   }
 }
 

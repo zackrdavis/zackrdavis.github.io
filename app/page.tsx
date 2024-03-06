@@ -25,26 +25,25 @@ export default function Home() {
         <Block
           title="Fonting with GANS"
           media={{
-            src: "/images/search.gif",
+            src: "/images/fonting-with-gans/twisted_samples.png",
             alt: "A grid of black tiles with white forms that slowly become handwritten characters.",
           }}
           href="/fonting-with-gans"
         >
-          Project writeup: Learning the space of handwritten letters and numbers
-          with PyTorch, then inverting to find the best match for specific
-          images.
+          Learning the space of handwritten letters and numbers with PyTorch,
+          then inverting to find the best match for specific images.
         </Block>
 
         <Block
           title="Fonting with GANS #2"
           media={{
-            src: "https://player.vimeo.com/video/919806625/",
+            src: "https://player.vimeo.com/video/919832199/",
             alt: "White text appearing on a black background, reading 'Hello world'",
           }}
           href="/fonting-with-gans-2"
         >
-          Project writeup: Typing and animating with real-time, client-side
-          generated glyphs.
+          Generating glyphs at speed with client-side inference, and shoehorning
+          them into a fluid typing interface.
         </Block>
 
         <Block
