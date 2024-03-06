@@ -15,7 +15,7 @@ Where did I end up? Click in this black box and do some typing:
 
 ## Glyph Generator
 
-Let's say I know an input that generates a good letter "E". How do I turn run that through the network and get an image in JavaScript?
+Let's say I know an input that generates a good letter "E". How do I turn run that through the network and get an image in the browser?
 
 First I get an `InferenceSession` going:
 
