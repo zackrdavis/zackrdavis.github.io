@@ -23,7 +23,7 @@ export default function Home() {
         </Block>
 
         <Block
-          title="Fonting with GANS"
+          title="Fonting with GANs"
           media={{
             src: "/images/fonting-with-gans/twisted_samples.png",
             alt: "A grid of black tiles with white forms that slowly become handwritten characters.",
@@ -35,7 +35,7 @@ export default function Home() {
         </Block>
 
         <Block
-          title="Fonting with GANS #2"
+          title="Fonting with GANs #2"
           media={{
             src: "https://player.vimeo.com/video/919832199/",
             alt: "White text appearing on a black background, reading 'Hello world'",
