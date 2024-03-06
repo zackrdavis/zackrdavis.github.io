@@ -69,7 +69,7 @@ I never properly benchmarked it, but this pipeline worked fast. I was able to fe
 
 ## A Familiar Interface
 
-I definitely wanted to type in this font. Morphing would happen at some point, but I wanted it in the context of a fluid text interaction with a cursor and highlighting, not boxed-up in unfamiliar UI. I basically wanted a big `<textarea>`,
+I definitely wanted to type in this font. Morphing would happen at some point, but I wanted it in the context of a fluid text interaction with a cursor and highlighting, not boxed-up in unfamiliar UI. I basically wanted a big `<textarea>`.
 
 So that's what I started with. That would accept all of the interactions, provide a blinking cursor and text-selection highlights, and hide its own actual text with a transparent color. Behind it I'd have a div full of inline `<canvas>` glyphs. For every character typed I'd render a corresponding glyph. I spun up a react app to keep them synced, since I expected the UI to expand as I messed around.
 

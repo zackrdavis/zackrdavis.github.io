@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
+  // static export, unless doing local dev
+  output: process.env.NODE_ENV == "development" ? undefined : "export",
 
   images: {
     unoptimized: true,
