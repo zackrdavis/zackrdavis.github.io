@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import Image from "next/image";
+import { VideoPlayer } from "./VideoPlayer";
 
 type BlockProps = {
   title?: string;
@@ -25,6 +26,10 @@ export const Block = ({ media, title, children, href }: BlockProps) => {
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
           title="Homunculus House"
         ></iframe>
+      </div>
+    ) : media && media.src.includes(".mp4") ? (
+      <div className="background">
+        <VideoPlayer src={media.src} />
       </div>
     ) : media ? (
       <div className="background">

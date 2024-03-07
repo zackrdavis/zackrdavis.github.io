@@ -26,7 +26,7 @@ export default function Home() {
           title="Fonting with GANs"
           media={{
             src: "/images/fonting-with-gans/twisted_samples.png",
-            alt: "A grid of black tiles with white forms that slowly become handwritten characters.",
+            alt: "",
           }}
           href="/fonting-with-gans"
         >
@@ -36,10 +36,7 @@ export default function Home() {
 
         <Block
           title="Fonting with GANs #2"
-          media={{
-            src: "https://player.vimeo.com/video/919832199/",
-            alt: "White text appearing on a black background, reading 'Hello world'",
-          }}
+          media={{ src: "/images/fonting2.mp4", alt: "" }}
           href="/fonting-with-gans-2"
         >
           Building a weird text input with client-side generative glyphs.
@@ -80,7 +77,7 @@ export default function Home() {
         <Block
           href="https://zackdavis.net/homunculus_house/"
           title="Homunculus House"
-          media={{ src: "https://player.vimeo.com/video/91787237", alt: "" }}
+          media={{ src: "/images/homunculus_house.mp4", alt: "" }}
         >
           Simulated views and illumination for a house rolling downhill.
           Presented at the Portland2014 Biennial. 4-channel projected video, no
