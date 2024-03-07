@@ -31,7 +31,7 @@ export default function Home() {
           href="/fonting-with-gans"
         >
           Learning the space of handwritten letters and numbers with PyTorch,
-          then inverting to find the best match for specific images.
+          then inverting to find the best match for each character.
         </Block>
 
         <Block
@@ -42,8 +42,7 @@ export default function Home() {
           }}
           href="/fonting-with-gans-2"
         >
-          Generating glyphs at speed with client-side inference, and shoehorning
-          them into a fluid typing interface.
+          Building a weird text input with client-side generative glyphs.
         </Block>
 
         <Block
