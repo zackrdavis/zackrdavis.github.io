@@ -106,6 +106,7 @@ header {
   display: flex;
   flex-direction: column;
   position: relative;
+  max-width: 100%;
 
   p:first-child {
     margin-top: 0;
@@ -193,6 +194,10 @@ header {
 
 /* Mobile Portrait */
 @media screen and (max-width: 580px) {
+  .block {
+    aspect-ratio: unset;
+  }
+
   .grid {
     display: flex;
     flex-direction: column;
