@@ -4,7 +4,9 @@ import Markdown from "react-markdown";
 const intro = `
 I'm a software engineer with lots of experience building fast, fun,
 accessible user-interfaces. I've worked with data-intensive
-enterprise projects, startups, museums and theater companies.
+enterprise projects, startups, museums and theater companies. 
+
+[Résumé](/resume.pdf)
 
 Outside of work, I'm an [artist](http://zackdavis.net) and a
 gardener. I live in Portland, Oregon.
@@ -30,7 +32,7 @@ export default function Home() {
           }}
           href="/home-deep-learning"
         >
-          How I build notebooks and run training on my desktop from the comfort
+          How I build notebooks and train models on my desktop from the comfort
           of my MacBook
         </Block>
 
