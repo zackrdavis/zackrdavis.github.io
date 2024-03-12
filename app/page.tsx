@@ -23,6 +23,18 @@ export default function Home() {
         </Block>
 
         <Block
+          title="Home Deep Learning"
+          media={{
+            src: "/images/home-deep-learning/picadilly_radiator.png",
+            alt: "",
+          }}
+          href="/home-deep-learning"
+        >
+          How I build notebooks and run training on my desktop from the comfort
+          of my MacBook
+        </Block>
+
+        <Block
           title="Fonting with GANs"
           media={{
             src: "/images/fonting-with-gans/twisted_samples.png",
