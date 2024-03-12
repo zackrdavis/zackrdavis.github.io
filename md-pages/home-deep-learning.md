@@ -46,7 +46,7 @@ Then serve the Python kernel with jupyter:
 
 and see something like:
 
-```
+```text
 [I 2024-03-11 12:40:16.855 ServerApp] Jupyter Server 2.13.0 is running at:
 [I 2024-03-11 12:40:16.855 ServerApp] http://localhost:8888/tree
 [I 2024-03-11 12:40:16.855 ServerApp] http://127.0.0.1:8888/tree

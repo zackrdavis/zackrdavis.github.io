@@ -17,7 +17,9 @@ You can find the code for the Python side of this project here: [VGAN-EMNIST Inv
 
 Unlike most diffusion networks, GANs produce images in a single fast feedforward step, and their output makes up a smooth and [structured](https://machinelearningmastery.com/how-to-interpolate-and-perform-vector-arithmetic-with-faces-using-a-generative-adversarial-network/) latent space. This is why I thought they might be fast enough for animation, and their animation would be formally compelling.
 
-I used Diego Gomez's [Vanilla GAN in PyTorch](https://github.com/diegoalejogm/gans) as a starting point and swapped the MNIST (numeric) dataset for EMNIST (alphanumeric). My training results were pretty weird, without a lot of recognizable characters. Maybe that's to be expected in the latent space between letters? Then I visualized the first batch of training data:
+I used Diego Gomez's [Vanilla GAN in PyTorch](https://github.com/diegoalejogm/gans) as a starting point and swapped the MNIST (numeric) dataset for EMNIST (alphanumeric).
+
+My training results were pretty weird, without a lot of recognizable characters. I visualized the first batch of training data:
 
 ![a grid of handwritten numbers and letters with each one mirrored and rotated 90 degrees](/images/fonting-with-gans/twisted_samples.png)
 
@@ -59,7 +61,7 @@ I gathered these manually for a while by randomly sampling, then copy-pasting th
 
 ## Inversion
 
-I give thanks to Fast.ai's [great explanation of SGD](https://github.com/fastai/fastbook/blob/master/04_mnist_basics.ipynb) for making this thinkable: For each character, I'd take a single real example from the labeled data and _gradient-descend_ through the latent space for a similar fake image. This is possible because we can treat the input/coordinates of an image just like we treat model weights during training: feedforward through the network, determine the error between the output and the real image, and backpropagate up to the input to learn how it should change. My search function ended up looking something like this:
+I credit Fast.ai's [great explanation of SGD](https://github.com/fastai/fastbook/blob/master/04_mnist_basics.ipynb) for making this thinkable: For each character, I'd take a single real example from the labeled data and _gradient-descend_ through the latent space for a similar fake image. This is possible because we can treat the input/coordinates of an image just like we treat model weights during training: feedforward through the network, determine the error between the output and the real image, and backpropagate up to the input to learn how it should change. My search function ended up looking something like this:
 
 ```python
 def inversion_search(target_img, generator, steps=100, rate=0.01):
@@ -76,9 +78,9 @@ def inversion_search(target_img, generator, steps=100, rate=0.01):
     return input
 ```
 
-A deeply silly bug almost made me give up on this: I had the inversion search working on the pre-transform mirrored and twisted data. Amazing how hard this was to see when I wasn't looking for it, even having dealt with it earlier. I had to plot the whole grid of targets before I spotted it, and it hammered home the value of easy fluency with matpotlib.
+A silly bug almost made me give up on this: I had the inversion search working on the pre-transform data, so it was still mirrored and rotated. Amazing how hard this was to see when I wasn't looking for it, even having dealt with it earlier. I had to plot the whole grid of targets before I spotted it, and it hammered home the value of easy fluency with matpotlib.
 
-Anyway, here's the working search, animated in order to convey a fraction of my dawning joy when I fixed the bug.
+Anyway, here's the working search, animated in order to convey a fraction of my dawning joy when I fixed the bug. Some characters are much slower to home in than others, like the capital "B". You can almost feel it rolling down different slopes as it finds its way.
 
 ![A grid of black tiles with white forms that slowly become handwritten characters.](/images/fonting-with-gans/search.gif)
 

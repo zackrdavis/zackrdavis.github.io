@@ -32,8 +32,8 @@ export default function Home() {
           }}
           href="/home-deep-learning"
         >
-          How I build notebooks and train models on my desktop from the comfort
-          of my MacBook
+          Tools and workflow for desktop-GPU training from the comfort of my
+          MacBook.
         </Block>
 
         <Block
