@@ -19,10 +19,10 @@ The first ingredient is an SSH connection between my laptop and my desktop, henc
 
 With that in place, you can use VSCode's Remote-SSH plugin to open the connection. [Here's how to do that.](https://www.digitalocean.com/community/tutorials/how-to-use-visual-studio-code-for-remote-development-via-the-remote-ssh-plugin) After connecting once, you can use the Remote Explorer panel to open future connections without creating a new VSCode window.
 
-![](/images/home-deep-learning/connected.png)
+![](/images/home-deep-learning/connect_current.png)
 Once the connection is open, the file explorer displays remote files and the terminal is on the server. As with jupyter lab, you can drag files onto the server or download them individually.
-![](/images/home-deep-learning/select_kernel.png)
-Because this is VSCode there are lots of helpers and annotations, as you can see with all those missing variables. That's one reason I've moved to this from a jupyter-in-browser setup, but the familiarity of the interface would be worth a lot to me even without it.
+![](/images/home-deep-learning/connected.png)
+Because this is VSCode there are lots of helpers and annotations, as you can see with all those missing imports. That's one reason I've moved to this from a jupyter-in-browser setup, but the familiarity of the interface would be worth a lot to me even without it.
 
 ## Package Management
 
