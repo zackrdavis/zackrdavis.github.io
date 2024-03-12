@@ -98,7 +98,7 @@ Now I can set up a new PyTorch environment with `juptorchenv my_env_name`.
 
 ## Classic Mode
 
-Before I figured out the VSCode workflow, I used a more standard jupyter-in-browser setup. That was more customizable in some ways, definitely more transparent and hackable.
+Before I figured out the VSCode workflow, I used a more standard jupyter-in-browser setup. That was more customizable in some ways, and definitely more transparent.
 
 On the server side it was almost exactly the same, except that I used jupyterlab and jupyterlab-git to give the browser interface a bit more power. On the client side there were a couple of extra commands:
 

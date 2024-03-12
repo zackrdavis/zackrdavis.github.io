@@ -127,7 +127,7 @@ header {
       background-color: black;
       /* border: 1px solid black; */
       min-height: 150px;
-      margin: 5px 0 15px;
+      margin: 5px 0 0;
       transition: all 0.1s;
 
       .playPause {
@@ -193,6 +193,10 @@ header {
 
     &:first-child {
       margin-top: 40px;
+    }
+
+    &:not(:first-child) {
+      margin-top: 10px;
     }
   }
 }
