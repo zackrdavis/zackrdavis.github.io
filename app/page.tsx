@@ -39,6 +39,7 @@ export default function Home() {
           media={{
             src: "/images/fonting-with-gans/twisted_samples.png",
             alt: "",
+            position: "top center",
           }}
           href="/fonting-with-gans"
         >
@@ -53,10 +54,28 @@ export default function Home() {
         >
           Building a weird text input with client-side generative glyphs.
         </Block>
+        {/* 
+        <Block
+          title="Launchpad Living"
+          media={{
+            src: "/images/launchpad.png",
+            position: "top center",
+            fit: "contain",
+            alt: "",
+            color: "rgb(38,73,44)",
+          }}
+          href="https://www.launchpadliving.org/"
+        >
+          Landing page for Launchpad Living, providing housing.
+        </Block> */}
 
         <Block
           title="Museum of Us"
-          media={{ src: "/images/mou.gif", alt: "" }}
+          media={{
+            src: "/images/mou_logo.gif",
+            position: "center center",
+            alt: "",
+          }}
           href="https://museumofus.org/"
         >
           A new website for the Museum of Us in San Diego, designed by Rebecca
@@ -66,7 +85,11 @@ export default function Home() {
 
         <Block
           title="A Robot Actor"
-          media={{ src: "/images/paradiso_robot_retina.jpg", alt: "" }}
+          media={{
+            src: "/images/paradiso_robot_retina.jpg",
+            alt: "",
+            position: "top center",
+          }}
           href="https://greenenaftaligallery.com/exhibitions/richard-maxwell#1"
         >
           <Markdown>
@@ -96,7 +119,10 @@ export default function Home() {
           sound.
         </Block>
 
-        <Block title="FuiszVideo" media={{ src: "/images/fuisz.png", alt: "" }}>
+        <Block
+          title="FuiszVideo"
+          media={{ src: "/images/fuisz.png", alt: "", position: "top center" }}
+        >
           Frontend engineering at FuiszVideo, an ad publishing platform that
           used machine vision to make interactive videos.
         </Block>

@@ -9,6 +9,9 @@ type BlockProps = {
   media?: {
     src: string;
     alt: string;
+    position?: string;
+    fit?: "fill" | "contain" | "cover" | "none" | "scale-down";
+    color?: string;
   };
 };
 
@@ -17,7 +20,10 @@ export const Block = ({ media, title, children, href }: BlockProps) => {
 
   const mediaNode =
     media && media.src.includes("vimeo") ? (
-      <div className="background">
+      <div
+        className="background"
+        style={{ background: media.color || "black" }}
+      >
         <iframe
           style={{ width: "100%", height: "100%", pointerEvents: "none" }}
           src={`${media.src}?background=1`}
@@ -28,12 +34,27 @@ export const Block = ({ media, title, children, href }: BlockProps) => {
         ></iframe>
       </div>
     ) : media && media.src.includes(".mp4") ? (
-      <div className="background">
+      <div
+        className="background"
+        style={{ background: media.color || "black" }}
+      >
         <VideoPlayer src={media.src} />
       </div>
     ) : media ? (
-      <div className="background">
-        <Image src={media.src} width="450" height="300" alt={media.alt} />
+      <div
+        className="background"
+        style={{ background: media.color || "black" }}
+      >
+        <Image
+          src={media.src}
+          width="450"
+          height="300"
+          alt={media.alt}
+          style={{
+            objectPosition: media.position || "center center",
+            objectFit: media.fit || "cover",
+          }}
+        />
       </div>
     ) : null;
 
