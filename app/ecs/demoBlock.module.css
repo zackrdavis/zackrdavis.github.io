@@ -1,0 +1,7 @@
+.demoBlock {
+  height: 500px;
+  padding: 20px;
+  background: green;
+  border-radius: 4px;
+  margin: 40px;
+}
