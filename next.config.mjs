@@ -7,6 +7,16 @@ const nextConfig = {
     unoptimized: true,
   },
 
+  async redirects() {
+    return [
+      {
+        source: "/minimal-ecs",
+        destination: "/minimal-ecs/index.html",
+        permanent: true,
+      },
+    ];
+  },
+
   webpack: function (config) {
     config.module.rules.push({
       test: /\.md$/,
