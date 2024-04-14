@@ -7,33 +7,33 @@ const topWall = archWall({
 });
 
 const rightWall = archWall({
-  dims: { x: 20, y: 600 },
-  location: { x: 580, y: 0 },
+  dims: { x: 20, y: 260 },
+  location: { x: 580, y: 20 },
 });
 
 const bottomWall = archWall({
   dims: { x: 600, y: 20 },
-  location: { x: 0, y: 580 },
+  location: { x: 0, y: 280 },
 });
 
 const leftWall = archWall({
-  dims: { x: 20, y: 600 },
-  location: { x: 0, y: 0 },
+  dims: { x: 20, y: 260 },
+  location: { x: 0, y: 20 },
 });
 
 const boxWallTop = archWall({
   dims: { x: 100, y: 20 },
-  location: { x: 200, y: 180 },
+  location: { x: 200, y: 80 },
 });
 
 const boxWallRight = archWall({
   dims: { x: 20, y: 100 },
-  location: { x: 300, y: 200 },
+  location: { x: 300, y: 100 },
 });
 
 const boxWallLeft = archWall({
   dims: { x: 20, y: 100 },
-  location: { x: 180, y: 200 },
+  location: { x: 180, y: 100 },
 });
 
 const square1 = archSquare({

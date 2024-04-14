@@ -4,45 +4,28 @@ const clamp = (num: number, min: number, max: number) => {
   return Math.min(Math.max(num, min), max);
 };
 
+type ControlMap = {
+  up: boolean;
+  down: boolean;
+  left: boolean;
+  right: boolean;
+};
+
 export class PlayerControlSystem {
-  keys = {
-    ArrowUp: false,
-    ArrowDown: false,
-    ArrowLeft: false,
-    ArrowRight: false,
-    w: false,
-    a: false,
-    s: false,
-    d: false,
+  controls: ControlMap = {
+    up: false,
+    down: false,
+    left: false,
+    right: false,
   };
 
-  constructor() {
-    window.addEventListener("keydown", (e) => {
-      const pressedKey = e.key as keyof typeof this.keys;
-
-      if (pressedKey in this.keys) {
-        this.keys[pressedKey] = true;
-      }
-    });
-
-    window.addEventListener("keyup", (e) => {
-      const pressedKey = e.key as keyof typeof this.keys;
-
-      if (pressedKey in this.keys) {
-        this.keys[pressedKey] = false;
-      }
-    });
+  setControl(control: keyof ControlMap, value: boolean) {
+    this.controls[control] = value;
   }
 
   update(entities: Ent[]) {
     forEntsWith(["velocity", "playerControl"], entities, (entity) => {
-      const { ArrowUp, ArrowDown, ArrowLeft, ArrowRight, w, a, s, d } =
-        this.keys;
-
-      const right = ArrowRight || d;
-      const left = ArrowLeft || a;
-      const up = ArrowUp || w;
-      const down = ArrowDown || s;
+      const { up, down, left, right } = this.controls;
 
       const { acceleration, maxSpeed } = entity.playerControl;
 

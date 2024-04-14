@@ -4,8 +4,8 @@ export class DisplaySystem {
   canvas: HTMLCanvasElement | null;
   context: CanvasRenderingContext2D | null | undefined;
 
-  constructor() {
-    this.canvas = document.querySelector("#ecsCanvas");
+  constructor(canvas: HTMLCanvasElement | null) {
+    this.canvas = canvas;
     this.context = this.canvas?.getContext("2d");
   }
 
