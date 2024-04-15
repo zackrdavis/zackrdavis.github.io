@@ -11,23 +11,23 @@ import { ImpactSystem } from "./systems/impact";
 
 // At each tick, run all systems.
 // Each system processes all entities, acting only on those with the necessary properties.
-const mainLoop = (entities: Ent[], systems: TSystem[]) => {
-  const tick = () => {
-    for (const system of systems) {
-      system.update(entities);
-    }
-  };
+// const mainLoop = (entities: Ent[], systems: TSystem[]) => {
+//   const tick = () => {
+//     for (const system of systems) {
+//       system.update(entities);
+//     }
+//   };
 
-  setInterval(tick, 10);
-};
+//   setInterval(tick, 10);
+// };
 
-mainLoop(gameEntities, [
-  new DisplaySystem(),
-  new MomentumSystem(),
-  new CollisionSystem(),
-  new ImpactSystem(),
-  new PlayerControlSystem(),
-  new FrictionSystem(),
-  new ZombieVirus(),
-  new ResetCollisions(),
-]);
+// mainLoop(gameEntities, [
+//   new DisplaySystem(),
+//   new MomentumSystem(),
+//   new CollisionSystem(),
+//   new ImpactSystem(),
+//   new PlayerControlSystem(),
+//   new FrictionSystem(),
+//   new ZombieVirus(),
+//   new ResetCollisions(),
+// ]);
