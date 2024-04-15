@@ -14,6 +14,11 @@ const nextConfig = {
         destination: "/minimal-ecs/index.html",
         permanent: true,
       },
+      {
+        source: "/gouaches",
+        destination: "/gouaches/index.html",
+        permanent: true,
+      },
     ];
   },
 
