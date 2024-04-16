@@ -1,5 +1,17 @@
 .demoBlock {
-  .canvas {
-    aspect-ratio: 2/1;
-  }
+  position: relative;
+}
+
+.canvas {
+  aspect-ratio: 2/1;
+}
+
+.reset {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  background-color: #f00;
+  color: #fff;
+  cursor: pointer;
 }
