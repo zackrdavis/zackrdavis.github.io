@@ -120,14 +120,6 @@ export default function Home() {
         </Block>
 
         <Block
-          title="FuiszVideo"
-          media={{ src: "/images/fuisz.png", alt: "", position: "top center" }}
-        >
-          Frontend engineering at FuiszVideo, an ad publishing platform that
-          used machine vision to make interactive videos.
-        </Block>
-
-        <Block
           href="https://artspeak.ca/"
           title="Artspeak"
           media={{ src: "/images/artspeak.png", alt: "" }}
