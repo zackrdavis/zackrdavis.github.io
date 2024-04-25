@@ -1,28 +1,15 @@
 import { Block } from "../components/Block";
-import Markdown from "react-markdown";
+import Intro from "./intro.mdx";
 
 import picadilly_radiator from "./home-deep-learning/assets/picadilly_radiator.png";
 import twisted from "./fonting-with-gans/assets/twisted.png";
-
-const intro = `
-I'm a software engineer with lots of experience building fast, fun,
-accessible user-interfaces. I've worked with data-intensive
-enterprise projects, startups, museums and theater companies.
-
-Outside of work, I'm an [artist](http://zackdavis.net) and a
-gardener. I live in Portland, Oregon.
-
-I'd love to hear from you:
-
-[zackrdavis@gmail.com](mailto:zackrdavis@gmail.com) • [GitHub](https://github.com/zackrdavis) • [Linkedin](https://www.linkedin.com/in/zackrdavis)
-`;
 
 export default function Home() {
   return (
     <main>
       <div className="grid">
         <Block>
-          <Markdown>{intro}</Markdown>
+          <Intro />
         </Block>
 
         <Block
@@ -95,12 +82,13 @@ export default function Home() {
           }}
           href="https://greenenaftaligallery.com/exhibitions/richard-maxwell#1"
         >
-          <Markdown>
-            {`Developed for Richard Maxwell's Paradiso, the robot delivers lines,
-            visually tracks fellow actors, and generates a unique script during
-            each performance. Paradiso was a [NYT Critic's
-            Pick](https://www.nytimes.com/2018/01/16/theater/paradiso-richard-maxwell-review.html).`}
-          </Markdown>
+          Developed for Richard Maxwell&rsquo;s Paradiso, the robot delivers
+          lines, visually tracks fellow actors, and generates a unique script
+          during each performance. Paradiso was a{" "}
+          <a href="https://www.nytimes.com/2018/01/16/theater/paradiso-richard-maxwell-review.html">
+            NYT Critic&rsquo;s Pick
+          </a>
+          .
         </Block>
 
         <Block
