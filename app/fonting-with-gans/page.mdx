@@ -1,3 +1,7 @@
+import { MdxLayout } from "../../components/MdxLayout";
+import Image from "next/image";
+import twisted from "./images/twisted.png";
+
 ## Fonting with GANs
 
 ### 1/30/2024
@@ -6,7 +10,12 @@ During my virtual residency at the [Recurse Center](https://www.recurse.com/), o
 
 My first stab in this direction was an in-browser Generative Adversarial Net with the EMNIST handwriting dataset. And, putting the prize up front, here it is, running fast enough animate latent-space-interpolation in real time:
 
-<iframe src="https://codesandbox.io/embed/7rd69j?view=preview" width="100%" height="300" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+<iframe
+  src="https://codesandbox.io/embed/7rd69j?view=preview"
+  width="100%"
+  height="300"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
 
 You can find the code for the Python side of this project here: [VGAN-EMNIST Inversion](https://github.com/zackrdavis/VGAN-EMNIST-Inversion). Big picture, this involved:
 
@@ -21,7 +30,7 @@ I used Diego Gomez's [Vanilla GAN in PyTorch](https://github.com/diegoalejogm/ga
 
 My training results were pretty weird, without a lot of recognizable characters. I visualized the first batch of training data:
 
-![a grid of handwritten numbers and letters with each one mirrored and rotated 90 degrees](/images/fonting-with-gans/twisted_samples.png)
+<Image src={twisted} alt="TEST" />
 
 It's hard to see what's going on unless you know what to look for, but TorchVision's EMNIST data is mirrored and rotated -90 degrees. Two extra transforms set things right:
 
@@ -108,3 +117,7 @@ torch.onnx.export(
 The sandbox at the top of this writeup uses `onnxruntime-web` to run the exported network. Its character map is a combination of the best images from several runs of the inversion search, saved in `addresses.json`.
 
 [Project Repo](https://github.com/zackrdavis/VGAN-EMNIST-Inversion)
+
+export default function MDXPage({ children }) {
+  return <MdxLayout>{children}</MdxLayout>;
+}

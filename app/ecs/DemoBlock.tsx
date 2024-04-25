@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useInterval } from "../helpers/useInterval";
+import { useInterval } from "../../helpers/useInterval";
 import style from "./demoBlock.module.css";
 import { DisplaySystem } from "./ecs-src/systems/display";
 import { Ent, TSystem } from "./ecs-src/systems/shared";

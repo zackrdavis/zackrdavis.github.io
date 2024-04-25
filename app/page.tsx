@@ -1,4 +1,4 @@
-import { Block } from "./Block";
+import { Block } from "../components/Block";
 import Markdown from "react-markdown";
 
 const intro = `

@@ -1,3 +1,5 @@
+import { MdxLayout } from "../../components/MdxLayout";
+
 Years ago, I built _a honker_ of a desktop for gaming and machine learning. Coming from my laptop, I used to feel lot of friction when I switched over to work on it. Gradually, though, I've arrived at a really pleasant way of utilizing its GPU from my daily driver, VSCode on a MacBook.
 
 For those using notebooks professionally this is probably old news, but this is the writeup I needed two years ago.
@@ -109,3 +111,7 @@ After the jupyter server was running, set up the tunnel from the client:
 And to free up port 8888 after you're done:
 
 `lsof -t -i:8888 | xargs -r kill`
+
+export default function MDXPage({ children }) {
+  return <MdxLayout>{children}</MdxLayout>;
+}
