@@ -1,6 +1,9 @@
 import { Block } from "../components/Block";
 import Markdown from "react-markdown";
 
+import picadilly_radiator from "./home-deep-learning/assets/picadilly_radiator.png";
+import twisted from "./fonting-with-gans/assets/twisted.png";
+
 const intro = `
 I'm a software engineer with lots of experience building fast, fun,
 accessible user-interfaces. I've worked with data-intensive
@@ -25,8 +28,8 @@ export default function Home() {
         <Block
           title="Home Deep Learning"
           media={{
-            src: "/images/home-deep-learning/picadilly_radiator.png",
-            alt: "",
+            src: picadilly_radiator.src,
+            alt: "An ornate silver steam radiator",
           }}
           href="/home-deep-learning"
         >
@@ -37,7 +40,7 @@ export default function Home() {
         <Block
           title="Fonting with GANs"
           media={{
-            src: "/images/fonting-with-gans/twisted_samples.png",
+            src: twisted.src,
             alt: "",
             position: "top center",
           }}

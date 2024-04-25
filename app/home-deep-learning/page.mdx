@@ -1,4 +1,9 @@
 import { MdxLayout } from "../../components/MdxLayout";
+import { ImageFull } from "../../components/ImageFull";
+
+import connect_current from "./assets/connect_current.png";
+import connected from "./assets/connected.png";
+import select_kernel from "./assets/select_kernel.png";
 
 Years ago, I built _a honker_ of a desktop for gaming and machine learning. Coming from my laptop, I used to feel lot of friction when I switched over to work on it. Gradually, though, I've arrived at a really pleasant way of utilizing its GPU from my daily driver, VSCode on a MacBook.
 
@@ -21,10 +26,21 @@ The first ingredient is an SSH connection between my laptop and my desktop, henc
 
 With that in place, you can use VSCode's Remote-SSH plugin to open the connection. [Here's how to do that.](https://www.digitalocean.com/community/tutorials/how-to-use-visual-studio-code-for-remote-development-via-the-remote-ssh-plugin) After connecting once, you can use the Remote Explorer panel to open future connections without creating a new VSCode window.
 
-![](/images/home-deep-learning/connect_current.png)
-Once the connection is open, the file explorer displays remote files and the terminal is on the server. As with jupyter lab, you can drag files onto the server or download them individually.
-![](/images/home-deep-learning/connected.png)
-Because this is VSCode there are lots of helpers and annotations, as you can see with all those missing imports. That's one reason I've moved to this from a jupyter-in-browser setup, but the familiarity of the interface would be worth a lot to me even without it.
+<ImageFull
+  src={connect_current}
+  alt="Screenshot of VSCode showing a remote connection"
+/>
+
+Once the connection is open, the file explorer displays remote files and the terminal
+is on the server. As with jupyter lab, you can drag files onto the server or download
+them individually.
+
+<ImageFull src={connected} alt="Screenshot of VSCode showing remote files" />
+
+Because this is
+VSCode there are lots of helpers and annotations, as you can see with all those missing
+imports. That's one reason I've moved to this from a jupyter-in-browser setup, but
+the familiarity of the interface would be worth a lot to me even without it.
 
 ## Package Management
 
@@ -58,8 +74,16 @@ and see something like:
 Copy that localhost url to your clipboard.
 
 In a notebook file, you can now click "Select Kernel" at the top-right, then select "Existing Jupyter Server".
-![](/images/home-deep-learning/select_kernel.png)
-If you have the localhost url in your clipboard, it should automatically populate the remote url field. Hit Enter, write in your jupyter password, hit enter again. Name the server whatever you like (I just leave it localhost). Then select the kernel that appears below the input field.
+
+<ImageFull
+  src={select_kernel}
+  alt="Screenshot of VSCode showing kernel selection"
+/>
+
+If you have the localhost url in your clipboard, it should automatically populate
+the remote url field. Hit Enter, write in your jupyter password, hit enter again.
+Name the server whatever you like (I just leave it localhost). Then select the kernel
+that appears below the input field.
 
 When that connects, you're ready to go.
 

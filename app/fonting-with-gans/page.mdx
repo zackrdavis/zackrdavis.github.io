@@ -1,6 +1,9 @@
 import { MdxLayout } from "../../components/MdxLayout";
-import Image from "next/image";
-import twisted from "./images/twisted.png";
+import { ImageFull } from "../../components/ImageFull";
+
+import twisted from "./assets/twisted.png";
+import weirdos from "./assets/weirdos.png";
+import search from "./assets/search.gif";
 
 ## Fonting with GANs
 
@@ -30,7 +33,10 @@ I used Diego Gomez's [Vanilla GAN in PyTorch](https://github.com/diegoalejogm/ga
 
 My training results were pretty weird, without a lot of recognizable characters. I visualized the first batch of training data:
 
-<Image src={twisted} alt="TEST" />
+<ImageFull
+  src={twisted}
+  alt="A grid of EMNIST handwritten digits twisted 90 degrees"
+/>
 
 It's hard to see what's going on unless you know what to look for, but TorchVision's EMNIST data is mirrored and rotated -90 degrees. Two extra transforms set things right:
 
@@ -48,7 +54,10 @@ compose = transforms.Compose([
 
 Everything worked as expected after that, and 200 training epochs later, the network was making familiar shapes. Because I wasn't using labeled data, these random samples show a handful of hybrid weirdos, but they seemed oriented correctly.
 
-![Two rows of white glyphs on a black background. The letters are distorted and unreadable.](/images/fonting-with-gans/weirdos.png)
+<ImageFull
+  src={weirdos}
+  alt="Two rows of white glyphs on a black background. The letters are distorted and unreadable."
+/>
 
 ## The Map
 
@@ -91,7 +100,10 @@ A silly bug almost made me give up on this: I had the inversion search working o
 
 Anyway, here's the working search, animated in order to convey a fraction of my dawning joy when I fixed the bug. Some characters are much slower to home in than others, like the capital "B". You can almost feel it rolling down different slopes as it finds its way.
 
-![A grid of black tiles with white forms that slowly become handwritten characters.](/images/fonting-with-gans/search.gif)
+<ImageFull
+  src={search}
+  alt="A grid of black tiles with white forms that slowly become handwritten characters."
+/>
 
 ## Packaging for the Frontend
 

@@ -1,4 +1,9 @@
 import { MdxLayout } from "../../components/MdxLayout";
+import { ImageFull } from "../../components/ImageFull";
+
+import typing from "./assets/typing.gif";
+import whitespace_works from "./assets/whitespace_works.gif";
+import whitespace_breaks from "./assets/whitespace_breaks.gif";
 
 ## Fonting with GANs #2
 
@@ -77,7 +82,10 @@ I definitely wanted to type in this font. Morphing would happen at some point, b
 
 So that's what I started with. That would accept all of the interactions, provide a blinking cursor and text-selection highlights, and hide its own actual text with a transparent color. Behind it I'd have a div full of inline `<canvas>` glyphs. For every character typed I'd render a corresponding glyph. I spun up a react app to keep them synced, since I expected the UI to expand as I messed around.
 
-![Letters typed on two separated planes. On the front plane, letters are a monospace font. On the back plane they look like white letters handwritten on a black background.](/images/fonting-with-gans-2/typing.gif)
+<ImageFull
+  src={typing}
+  alt="Letters typed on two separated planes. On the front plane, letters are a monospace font. On the back plane they look like white letters handwritten on a black background."
+/>
 
 To keep the text and the glyphs aligned:
 
@@ -88,7 +96,10 @@ To keep the text and the glyphs aligned:
 
 And it all worked until I started testing lots of whitespace.
 
-![Letters typed on two separated planes. On the front plane, letters are a monospace font. On the back plane they look like white letters handwritten on a black background. When whitespaces are typed, the two texts become misaligned.](/images/fonting-with-gans-2/whitespace-breaks.gif)
+<ImageFull
+  src={whitespace_breaks}
+  alt="Letters typed on two separated planes. On the front plane, letters are a monospace font. On the back plane they look like white letters handwritten on a black background. When whitespaces are typed, the two texts become misaligned."
+/>
 
 Canvases aren't characters, so browsers don't know to avoid breaking them when line-wrapping. Multiple returns in a row also gave me trouble. I tried various combinations of `display`, `white-space` and `overflow-wrap`, but things that got close-enough in one browser would be way off in the others. Things would be so much easier if the glyphs really were inline characters, but I couldn't apply a background to a letter...
 
@@ -129,7 +140,10 @@ const nnOutToDataUrl = (data: Float32Array, width: number, height: number) => {
 
 I applied these as `background-image` to my spans, and I finally had the glyphs behaving exactly like characters in the `<textarea>`, a familiar interaction that I could now start bending.
 
-![Letters typed on two separated planes. On the front plane, letters are a monospace font. On the back plane they look like white letters handwritten on a black background.](/images/fonting-with-gans-2/whitespace-works.gif)
+<ImageFull
+  src={whitespace_works}
+  alt="Letters typed on two separated planes. On the front plane, letters are a monospace font. On the back plane they look like white letters handwritten on a black background."
+/>
 
 ## Lerping through Latent Space
 
