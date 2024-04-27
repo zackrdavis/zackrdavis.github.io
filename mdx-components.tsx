@@ -1,7 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import Image from "next/image";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
