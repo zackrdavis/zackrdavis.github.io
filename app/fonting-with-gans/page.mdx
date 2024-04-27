@@ -2,7 +2,9 @@ import { MdxLayout } from "../../components/MdxLayout";
 import { ImageFull } from "../../components/ImageFull";
 import { Sandbox } from "../../components/Sandbox";
 
-import { indexTs, utilsTs, addressesJson } from "./sandPackFiles";
+import indexJs from "./sandPackFiles/index.js?raw";
+import utilsTs from "./sandPackFiles/utils.ts?raw";
+import addressesJs from "./sandPackFiles/addresses.js?raw";
 
 import twisted from "./assets/twisted.png";
 import weirdos from "./assets/weirdos.png";
@@ -17,11 +19,11 @@ During my virtual residency at the [Recurse Center](https://www.recurse.com/), o
 My first stab in this direction was an in-browser Generative Adversarial Net with the EMNIST handwriting dataset. And, putting the prize up front, here it is, running fast enough animate latent-space-interpolation in real time:
 
 <Sandbox
-  template="vanilla-ts"
+  template="vanilla"
   files={{
-    "/index.ts": indexTs,
+    "/index.js": indexJs,
     "/utils.ts": utilsTs,
-    "/addresses.json": addressesJson,
+    "/addresses.js": addressesJs,
   }}
   customSetup={{
     dependencies: {

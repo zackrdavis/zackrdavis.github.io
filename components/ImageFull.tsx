@@ -11,7 +11,16 @@ export const ImageFull = (props: any) => {
         aspectRatio: width / height,
       }}
     >
-      <Image src={props.src} alt={props.alt} layout="fill" objectFit="cover" />
+      <Image
+        src={props.src}
+        alt={props.alt}
+        style={{
+          objectFit: "cover",
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+        }}
+      />
     </div>
   );
 };
