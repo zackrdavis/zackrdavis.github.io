@@ -6,7 +6,7 @@ const nextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
 
   // static export, unless doing local dev
-  output: process.env.NODE_ENV == "development" ? undefined : "export",
+  output: "export",
 
   images: {
     unoptimized: true,
@@ -30,7 +30,7 @@ const nextConfig = {
   webpack: function (config) {
     config.module.rules.push({
       resourceQuery: /raw/,
-      use: "raw-loader",
+      type: "asset/source",
     });
     return config;
   },
