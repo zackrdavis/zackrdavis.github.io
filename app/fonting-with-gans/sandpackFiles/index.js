@@ -2,12 +2,13 @@ import { InferenceSession, Tensor } from "onnxruntime-web";
 import { projectRange, randomProperty, stepFromTo } from "./utils";
 import { addresses } from "./addresses";
 
-let target = addresses["O"];
-let current = addresses["l"];
+let target = addresses["A"];
+let current = addresses["A"];
+let changed = false;
 
 export const main = async () => {
-  const button = document.getElementById("button");
-  const canvas = document.getElementById("canvas");
+  const button = document.querySelector("button");
+  const canvas = document.querySelector("canvas");
   const canvasContext = canvas.getContext("2d");
 
   const session = await InferenceSession.create(
@@ -46,37 +47,29 @@ export const main = async () => {
 
   button.addEventListener("click", async () => {
     target = randomProperty(addresses);
+    changed = true;
   });
 
   document.addEventListener("keydown", (e) => {
     if (addresses[e.key] && !e.metaKey) {
       target = addresses[e.key];
+      changed = true;
     }
   });
 
   setInterval(() => {
-    if (JSON.stringify(current) !== JSON.stringify(target)) {
-      const newAddr = stepFromTo(current, target, 0.2);
-      generate_to_canvas(newAddr);
-      current = newAddr;
+    if (changed) {
+      if (JSON.stringify(current) == JSON.stringify(target)) {
+        changed = false;
+      } else {
+        const newAddr = stepFromTo(current, target, 0.05);
+        generate_to_canvas(newAddr);
+        current = newAddr;
+      }
     }
-  }, 50);
-};
+  }, 10);
 
-document.getElementById("app").innerHTML = `
-  <div style="display:flex; flex-direction:column; gap: 20px; align-items:center; justify-content:center;">
-  <canvas
-    id="canvas"
-    width="28"
-    height="28"
-    style="
-      width: 100px;
-      height: 100px;
-    "
-  ></canvas>
-  <div>Type some alphanumeric characters</div>
-  <button id="button">Click to randomize</button>
-  </div>
-`;
+  generate_to_canvas(current);
+};
 
 main();
