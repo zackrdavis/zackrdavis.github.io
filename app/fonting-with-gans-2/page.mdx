@@ -1,5 +1,13 @@
 import { MdxLayout } from "../../components/MdxLayout";
 import { ImageFull } from "../../components/ImageFull";
+import { Sandbox } from "../../components/Sandbox";
+
+import AppTsx from "!!raw-loader!./sandpackFiles/App.tsx";
+import GlyphTsx from "!!raw-loader!./sandpackFiles/Glyph.tsx";
+import UtilsTs from "!!raw-loader!./sandpackFiles/utils.ts";
+import useOnnxWebTs from "!!raw-loader!./sandpackFiles/useOnnxWeb.ts";
+import useIntervalTs from "!!raw-loader!./sandpackFiles/useInterval.ts";
+import AddressesTs from "!!raw-loader!./sandpackFiles/addresses.ts";
 
 import typing from "./assets/typing.gif";
 import whitespace_works from "./assets/whitespace_works.gif";
@@ -13,14 +21,41 @@ I got an itch to make weird interactions with client-side generative models. [Pr
 
 Where did I end up? Click in this black box and do some typing:
 
-<iframe
-src="https://codesandbox.io/embed/rl423h?view=preview&module=%2Fsrc%2FGlyph.tsx"
-style={{width:"100%", height: 500, border:0, borderRadius: 4, overflow:"hidden"}}
-title="emnist-onnx-typing"
-allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+<Sandbox
+  template="react-ts"
+  customSetup={{
+    dependencies: {
+      "onnxruntime-web": "1.16.3",
+      underscore: "latest",
+      "@types/underscore": "latest",
+      "styled-components": "latest",
+      "@types/styled-components": "5.1.34",
+    },
+  }}
+  files={{
+    "/App.tsx": AppTsx,
+    "/Glyph.tsx": GlyphTsx,
+    "/addresses.ts": AddressesTs,
+    "/utils.ts": UtilsTs,
+    "/useOnnxWeb.ts": useOnnxWebTs,
+    "/useInterval.ts": useIntervalTs,
+    "/App.css": `
+::selection {
+background: rgba(255, 255, 255, 0.4); /* WebKit/Blink Browsers */
+}
 
-> </iframe>
+::-moz-selection {
+background: rgba(255, 255, 255, 0.4); /_ Gecko Browsers _/
+}
+
+body {
+margin: 0;
+padding: 0;
+}
+`,
+
+}}
+/>
 
 ## Glyph Generator
 

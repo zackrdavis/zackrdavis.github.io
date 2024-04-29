@@ -1,0 +1,11 @@
+::selection {
+  background: rgba(255, 255, 255, 0.4); /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: rgba(255, 255, 255, 0.4); /* Gecko Browsers */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
