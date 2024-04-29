@@ -72,4 +72,28 @@ export const main = async () => {
   generate_to_canvas(current);
 };
 
+document.querySelector("body").style.margin = 0;
+
+document.getElementById("app").innerHTML = `
+<div style="
+  position: absolute; 
+  width: 100vw; 
+  height: 100vh; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 15px; 
+  align-items: center; 
+  justify-content: center;
+">
+
+<canvas style="
+  width: 120px; 
+  height: 
+  120px;
+" width="28" height="28"></canvas>
+
+<div>Type something</div>
+
+<button>Or Click</button></div>`;
+
 main();

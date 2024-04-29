@@ -2,10 +2,9 @@ import { MdxLayout } from "../../components/MdxLayout";
 import { ImageFull } from "../../components/ImageFull";
 import { Sandbox } from "../../components/Sandbox";
 
-import indexJs from "./sandpackFiles/index.js?raw";
-import utilsTs from "./sandpackFiles/utils.ts?raw";
-import addressesJs from "./sandpackFiles/addresses.js?raw";
-import indexHtml from "./sandpackFiles/index.html?raw";
+import indexJs from "!!raw-loader!./sandpackFiles/index.js";
+import utilsTs from "!!raw-loader!./sandpackFiles/utils.ts";
+import addressesJs from "!!raw-loader!./sandpackFiles/addresses.js";
 
 import twisted from "./assets/twisted.png";
 import weirdos from "./assets/weirdos.png";
@@ -21,16 +20,15 @@ My first stab in this direction was an in-browser Generative Adversarial Net wit
 
 <Sandbox
   template="vanilla"
-  files={{
-    "/index.js": indexJs,
-    "/utils.ts": utilsTs,
-    "/addresses.js": addressesJs,
-    "/index.html": indexHtml,
-  }}
   customSetup={{
     dependencies: {
       "onnxruntime-web": "1.16.3",
     },
+  }}
+  files={{
+    "/index.js": indexJs,
+    "/utils.ts": utilsTs,
+    "/addresses.js": addressesJs,
   }}
 />
 

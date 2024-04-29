@@ -28,10 +28,6 @@ const nextConfig = {
   },
 
   webpack: function (config) {
-    config.module.rules.push({
-      resourceQuery: /raw/,
-      use: "raw-loader",
-    });
     return config;
   },
 };
