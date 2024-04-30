@@ -1,0 +1,46 @@
+import { MdxLayout } from "../../components/MdxLayout";
+import { ImageFull } from "../../components/ImageFull";
+import { Sandbox } from "../../components/Sandbox";
+
+import { styles } from "./sandpackFiles/1/styles.ts";
+import indexJs from "!!raw-loader!./sandpackFiles/1/index.js";
+import utilsJs from "!!raw-loader!./sandpackFiles/1/utils.js";
+import indexHtml from "!!raw-loader!./sandpackFiles/1/index.html";
+
+# Entity + Component + System
+
+## A surprisingly simple way to build a universe
+
+If you're looking for a programming project that's as far as possible from building another React app or CRUD API, may I suggest handcrafting a tiny game engine and setting a universe in motion?
+
+That's what I was after when I came across a handful of blog posts about the Entity-Component-System architecture (ECS), which promises easy extensibility. There are lots of ways to build an ECS, and lots of optimization tricks to make it work at scale. I made mine up as I went along and didn't do any optimization. In the end, without any particular planning, I ended up with something fun. The scale was tiny and I don't have any other gamedev experience to compare it to, but I think ECS delivered.
+
+I'll demonstrate the core of the engine and then start adding game dynamics. By the end, I hope making your own tiny game engine seems both approachable and fun.
+
+## The Concept
+
+_Entities_ are just bags of properties. These properties are called _components_, and they change over time thanks to _systems_.
+
+A system is concerned with one or more specific components. It looks at every entity with those components and makes some changes. At every tick of game time, each system takes its turn processing all of its relevant entities. Systems run in the same order every time.
+
+Here we've got two entities, one using the increment system and the other using both the increment and the rotate systems:
+
+<Sandbox
+  template="static"
+  files={{
+    "/index.html": indexHtml,
+    "/styles.css": styles,
+    "/index.js": indexJs,
+    "/utils.js": utilsJs,
+  }}
+  options={{
+    visibleFiles: ["/index.js", "/utils.js", "/index.html"],
+    activeFile: "/index.js",
+  }}
+/>
+
+This core logic won't change much as we add more complexity.
+
+export default function MDXPage({ children }) {
+  return <MdxLayout>{children}</MdxLayout>;
+}
