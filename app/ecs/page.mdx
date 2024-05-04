@@ -2,18 +2,27 @@ import { MdxLayout } from "../../components/MdxLayout";
 import { ImageFull } from "../../components/ImageFull";
 import { Sandbox } from "../../components/Sandbox";
 
-import { styles } from "./sandpackFiles/1/styles.ts";
-import indexJs from "!!raw-loader!./sandpackFiles/1/index.js";
-import utilsJs from "!!raw-loader!./sandpackFiles/1/utils.js";
-import indexHtml from "!!raw-loader!./sandpackFiles/1/index.html";
+import { styles as styles1 } from "./sandpackFiles/1/styles.ts";
+import indexHtml1 from "!!raw-loader!./sandpackFiles/1/index.html";
+import indexTs1 from "!!raw-loader!./sandpackFiles/1/index.ts";
+import engineTs1 from "!!raw-loader!./sandpackFiles/1/src/engine.ts";
+import renderSystemTs1 from "!!raw-loader!./sandpackFiles/1/src/renderSystem.ts";
+import typesTs1 from "!!raw-loader!./sandpackFiles/1/src/types.ts";
+
+import { styles as styles2 } from "./sandpackFiles/2/styles.ts";
+import indexHtml2 from "!!raw-loader!./sandpackFiles/2/index.html";
+import indexTs2 from "!!raw-loader!./sandpackFiles/2/index.ts";
+import engineTs2 from "!!raw-loader!./sandpackFiles/2/src/engine.ts";
+import renderSystemTs2 from "!!raw-loader!./sandpackFiles/2/src/renderSystem.ts";
+import typesTs2 from "!!raw-loader!./sandpackFiles/2/src/types.ts";
 
 # Entity + Component + System
 
 ## A surprisingly simple way to build a universe
 
-If you're looking for a programming project that's as far as possible from building another React app or CRUD API, may I suggest handcrafting a tiny game engine and setting a universe in motion?
+If you're looking for a programming project that's as far as possible from building a React app or a CRUD API, may I suggest handcrafting a tiny game engine and setting a universe in motion?
 
-That's what I was after when I came across a handful of blog posts about the Entity-Component-System architecture (ECS), which promises easy extensibility. There are lots of ways to build an ECS, and lots of optimization tricks to make it work at scale. I made mine up as I went along and didn't do any optimization. In the end, without any particular planning, I ended up with something fun. The scale was tiny and I don't have any other gamedev experience to compare it to, but I think ECS delivered.
+That's what I was after when I came across a handful of blog posts about the Entity-Component-System architecture (ECS). Internet people say that ECS makes games easy to extend in an open-ended, additive process. That sounds like my ideal of recreational programming. There are lots of ways to build an ECS, and lots of optimization tricks to make it work at scale. I made mine up as I went along and didn't do any optimization. In the end, without any particular planning, I ended up with something fun. The scale was tiny and I don't have any other gamedev experience to compare it to, but I think ECS delivered.
 
 I'll demonstrate the core of the engine and then start adding game dynamics. By the end, I hope making your own tiny game engine seems both approachable and fun.
 
@@ -23,23 +32,67 @@ _Entities_ are just bags of properties. These properties are called _components_
 
 A system is concerned with one or more specific components. It looks at every entity with those components and makes some changes. At every tick of game time, each system takes its turn processing all of its relevant entities. Systems run in the same order every time.
 
-Here we've got two entities, one using the increment system and the other using both the increment and the rotate systems:
+Below, there are two entities, one using the `incrementSystem` and the other using that _and_ the `rotateSystem`. There's also a special `renderSystem`. We'll eventually switch these systems and components out, but this core logic will hardly change as we progress to a game with collision physics.
 
 <Sandbox
-  template="static"
+  template="vanilla-ts"
   files={{
-    "/index.html": indexHtml,
-    "/styles.css": styles,
-    "/index.js": indexJs,
-    "/utils.js": utilsJs,
-  }}
-  options={{
-    visibleFiles: ["/index.js", "/utils.js", "/index.html"],
-    activeFile: "/index.js",
+    "/index.html": indexHtml1,
+    "/styles.css": styles1,
+    "/index.ts": indexTs1,
+    "/src/engine.ts": engineTs1, 
+    "/src/renderSystem.ts": renderSystemTs1,
+    "/src/types.ts": typesTs1,
+    "/package.json": `{
+      "dependencies": {},
+        "devDependencies": {
+          "typescript": "^4.0.0"
+        },
+      "main": "/index.html"
+    }`,
+    "/sandbox.config.json": `{ "hardReloadOnChange" :  true }`,
+
+}}
+options={{
+    visibleFiles: ["/src/engine.ts", "/src/renderSystem.ts", "/src/types.ts"],
+    activeFile: "/src/engine.ts",
+    showInlineErrors: true,
+    showOpenInCodeSandbox: false,
   }}
 />
 
-This core logic won't change much as we add more complexity.
+## Universe Input/Output
+
+The `renderSystem` is special. It knows about non-gameworld things like the DOM, or the canvas API, or maybe WebSockets if we're running the engine on a server. Another impure system will be the `inputSystem`. We want to isolate these systems with side effects and knowledge of the outside world.
+
+We'll upgrade our display system to target an HTML canvas, and we'll accept input from the keyboard. We'll also add `appearance` and `location` components to tell the `renderSystem` how to draw each entity.
+
+<Sandbox
+  template="vanilla-ts"
+  files={{
+    "/index.html": indexHtml2,
+    "/styles.css": styles2,
+    "/index.ts": indexTs2,
+    "/src/engine.ts": engineTs2, 
+    "/src/renderSystem.ts": renderSystemTs2,
+    "/src/types.ts": typesTs2,
+    "/package.json": `{
+      "dependencies": {},
+        "devDependencies": {
+          "typescript": "^4.0.0"
+        },
+      "main": "/index.html"
+    }`,
+    "/sandbox.config.json": `{ "hardReloadOnChange" :  true }`,
+
+}}
+options={{
+    visibleFiles: ["/src/engine.ts", "/src/renderSystem.ts", "/src/types.ts"],
+    activeFile: "/src/engine.ts",
+    showInlineErrors: true,
+    showOpenInCodeSandbox: false,
+  }}
+/>
 
 export default function MDXPage({ children }) {
   return <MdxLayout>{children}</MdxLayout>;

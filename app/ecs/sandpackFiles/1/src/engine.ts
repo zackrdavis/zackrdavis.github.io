@@ -1,3 +1,6 @@
+import { Entity } from "./types";
+import { renderSystem } from "./renderSystem";
+
 // Green
 const entity1 = {
   id: "#ent1",
@@ -12,8 +15,8 @@ const entity2 = {
 };
 
 // Process entities with a count component.
-const incrementSystem = (entities) => {
-  for (const entity of entities.filter((e) => e.count !== undefined)) {
+const incrementSystem = (entities: Entity[]) => {
+  for (const entity of entities) {
     if (entity.count !== undefined) {
       entity.count += 1;
     }
@@ -21,7 +24,7 @@ const incrementSystem = (entities) => {
 };
 
 // Process entities with an angle component.
-const rotateSystem = (entities) => {
+const rotateSystem = (entities: Entity[]) => {
   for (const entity of entities) {
     if (entity.angle !== undefined) {
       entity.angle += 6;
@@ -30,13 +33,14 @@ const rotateSystem = (entities) => {
 };
 
 const entities = [entity1, entity2];
-const systems = [incrementSystem, rotateSystem];
+const systems = [incrementSystem, rotateSystem, renderSystem];
 
-// At each tick, run all systems.
+// At each tick, run all systems against all entities.
 const tick = () => {
   for (const system of systems) {
     system(entities);
   }
 };
 
-setInterval(tick, 500);
+// Go!
+export const go = () => setInterval(tick, 500);

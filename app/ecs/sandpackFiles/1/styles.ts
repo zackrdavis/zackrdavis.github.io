@@ -1,14 +1,14 @@
 export const styles = `body {
     margin: 0;
+    font-family: Arial, sans-serif;
+    font-size: 30px;
+    color: white;
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     gap: 20px;
     align-items: center;
-    font-family: Arial, sans-serif;
-    font-size: 30px;
-    color: white;
   }
 
   .ent {
@@ -26,5 +26,4 @@ export const styles = `body {
 
   #ent2 {
     background: tomato;
-  }
-`;
+  }`;
