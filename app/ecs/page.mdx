@@ -14,6 +14,7 @@ import indexHtml2 from "!!raw-loader!./sandpackFiles/2/index.html";
 import indexTs2 from "!!raw-loader!./sandpackFiles/2/index.ts";
 import engineTs2 from "!!raw-loader!./sandpackFiles/2/src/engine.ts";
 import renderSystemTs2 from "!!raw-loader!./sandpackFiles/2/src/renderSystem.ts";
+import inputSystemTs2 from "!!raw-loader!./sandpackFiles/2/src/inputSystem.ts";
 import typesTs2 from "!!raw-loader!./sandpackFiles/2/src/types.ts";
 
 # Entity + Component + System
@@ -54,18 +55,18 @@ Below, there are two entities, one using the `incrementSystem` and the other usi
 
 }}
 options={{
-    visibleFiles: ["/src/engine.ts", "/src/renderSystem.ts", "/src/types.ts"],
-    activeFile: "/src/engine.ts",
-    showInlineErrors: true,
-    showOpenInCodeSandbox: false,
-  }}
+  visibleFiles: ["/src/engine.ts", "/src/renderSystem.ts", "/src/types.ts"],
+  activeFile: "/src/engine.ts",
+}}
 />
 
 ## Universe Input/Output
 
-The `renderSystem` is special. It knows about non-gameworld things like the DOM, or the canvas API, or maybe WebSockets if we're running the engine on a server. Another impure system will be the `inputSystem`. We want to isolate these systems with side effects and knowledge of the outside world.
+The `renderSystem` is an odd duck. It doesn't make changes to components (just renders them), and it knows about non-gameworld things like the DOM (or, depending on our rendering target, the canvas API or even WebSockets). We'll need another special system like this to listen for keyboard events.
 
-We'll upgrade our display system to target an HTML canvas, and we'll accept input from the keyboard. We'll also add `appearance` and `location` components to tell the `renderSystem` how to draw each entity.
+Because they need to save some long-lived information about the setup, and I want to keep this "impure" logic isolated, I'm going to write them both as classes that we initialize before starting the engine.
+
+Click the canvas and use your arrow keys or WASD to move the red square around.
 
 <Sandbox
   template="vanilla-ts"
@@ -75,6 +76,7 @@ We'll upgrade our display system to target an HTML canvas, and we'll accept inpu
     "/index.ts": indexTs2,
     "/src/engine.ts": engineTs2, 
     "/src/renderSystem.ts": renderSystemTs2,
+    "/src/inputSystem.ts": inputSystemTs2,
     "/src/types.ts": typesTs2,
     "/package.json": `{
       "dependencies": {},
@@ -87,13 +89,14 @@ We'll upgrade our display system to target an HTML canvas, and we'll accept inpu
 
 }}
 options={{
-    visibleFiles: ["/src/engine.ts", "/src/renderSystem.ts", "/src/types.ts"],
+    visibleFiles: ["/src/engine.ts", "/src/renderSystem.ts", "/src/inputSystem.ts", "/src/types.ts"],
     activeFile: "/src/engine.ts",
-    showInlineErrors: true,
-    showOpenInCodeSandbox: false,
   }}
 />
 
 export default function MDXPage({ children }) {
   return <MdxLayout>{children}</MdxLayout>;
 }
+import { renderSystem } from "./sandpackFiles/1/src/renderSystem.ts";
+import { inputSystem } from "./sandpackFiles/2/src/inputSystem";
+import { render } from "react-dom";

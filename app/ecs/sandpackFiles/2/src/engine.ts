@@ -1,17 +1,18 @@
 import { Entity } from "./types";
-import { renderSystem } from "./renderSystem";
+import { RenderSystem } from "./renderSystem";
+import { InputSystem } from "./inputSystem";
 
 // Green
 const entity1 = {
   id: "#ent1",
   appearance: {
-    width: 10,
-    height: 10,
+    width: 20,
+    height: 20,
     color: "mediumSeaGreen",
   },
   location: {
-    x: 10,
-    y: 10,
+    x: 120,
+    y: 140,
   },
 };
 
@@ -19,18 +20,27 @@ const entity1 = {
 const entity2 = {
   id: "#ent2",
   appearance: {
-    width: 10,
-    height: 10,
+    width: 20,
+    height: 20,
     color: "tomato",
   },
   location: {
-    x: 45,
-    y: 45,
+    x: 160,
+    y: 140,
   },
+  playerControl: true,
 };
 
+const inputSystem = new InputSystem();
+const renderSystem = new RenderSystem();
+const updateRenderSystem = (entities) => renderSystem.update(entities);
+const updateInputSystem = (entities) => inputSystem.update(entities);
+
 const entities = [entity1, entity2];
-const systems = [renderSystem];
+const systems = [
+  (entities) => inputSystem.update(entities),
+  (entities) => renderSystem.update(entities),
+];
 
 // At each tick, run all systems against all entities.
 const tick = () => {
@@ -40,4 +50,4 @@ const tick = () => {
 };
 
 // Go!
-export const go = () => setInterval(tick, 500);
+export const go = () => setInterval(tick, 30);

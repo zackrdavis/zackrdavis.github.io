@@ -1,21 +1,34 @@
 import { Entity } from "./types";
 
-// Draw entities with appearance and location to the canvas.
-export const renderSystem = (entities: Entity[]) => {
-  const canvas = document.querySelector<HTMLCanvasElement>("#canvas")!;
-  const context = canvas.getContext("2d")!;
+export class RenderSystem {
+  canvas: HTMLCanvasElement | null;
+  context: CanvasRenderingContext2D | null | undefined;
 
-  // clear canvas for redraw
-  context.clearRect(0, 0, canvas.width, canvas.height);
+  constructor() {
+    this.canvas = document.querySelector("#canvas");
+    this.context = this.canvas?.getContext("2d");
+  }
 
-  for (const entity of entities) {
-    if (entity.appearance && entity.location) {
-      const { width, height, color } = entity.appearance;
-      const { x, y } = entity.location;
+  update(entities: Entity[]) {
+    // do nothing if no canvas
+    if (!this.canvas || !this.context) {
+      return;
+    }
 
-      // draw and fill the rect
-      context.fillStyle = color;
-      context.fillRect(x, y, width, height);
+    const ctx = this.context;
+
+    // clear canvas for redraw
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    for (const entity of entities) {
+      if (entity.location && entity.appearance) {
+        const { width, height, color } = entity.appearance;
+        const { x, y } = entity.location;
+
+        // draw and fill the rect
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, width, height);
+      }
     }
   }
-};
+}

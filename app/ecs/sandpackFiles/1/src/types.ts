@@ -1,8 +1,8 @@
 export type Entity = {
-  // All entities have an id.
+  // Mandatory
   id: string;
 
-  // Entities may or may not have any of these components.
+  // Optional Components
   count?: number;
   angle?: number;
 };
