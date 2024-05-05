@@ -8,7 +8,7 @@ export type Entity = {
     width: number;
     height: number;
   };
-  location?: {
+  position?: {
     x: number;
     y: number;
   };

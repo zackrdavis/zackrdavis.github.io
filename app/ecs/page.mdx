@@ -62,9 +62,15 @@ options={{
 
 ## Universe Input/Output
 
-The `renderSystem` is an odd duck. It doesn't make changes to components (just renders them), and it knows about non-gameworld things like the DOM (or, depending on our rendering target, the canvas API or even WebSockets). We'll need another special system like this to listen for keyboard events.
+The `renderSystem` is an odd duck. It knows about non-gameworld things like the DOM (or, depending on our rendering target, the canvas API or even WebSockets). And we'll need another special system, `inputSystem`, to listen for keyboard events. I want to keep these these "impure" systems as self-contained as possible. This makes the game easier to test and more portable to other platforms.
 
-Because they need to save some long-lived information about the setup, and I want to keep this "impure" logic isolated, I'm going to write them both as classes that we initialize before starting the engine.
+Below, we've added the first real components to our entities:
+
+- `position`: Where is the entity in 2D space; where should we draw it?
+- `appearance`: How does the entity look? We're just drawing rectangles with width, height and fill-color, but this could also refer to a sprite or a 3D model at some point.
+- `playerControl`: Does the entity respond to keyboard input? A simple Boolean.
+
+Notice how these components don't map 1-to-1 onto systems. `renderSystem` needs `position` and `appearance`, while `inputSystem` needs `playerControl` and `position`. This is a sign of decoupling between systems, meaning you can make big changes to one system without necessarily worrying about the others.
 
 Click the canvas and use your arrow keys or WASD to move the red square around.
 
@@ -93,6 +99,8 @@ options={{
     activeFile: "/src/engine.ts",
   }}
 />
+
+Already fun!
 
 export default function MDXPage({ children }) {
   return <MdxLayout>{children}</MdxLayout>;

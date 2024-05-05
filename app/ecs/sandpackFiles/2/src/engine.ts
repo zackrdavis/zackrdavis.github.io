@@ -1,6 +1,5 @@
-import { Entity } from "./types";
-import { RenderSystem } from "./renderSystem";
-import { InputSystem } from "./inputSystem";
+import { renderSystem } from "./renderSystem";
+import { inputSystem } from "./inputSystem";
 
 // Green
 const entity1 = {
@@ -10,7 +9,7 @@ const entity1 = {
     height: 20,
     color: "mediumSeaGreen",
   },
-  location: {
+  position: {
     x: 120,
     y: 140,
   },
@@ -24,23 +23,15 @@ const entity2 = {
     height: 20,
     color: "tomato",
   },
-  location: {
+  position: {
     x: 160,
     y: 140,
   },
   playerControl: true,
 };
 
-const inputSystem = new InputSystem();
-const renderSystem = new RenderSystem();
-const updateRenderSystem = (entities) => renderSystem.update(entities);
-const updateInputSystem = (entities) => inputSystem.update(entities);
-
 const entities = [entity1, entity2];
-const systems = [
-  (entities) => inputSystem.update(entities),
-  (entities) => renderSystem.update(entities),
-];
+const systems = [inputSystem, renderSystem];
 
 // At each tick, run all systems against all entities.
 const tick = () => {

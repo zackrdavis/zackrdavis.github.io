@@ -1,34 +1,26 @@
 import { Entity } from "./types";
 
-export class RenderSystem {
-  canvas: HTMLCanvasElement | null;
-  context: CanvasRenderingContext2D | null | undefined;
+let canvas: HTMLCanvasElement | null;
+let context: CanvasRenderingContext2D | null | undefined;
 
-  constructor() {
-    this.canvas = document.querySelector("#canvas");
-    this.context = this.canvas?.getContext("2d");
-  }
-
-  update(entities: Entity[]) {
-    // do nothing if no canvas
-    if (!this.canvas || !this.context) {
-      return;
-    }
-
-    const ctx = this.context;
-
-    // clear canvas for redraw
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+export const renderSystem = (entities: Entity[]) => {
+  if (!canvas || !context) {
+    // Find canvas and context.
+    canvas = document.querySelector("#canvas");
+    context = canvas?.getContext("2d");
+  } else {
+    // Clear the canvas.
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     for (const entity of entities) {
-      if (entity.location && entity.appearance) {
+      if (entity.position && entity.appearance) {
         const { width, height, color } = entity.appearance;
-        const { x, y } = entity.location;
+        const { x, y } = entity.position;
 
-        // draw and fill the rect
-        ctx.fillStyle = color;
-        ctx.fillRect(x, y, width, height);
+        // Draw and fill the rect.
+        context.fillStyle = color;
+        context.fillRect(x, y, width, height);
       }
     }
   }
-}
+};

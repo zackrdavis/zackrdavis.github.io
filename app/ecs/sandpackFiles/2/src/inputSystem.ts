@@ -1,64 +1,54 @@
 import { Entity } from "./types";
 
-export class InputSystem {
-  keys = {
-    ArrowUp: false,
-    ArrowDown: false,
-    ArrowLeft: false,
-    ArrowRight: false,
-    w: false,
-    a: false,
-    s: false,
-    d: false,
-  };
+const speed = 10;
 
-  constructor() {
+const pressedKeys = {
+  ArrowUp: false,
+  ArrowDown: false,
+  ArrowLeft: false,
+  ArrowRight: false,
+  w: false,
+  a: false,
+  s: false,
+  d: false,
+};
+
+let listenerSet = false;
+
+export const inputSystem = (entities: Entity[]) => {
+  if (!listenerSet) {
+    // Setup keyboard listeners.
     window.addEventListener("keydown", (e) => {
-      const pressedKey = e.key as keyof typeof this.keys;
-
-      if (pressedKey in this.keys) {
-        this.keys[pressedKey] = true;
-      }
-
+      if (e.key in pressedKeys) pressedKeys[e.key] = true;
       e.preventDefault();
     });
 
     window.addEventListener("keyup", (e) => {
-      const pressedKey = e.key as keyof typeof this.keys;
-
-      if (pressedKey in this.keys) {
-        this.keys[pressedKey] = false;
-      }
-
+      if (e.key in pressedKeys) pressedKeys[e.key] = false;
       e.preventDefault();
     });
+
+    listenerSet = true;
   }
 
-  update(entities: Entity[]) {
+  // What direction is being pressed?
+  const right = pressedKeys.ArrowRight || pressedKeys.d;
+  const left = pressedKeys.ArrowLeft || pressedKeys.a;
+  const up = pressedKeys.ArrowUp || pressedKeys.w;
+  const down = pressedKeys.ArrowDown || pressedKeys.s;
+
+  if (right || left || down || up) {
+    const changeX = right ? speed : left ? -speed : 0;
+    const changeY = down ? speed : up ? -speed : 0;
+
     for (const entity of entities) {
-      if (entity.location && entity.playerControl) {
-        const { x, y } = entity.location;
-
-        const { ArrowUp, ArrowDown, ArrowLeft, ArrowRight, w, a, s, d } =
-          this.keys;
-
-        const right = ArrowRight || d;
-        const left = ArrowLeft || a;
-        const up = ArrowUp || w;
-        const down = ArrowDown || s;
-
-        const speed = 10;
-
-        if (right || left || down || up) {
-          const newX = x + (right ? speed : left ? -speed : 0);
-          const newY = y + (down ? speed : up ? -speed : 0);
-
-          entity.location = {
-            x: newX,
-            y: newY,
-          };
-        }
+      if (entity.position && entity.playerControl) {
+        // Move playerControl entities.
+        entity.position = {
+          x: entity.position.x + changeX,
+          y: entity.position.y + changeY,
+        };
       }
     }
   }
-}
+};
