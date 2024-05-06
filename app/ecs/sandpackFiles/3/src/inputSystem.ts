@@ -1,6 +1,7 @@
 import { Entity } from "./entities";
 
-const speed = 10;
+const maxSpeed = 3;
+const accel = 1;
 
 const pressedKeys = {
   ArrowUp: false,
@@ -18,6 +19,11 @@ const pressedKeys = {
 };
 
 let listenerSet = false;
+
+// Minmax helper.
+const clamp = (num: number, min: number, max: number) => {
+  return Math.min(Math.max(num, min), max);
+};
 
 export const inputSystem = (entities: Entity[]) => {
   if (!listenerSet) {
@@ -44,18 +50,26 @@ export const inputSystem = (entities: Entity[]) => {
   const down = ArrowDown || s || S;
   const right = ArrowRight || d || D;
 
+  // Opposite directions cancel out the axis.
+  const bothX = left && right;
+  const bothY = up && down;
+
   if (right || left || down || up) {
-    // Determine the change in x and y.
-    // Cancel out opposite directions.
-    const changeX = right && left ? 0 : right ? speed : left ? -speed : 0;
-    const changeY = up && down ? 0 : down ? speed : up ? -speed : 0;
+    // Determine velocity change.
+    const changeVelX = bothX ? 0 : right ? accel : left ? -accel : 0;
+    const changeVelY = bothY ? 0 : down ? accel : up ? -accel : 0;
 
     for (const entity of entities) {
-      if (entity.position && entity.playerControl) {
-        // Move playerControl entities.
-        entity.position = {
-          x: entity.position.x + changeX,
-          y: entity.position.y + changeY,
+      if (entity.velocity && entity.playerControl) {
+        const { x, y } = entity.velocity;
+
+        // Determine the change in velocity.
+        const newVelX = clamp(x + changeVelX, -maxSpeed, maxSpeed);
+        const newVelY = clamp(y + changeVelY, -maxSpeed, maxSpeed);
+
+        entity.velocity = {
+          x: newVelX,
+          y: newVelY,
         };
       }
     }

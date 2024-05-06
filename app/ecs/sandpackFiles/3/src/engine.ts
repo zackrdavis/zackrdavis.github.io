@@ -1,8 +1,9 @@
 import { renderSystem } from "./renderSystem";
 import { inputSystem } from "./inputSystem";
+import { momentumSystem } from "./momentumSystem";
 import { entities } from "./entities";
 
-const systems = [inputSystem, renderSystem];
+const systems = [inputSystem, renderSystem, momentumSystem];
 
 // At each tick, run all systems against all entities.
 const tick = () => {
@@ -12,4 +13,4 @@ const tick = () => {
 };
 
 // Go!
-export const go = () => setInterval(tick, 30);
+export const go = () => setInterval(tick, 33);

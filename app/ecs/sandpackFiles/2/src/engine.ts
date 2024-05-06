@@ -12,4 +12,4 @@ const tick = () => {
 };
 
 // Go!
-export const go = () => setInterval(tick, 30);
+export const go = () => setInterval(tick, 33);

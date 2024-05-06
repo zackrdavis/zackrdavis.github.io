@@ -3,6 +3,7 @@ export type Entity = {
   id: string;
 
   // Optional Components
+  playerControl?: boolean;
   appearance?: {
     color: string;
     width: number;
@@ -12,7 +13,11 @@ export type Entity = {
     x: number;
     y: number;
   };
-  playerControl?: boolean;
+  velocity?: {
+    x: number;
+    y: number;
+  };
+  friction?: number;
 };
 
 // Green
@@ -27,11 +32,17 @@ const entity1 = {
     x: 120,
     y: 140,
   },
+  velocity: {
+    x: 0.8,
+    y: -1,
+  },
+  friction: 0.01,
 };
 
 // Red
 const entity2 = {
   id: "#ent2",
+  playerControl: true,
   appearance: {
     width: 20,
     height: 20,
@@ -41,7 +52,11 @@ const entity2 = {
     x: 160,
     y: 140,
   },
-  playerControl: true,
+  velocity: {
+    x: 0,
+    y: 0,
+  },
+  friction: 0.05,
 };
 
 export const entities = [entity1, entity2];

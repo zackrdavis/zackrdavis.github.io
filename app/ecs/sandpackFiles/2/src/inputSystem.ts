@@ -44,18 +44,21 @@ export const inputSystem = (entities: Entity[]) => {
   const down = ArrowDown || s || S;
   const right = ArrowRight || d || D;
 
+  // Opposite directions cancel out the axis.
+  const bothX = left && right;
+  const bothY = up && down;
+
   if (right || left || down || up) {
-    // Determine the change in x and y.
-    // Cancel out opposite directions.
-    const changeX = right && left ? 0 : right ? speed : left ? -speed : 0;
-    const changeY = up && down ? 0 : down ? speed : up ? -speed : 0;
+    // Determine position change.
+    const changePosX = bothX ? 0 : right ? speed : left ? -speed : 0;
+    const changePosY = bothY ? 0 : down ? speed : up ? -speed : 0;
 
     for (const entity of entities) {
       if (entity.position && entity.playerControl) {
         // Move playerControl entities.
         entity.position = {
-          x: entity.position.x + changeX,
-          y: entity.position.y + changeY,
+          x: entity.position.x + changePosX,
+          y: entity.position.y + changePosY,
         };
       }
     }

@@ -20,6 +20,7 @@ import entitiesTs2 from "!!raw-loader!./sandpackFiles/2/src/entities.ts";
 import engineTs3 from "!!raw-loader!./sandpackFiles/3/src/engine.ts";
 import renderSystemTs3 from "!!raw-loader!./sandpackFiles/3/src/renderSystem.ts";
 import inputSystemTs3 from "!!raw-loader!./sandpackFiles/3/src/inputSystem.ts";
+import momentumSystemTs3 from "!!raw-loader!./sandpackFiles/3/src/momentumSystem.ts";
 import entitiesTs3 from "!!raw-loader!./sandpackFiles/3/src/entities.ts";
 
 # Entity + Component + System
@@ -69,15 +70,15 @@ options={{
 
 ## Universe Input/Output
 
-The `renderSystem` is an odd duck. It knows about non-gameworld things like the DOM (or, depending on our rendering target, the canvas API or even WebSockets). And we'll need another special system, `inputSystem`, to listen for keyboard events. I want to keep these these "impure" systems as self-contained as possible. This makes the game easier to test and more portable to other platforms. Looking at the `inputSystem`, its notable how many lines are devoted to abstracting pressed keys into directional intent.
+The `renderSystem` is an odd duck. It knows about non-gameworld things like the DOM (or, depending on our rendering target, the canvas API or even WebSockets). And we'll need another special system, `inputSystem`, to listen for keyboard events. I want to keep these these "impure" systems as self-contained as possible. This makes the game easier to test and more portable to other platforms.
 
-Below, we've switched our rendering from div styling to canvas drawing. The count and rotation properties are gone, replaced by the ones our game will actually use:
+Below, we've switched our rendering from div styling to canvas drawing and increased the framerate to ~30fps. The count and rotation properties are gone, replaced by the ones our game will actually use:
 
 - `position`: Where is the entity in 2D space; where should we draw it?
 - `appearance`: How does the entity look in terms of width, height and fill-color? This could later refer to a sprite or a 3D model.
 - `playerControl`: Does the entity respond to keyboard input? A simple Boolean.
 
-Notice how these components don't map 1-to-1 onto systems. `renderSystem` needs `position` and `appearance`, while `inputSystem` needs `playerControl` and `position`. This is a sign of decoupling between systems, meaning you can make big changes to one system without necessarily worrying about the others.
+Notice how these components don't map 1-to-1 onto systems. `renderSystem` needs `position` and `appearance`, while `inputSystem` needs `playerControl` and `position`.
 
 At this point you can click the canvas and use your arrow keys or WASD to move the red square.
 
@@ -107,10 +108,14 @@ options={{
   }}
 />
 
-Already fun! But I wish this universe would do something when I'm not pressing buttons. Lets build a system to simulate momentum (with some friction so entities don't just fly away). For the player entity to participate in the new dynamic, the `inputSystem` will stop setting location directly and instead affect velocity, a bit like a strong wind. So we'll need a couple more components to support this:
+Already fun! But I wish the toy universe would do something when I'm not pressing buttons. Lets build a system to simulate momentum, with some friction so entities don't just fly away.
+
+For the player entity to participate in the new dynamic, the `inputSystem` will stop setting location directly and instead affect velocity, a bit like a strong wind. The new `momentumSystem` will apply velocity to position and friction to velocity. We'll need a couple more components to support this:
 
 - `velocity`: Rate of movement on both the X and the Y axis.
-- `friction`: How fast does the velocity decay?
+- `friction`: Decay rate for the velocity. This could be hardcoded in the momentum system, but extra friction on the player offers more control.
+
+Students of _this_ universe will notice that all of these systems treat the velocity's X and Y aspect independently, so a diagonal movement will be faster than a cardinal one, and friction might bring an entity to a stop on one axis before the other, imparting a curved trajectory. The physics feel surprisingly nice despite this, so I'm calling it good enough.
 
 <Sandbox
   template="vanilla-ts"
@@ -121,6 +126,7 @@ Already fun! But I wish this universe would do something when I'm not pressing b
     "/src/engine.ts": engineTs3,
     "/src/renderSystem.ts": renderSystemTs3,
     "/src/inputSystem.ts": inputSystemTs3,
+    "/src/momentumSystem.ts": momentumSystemTs3,
     "/src/entities.ts": entitiesTs3,
     "/package.json": `{
       "dependencies": {},
@@ -133,8 +139,8 @@ Already fun! But I wish this universe would do something when I'm not pressing b
 
 }}
 options={{
-    visibleFiles: ["/src/engine.ts", "/src/inputSystem.ts", "/src/entities.ts"],
-    activeFile: "/src/engine.ts",
+    visibleFiles: ["/src/momentumSystem.ts", "/src/inputSystem.ts", "/src/entities.ts"],
+    activeFile: "/src/momentumSystem.ts",
   }}
 />
 
