@@ -7,7 +7,7 @@ import indexHtml1 from "!!raw-loader!./sandpackFiles/1/index.html";
 import indexTs1 from "!!raw-loader!./sandpackFiles/1/index.ts";
 import engineTs1 from "!!raw-loader!./sandpackFiles/1/src/engine.ts";
 import renderSystemTs1 from "!!raw-loader!./sandpackFiles/1/src/renderSystem.ts";
-import typesTs1 from "!!raw-loader!./sandpackFiles/1/src/types.ts";
+import entitiesTs1 from "!!raw-loader!./sandpackFiles/1/src/entities.ts";
 
 import { styles as styles2 } from "./sandpackFiles/2/styles.ts";
 import indexHtml2 from "!!raw-loader!./sandpackFiles/2/index.html";
@@ -15,7 +15,12 @@ import indexTs2 from "!!raw-loader!./sandpackFiles/2/index.ts";
 import engineTs2 from "!!raw-loader!./sandpackFiles/2/src/engine.ts";
 import renderSystemTs2 from "!!raw-loader!./sandpackFiles/2/src/renderSystem.ts";
 import inputSystemTs2 from "!!raw-loader!./sandpackFiles/2/src/inputSystem.ts";
-import typesTs2 from "!!raw-loader!./sandpackFiles/2/src/types.ts";
+import entitiesTs2 from "!!raw-loader!./sandpackFiles/2/src/entities.ts";
+
+import engineTs3 from "!!raw-loader!./sandpackFiles/3/src/engine.ts";
+import renderSystemTs3 from "!!raw-loader!./sandpackFiles/3/src/renderSystem.ts";
+import inputSystemTs3 from "!!raw-loader!./sandpackFiles/3/src/inputSystem.ts";
+import entitiesTs3 from "!!raw-loader!./sandpackFiles/3/src/entities.ts";
 
 # Entity + Component + System
 
@@ -33,7 +38,9 @@ _Entities_ are just bags of properties. These properties are called _components_
 
 A system is concerned with one or more specific components. It looks at every entity with those components and makes some changes. At every tick of game time, each system takes its turn processing all of its relevant entities. Systems run in the same order every time.
 
-Below, there are two entities, one using the `incrementSystem` and the other using that _and_ the `rotateSystem`. There's also a special `renderSystem`. We'll eventually switch these systems and components out, but this core logic will hardly change as we progress to a game with collision physics.
+Below, there are two entities, one using the `incrementSystem` and the other using that _and_ the `rotateSystem`. There's also a special `renderSystem`. Soon we'll switch these systems and components out, but the core loop won't change as we progress to a game with collision physics.
+
+A couple notes about these code sandboxes: they're made with the incredible [Sandpack](https://sandpack.codesandbox.io/), and I'll often hide some files to keep focus on what's changing. You can always click "Open Sandbox" to see the full code.
 
 <Sandbox
   template="vanilla-ts"
@@ -41,9 +48,9 @@ Below, there are two entities, one using the `incrementSystem` and the other usi
     "/index.html": indexHtml1,
     "/styles.css": styles1,
     "/index.ts": indexTs1,
-    "/src/engine.ts": engineTs1, 
+    "/src/engine.ts": engineTs1,
     "/src/renderSystem.ts": renderSystemTs1,
-    "/src/types.ts": typesTs1,
+    "/src/entities.ts":entitiesTs1,
     "/package.json": `{
       "dependencies": {},
         "devDependencies": {
@@ -55,24 +62,24 @@ Below, there are two entities, one using the `incrementSystem` and the other usi
 
 }}
 options={{
-  visibleFiles: ["/src/engine.ts", "/src/renderSystem.ts", "/src/types.ts"],
+  visibleFiles: ["/src/engine.ts","/src/entities.ts", "/src/renderSystem.ts",],
   activeFile: "/src/engine.ts",
 }}
 />
 
 ## Universe Input/Output
 
-The `renderSystem` is an odd duck. It knows about non-gameworld things like the DOM (or, depending on our rendering target, the canvas API or even WebSockets). And we'll need another special system, `inputSystem`, to listen for keyboard events. I want to keep these these "impure" systems as self-contained as possible. This makes the game easier to test and more portable to other platforms.
+The `renderSystem` is an odd duck. It knows about non-gameworld things like the DOM (or, depending on our rendering target, the canvas API or even WebSockets). And we'll need another special system, `inputSystem`, to listen for keyboard events. I want to keep these these "impure" systems as self-contained as possible. This makes the game easier to test and more portable to other platforms. Looking at the `inputSystem`, its notable how many lines are devoted to abstracting pressed keys into directional intent.
 
-Below, we've added the first real components to our entities:
+Below, we've switched our rendering from div styling to canvas drawing. The count and rotation properties are gone, replaced by the ones our game will actually use:
 
 - `position`: Where is the entity in 2D space; where should we draw it?
-- `appearance`: How does the entity look? We're just drawing rectangles with width, height and fill-color, but this could also refer to a sprite or a 3D model at some point.
+- `appearance`: How does the entity look in terms of width, height and fill-color? This could later refer to a sprite or a 3D model.
 - `playerControl`: Does the entity respond to keyboard input? A simple Boolean.
 
 Notice how these components don't map 1-to-1 onto systems. `renderSystem` needs `position` and `appearance`, while `inputSystem` needs `playerControl` and `position`. This is a sign of decoupling between systems, meaning you can make big changes to one system without necessarily worrying about the others.
 
-Click the canvas and use your arrow keys or WASD to move the red square around.
+At this point you can click the canvas and use your arrow keys or WASD to move the red square.
 
 <Sandbox
   template="vanilla-ts"
@@ -80,10 +87,10 @@ Click the canvas and use your arrow keys or WASD to move the red square around.
     "/index.html": indexHtml2,
     "/styles.css": styles2,
     "/index.ts": indexTs2,
-    "/src/engine.ts": engineTs2, 
+    "/src/engine.ts": engineTs2,
     "/src/renderSystem.ts": renderSystemTs2,
     "/src/inputSystem.ts": inputSystemTs2,
-    "/src/types.ts": typesTs2,
+    "/src/entities.ts": entitiesTs2,
     "/package.json": `{
       "dependencies": {},
         "devDependencies": {
@@ -95,16 +102,42 @@ Click the canvas and use your arrow keys or WASD to move the red square around.
 
 }}
 options={{
-    visibleFiles: ["/src/engine.ts", "/src/renderSystem.ts", "/src/inputSystem.ts", "/src/types.ts"],
+    visibleFiles: ["/src/engine.ts", "/src/inputSystem.ts", "/src/renderSystem.ts", "/src/entities.ts"],
     activeFile: "/src/engine.ts",
   }}
 />
 
-Already fun!
+Already fun! But I wish this universe would do something when I'm not pressing buttons. Lets build a system to simulate momentum (with some friction so entities don't just fly away). For the player entity to participate in the new dynamic, the `inputSystem` will stop setting location directly and instead affect velocity, a bit like a strong wind. So we'll need a couple more components to support this:
+
+- `velocity`: Rate of movement on both the X and the Y axis.
+- `friction`: How fast does the velocity decay?
+
+<Sandbox
+  template="vanilla-ts"
+  files={{
+    "/index.html": indexHtml2,
+    "/styles.css": styles2,
+    "/index.ts": indexTs2,
+    "/src/engine.ts": engineTs3,
+    "/src/renderSystem.ts": renderSystemTs3,
+    "/src/inputSystem.ts": inputSystemTs3,
+    "/src/entities.ts": entitiesTs3,
+    "/package.json": `{
+      "dependencies": {},
+        "devDependencies": {
+          "typescript": "^4.0.0"
+        },
+      "main": "/index.html"
+    }`,
+    "/sandbox.config.json": `{ "hardReloadOnChange" :  true }`,
+
+}}
+options={{
+    visibleFiles: ["/src/engine.ts", "/src/inputSystem.ts", "/src/entities.ts"],
+    activeFile: "/src/engine.ts",
+  }}
+/>
 
 export default function MDXPage({ children }) {
   return <MdxLayout>{children}</MdxLayout>;
 }
-import { renderSystem } from "./sandpackFiles/1/src/renderSystem.ts";
-import { inputSystem } from "./sandpackFiles/2/src/inputSystem";
-import { render } from "react-dom";

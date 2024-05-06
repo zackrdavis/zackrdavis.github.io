@@ -1,18 +1,5 @@
-import { Entity } from "./types";
+import { entities, Entity } from "./entities";
 import { renderSystem } from "./renderSystem";
-
-// Green
-const entity1 = {
-  id: "#ent1",
-  count: 0,
-};
-
-// Red
-const entity2 = {
-  id: "#ent2",
-  count: 10,
-  angle: 0,
-};
 
 // Process entities with a count component.
 const incrementSystem = (entities: Entity[]) => {
@@ -32,7 +19,6 @@ const rotateSystem = (entities: Entity[]) => {
   }
 };
 
-const entities = [entity1, entity2];
 const systems = [incrementSystem, rotateSystem, renderSystem];
 
 // At each tick, run all systems against all entities.

@@ -1,6 +1,6 @@
-import { entities } from "./entities";
 import { renderSystem } from "./renderSystem";
 import { inputSystem } from "./inputSystem";
+import { entities } from "./entities";
 
 const systems = [inputSystem, renderSystem];
 

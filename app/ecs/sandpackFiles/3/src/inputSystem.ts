@@ -1,4 +1,4 @@
-import { Entity } from "./types";
+import { Entity } from "./entities";
 
 const speed = 10;
 

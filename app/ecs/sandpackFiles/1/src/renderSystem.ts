@@ -1,4 +1,4 @@
-import { Entity } from "./types";
+import { Entity } from "./entities";
 
 // Render entities as HTML.
 // We'll change our rendering method soon.
