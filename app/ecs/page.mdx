@@ -33,6 +33,15 @@ import collisionLogSystemTs4 from "!!raw-loader!./sandpackFiles/4/src/collisionL
 import forEntsWithTs4 from "!!raw-loader!./sandpackFiles/4/src/forEntsWith.ts";
 import entitiesTs4 from "!!raw-loader!./sandpackFiles/4/src/entities.ts";
 
+import engineTs5 from "!!raw-loader!./sandpackFiles/5/src/engine.ts";
+import renderSystemTs5 from "!!raw-loader!./sandpackFiles/5/src/renderSystem.ts";
+import inputSystemTs5 from "!!raw-loader!./sandpackFiles/5/src/inputSystem.ts";
+import momentumSystemTs5 from "!!raw-loader!./sandpackFiles/5/src/momentumSystem.ts";
+import collisionSystemTs5 from "!!raw-loader!./sandpackFiles/5/src/collisionSystem.ts";
+import reboundSystemTs5 from "!!raw-loader!./sandpackFiles/5/src/reboundSystem.ts";
+import forEntsWithTs5 from "!!raw-loader!./sandpackFiles/5/src/forEntsWith.ts";
+import entitiesTs5 from "!!raw-loader!./sandpackFiles/5/src/entities.ts";
+
 # Entity + Component + System
 
 ## A surprisingly simple way to build a universe
@@ -122,14 +131,14 @@ options={{
 
 Already fun! But I wish the toy universe would do something when I'm not pressing buttons. Lets build a system to simulate momentum, with some friction so entities don't just fly away.
 
-For the player entity to participate in the new dynamic, the `inputSystem` will stop setting location directly and instead affect velocity, a bit like a strong wind. The new `momentumSystem` will apply velocity to position and friction to velocity. We'll need a couple more components to support this:
+For the player entity to participate in the new dynamic, the `inputSystem` will stop setting location directly and instead affect velocity, a bit like a strong wind. The new `momentumSystem` will apply velocity to position, and then apply friction to velocity, so we need these new components:
 
 - `velocity`: Rate of movement on both the X and the Y axis.
 - `friction`: Decay rate for the velocity. This could be hardcoded in the momentum system, but extra friction on the player offers more control.
 
 Students of _this_ universe might notice that all of these systems treat the velocity's X and Y aspect independently, so a diagonal movement will be faster than a cardinal one, and friction might bring an entity to a stop on one axis before the other, imparting a curved trajectory. The physics feel surprisingly nice despite this, so I'm calling it good enough.
 
-You might also notice that when systems update components, they're mutating the entities in place, something we avoid in React land. This is a bit faster than creating new entities for every system at every tick, and saves on garbage-collection.
+You might also notice that when systems update components, they're mutating the entities in place, something to avoid in React land. This is a bit faster than creating new entities for every system at every tick, and saves on garbage-collection.
 
 <Sandbox
   template="vanilla-ts"
@@ -158,21 +167,19 @@ options={{
   }}
 />
 
-It's time to add collision-detection, which will be the basis of all interaction between entities. On my first pass, I thought collision and rebound would be a single system, but not all collisions should rebound. Entering an invisible box might be an important game condition.
+It's time to add collision-detection, which will be the basis of all interaction between entities. On my first pass I thought collision and rebound would be a single system, but what if we want game conditions triggered by an invisible box? Discovering collisions should be separate from reacting to them.
 
-I'm used to thinking of collision as an event, like the browser's `mouseEnter`, but a natural way to do it with ECS is to add a temporary `collisionEvent` to the entities involved. Other systems can use these however they need to.
+I'm used to thinking of collision as a broadcast event, like the browser's `mouseEnter`, but event APIs differ between the client and the server, so that's not portable. In any case, the event would have to be saved for other systems for an entire tick, likely as a component. A broadcast-free pattern emerges: the `collisionSystem` looks at entity edges and adds `collision` components to overlapping entities. Other systems can use these however they need to.
 
-To discover collisions, we'll need to look at the position of every collidable entity in relation to every other collidable entity. I've written a helper function, `forEntsWith`, to make this nested looping quick and type-safe.
+We'll have to compare edges between every collidable entity, so I've written a helper function, `forEntsWith`, to make this nested looping readable and type-safe. It provides a filtered list of collidable peers for each entity.
 
-The first thing to do is clear any existing collision events from the previous tick. Because systems always run in the same order, we know that all the other systems have had a chance to read it already. Then we look at the new state of play.
+The first thing to do is clear any existing collision events from the previous tick. Because systems always run in the same order, we know that all the other systems have had a chance to read it already. Then we look at the new state of play. We compare the left, right, top, and bottom edges of every entity. If there's overlap on BOTH X and Y axes, we know they're occupying some of the same space, and we can add a collision to the `collisionBox` component. That will contain the following data:
 
-We compare the left, right, top, and bottom edges of every entity. If there's overlap on BOTH X and Y axes, we know they're occupying some of the same space, and we can add a collision event. That event will contain the following data:
+- `xOverlap`: Overlap on the X axis.
+- `yOverlap`: Overlap on the Y axis.
+- `otherEntId`: The other driver's ID. This lets us get data for rebounds and more.
 
-- `xOverlap`: How much the entities overlap on the X axis.
-- `yOverlap`: How much the entities overlap on the Y axis.
-- `otherEntity`: The entity we're colliding with (cloned, not referenced). Useful data for rebounds and other interactions.
-
-Below, I've provided a real-time display of the overlap data being stored on the red player-controlled entity, which I've also made transparent.
+Below, I've provided a real-time display of the overlap data on the red player-controlled entity, which I've also made transparent.
 
 <Sandbox
   template="vanilla-ts"
@@ -204,15 +211,45 @@ options={{
   }}
 />
 
-As you scoot around, think about how you'd expect different collision data to effect the entities involved. A large `xOverlap` and a small `yOverlap` suggests a vertical collision. Unless we're modeling friction between the smooth faces of the entities (let's not!), they should trade velocities on the Y axis.
+## ReboundSystem
 
-I have to point out here that I can only model this mentally because everything in the game is a rectangle and never rotates. Maybe one day I'll try a more realistic simulation.
+I have to point out here that collisions are relatively easy to model here because everything is a rectangle and doesn't rotate. Assuming entities are perfectly elastic, we can model the rebound between moving entities as a trade of velocities. Some entities should also be immovable, like walls. If the other entity doesn't have a velocity component, we'll reverse the velocity of the moving entity on its axis of impact.
 
-Now to write the system that will use these collision events.
+So we need to know the axis of the collision. As you explore collisions above, you'll see that the overlap with the smaller absolute value generally indicates the axis. That stops being true as the overlap becomes more complete, but hopefully our rebound system prevents this from happening!
+
+By saving the value of the overlap, we can also cancel it out on impact. Entities overlapping for more than a single tick are a rich source of bugs in this model.
+
+<Sandbox
+  template="vanilla-ts"
+  files={{
+    "/index.html": indexHtml2,
+    "/styles.css": styles2,
+    "/index.ts": indexTs2,
+    "/src/engine.ts": engineTs5,
+    "/src/renderSystem.ts": renderSystemTs5,
+    "/src/inputSystem.ts": inputSystemTs5,
+    "/src/momentumSystem.ts": momentumSystemTs5,
+    "/src/collisionSystem.ts": collisionSystemTs5,
+    "/src/reboundSystem.ts": reboundSystemTs5,
+    "/src/forEntsWith.ts": forEntsWithTs5,
+    "/src/entities.ts": entitiesTs5,
+    "/package.json": `{
+      "dependencies": {},
+        "devDependencies": {
+          "typescript": "^4.0.0"
+        },
+      "main": "/index.html"
+    }`,
+    "/sandbox.config.json": `{ "hardReloadOnChange" :  true }`,
+
+}}
+options={{
+    visibleFiles: ["/src/collisionSystem.ts", "/src/reboundSystem.ts", "/src/entities.ts"],
+    activeFile: "/src/collisionSystem.ts",
+  }}
+/>
 
 export default function MDXPage({ children }) {
   return <MdxLayout>{children}</MdxLayout>;
 }
-import { forEntsWith } from "./sandpackFiles/4/src/forEntsWith";
-import { collisionSystem } from "./sandpackFiles/4/src/collisionSystem.ts";
 import { collisionLogSystem } from "./sandpackFiles/4/src/collisionLogSystem";

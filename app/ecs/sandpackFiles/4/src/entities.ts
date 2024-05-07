@@ -1,5 +1,5 @@
-type CollisionEvent = {
-  entity: Entity;
+type Collision = {
+  otherEntId: string;
   xOverlap: number;
   yOverlap: number;
 };
@@ -27,7 +27,7 @@ export type Entity = {
   collisionBox?: {
     width: number;
     height: number;
-    collisionEvents?: CollisionEvent[];
+    collisions: Collision[];
   };
 };
 
@@ -51,6 +51,7 @@ const entity1 = {
   collisionBox: {
     width: 20,
     height: 20,
+    collisions: [],
   },
 };
 
@@ -75,6 +76,7 @@ const entity2 = {
   collisionBox: {
     width: 20,
     height: 20,
+    collisions: [],
   },
 };
 

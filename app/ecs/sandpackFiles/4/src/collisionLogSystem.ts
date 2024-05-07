@@ -1,14 +1,16 @@
 import { Entity } from "./entities";
 
+let lastLog = "";
+
 export const collisionLogSystem = (entities: Entity[]) => {
   const { collisionBox } = entities[1];
-  if (collisionBox?.collisionEvents?.length) {
-    document.querySelector(
-      "#log"
-    )!.innerHTML = `xOverlap: ${collisionBox.collisionEvents[0].xOverlap},
-yOverlap: ${collisionBox.collisionEvents[0].yOverlap}
-`;
-  } else {
-    document.querySelector("#log")!.innerHTML = "No Collision.";
+
+  const logText = collisionBox?.collisions?.length
+    ? JSON.stringify(collisionBox.collisions, null, 2)
+    : "No Collision.";
+
+  if (logText !== lastLog) {
+    document.querySelector("#log")!.innerHTML = logText;
+    lastLog = logText;
   }
 };
