@@ -122,7 +122,7 @@ const entity2 = {
     x: 0,
     y: 0,
   },
-  friction: 0.05,
+  friction: 0.8,
   collisionBox: {
     width: 20,
     height: 20,
@@ -134,16 +134,16 @@ const wallTop = {
   id: "wallTop",
   appearance: {
     width: 280,
-    height: 10,
+    height: 20,
     color: "gray",
   },
   position: {
     x: 10,
-    y: 0,
+    y: -10,
   },
   collisionBox: {
     width: 280,
-    height: 10,
+    height: 20,
     collisions: [],
   },
 };
@@ -152,7 +152,7 @@ const wallBottom = {
   id: "wallBottom",
   appearance: {
     width: 280,
-    height: 10,
+    height: 20,
     color: "gray",
   },
   position: {
@@ -161,7 +161,7 @@ const wallBottom = {
   },
   collisionBox: {
     width: 280,
-    height: 10,
+    height: 20,
     collisions: [],
   },
 };
@@ -169,16 +169,16 @@ const wallBottom = {
 const wallLeft = {
   id: "wallLeft",
   appearance: {
-    width: 10,
+    width: 20,
     height: 280,
     color: "gray",
   },
   position: {
-    x: 0,
+    x: -10,
     y: 10,
   },
   collisionBox: {
-    width: 10,
+    width: 20,
     height: 280,
     collisions: [],
   },
@@ -187,7 +187,7 @@ const wallLeft = {
 const wallRight = {
   id: "wallRight",
   appearance: {
-    width: 10,
+    width: 20,
     height: 280,
     color: "gray",
   },
@@ -196,7 +196,7 @@ const wallRight = {
     y: 10,
   },
   collisionBox: {
-    width: 10,
+    width: 20,
     height: 280,
     collisions: [],
   },

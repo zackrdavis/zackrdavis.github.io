@@ -1,7 +1,7 @@
 import { Entity } from "./entities";
 
-const maxSpeed = 3;
-const accel = 1;
+const maxSpeed = 5;
+const accel = 3;
 
 const pressedKeys = {
   ArrowUp: false,

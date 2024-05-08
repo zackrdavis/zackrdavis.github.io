@@ -8,6 +8,7 @@ type Update = {
   newPosY: number;
 };
 
+// Store updates to apply after all entities have been checked.
 const updates: Update[] = [];
 
 export const reboundSystem = (entities: Entity[]) => {
@@ -86,8 +87,8 @@ export const reboundSystem = (entities: Entity[]) => {
     }
   }
 
+  // Apply updates.
   updates.forEach(({ entity, newVelX, newVelY, newPosX, newPosY }) => {
-    // Apply new velocity and position.
     if (entity.velocity && entity.position) {
       entity.velocity.x = newVelX;
       entity.velocity.y = newVelY;
@@ -96,5 +97,6 @@ export const reboundSystem = (entities: Entity[]) => {
     }
   });
 
+  // Clear updates.
   updates.length = 0;
 };

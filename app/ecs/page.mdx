@@ -169,11 +169,11 @@ options={{
 
 It's time to add collision-detection, which will be the basis of all interaction between entities. On my first pass I thought collision and rebound would be a single system, but what if we want game conditions triggered by an invisible box? Discovering collisions should be separate from reacting to them.
 
-I'm used to thinking of collision as a broadcast event, like the browser's `mouseEnter`, but event APIs differ between the client and the server, so that's not portable. In any case, the event would have to be saved for other systems for an entire tick, likely as a component. A broadcast-free pattern emerges: the `collisionSystem` looks at entity edges and adds `collision` components to overlapping entities. Other systems can use these however they need to.
+I'm used to thinking of collision as a broadcast event, like the browser's `mouseEnter`, but event APIs differ between platforms, and in any case the event would have to be saved for other systems for an entire tick, likely as a component. A broadcast-free pattern emerges: the `collisionSystem` looks at entity edges and adds `collision` components to overlapping entities. Other systems can use these however they need to.
 
 We'll have to compare edges between every collidable entity, so I've written a helper function, `forEntsWith`, to make this nested looping readable and type-safe. It provides a filtered list of collidable peers for each entity.
 
-The first thing to do is clear any existing collision events from the previous tick. Because systems always run in the same order, we know that all the other systems have had a chance to read it already. Then we look at the new state of play. We compare the left, right, top, and bottom edges of every entity. If there's overlap on BOTH X and Y axes, we know they're occupying some of the same space, and we can add a collision to the `collisionBox` component. That will contain the following data:
+The first thing to do is clear any existing collision events from the previous tick. Because systems always run in the same order, we know that all the other systems have had a chance to see them already. Then we look at the new state of play. We compare the left, right, top, and bottom edges of every entity. If there's overlap on BOTH X and Y axes, we know they're occupying some of the same space, and we can add a collision to the `collisionBox` component. That will contain the following data:
 
 - `xOverlap`: Overlap on the X axis.
 - `yOverlap`: Overlap on the Y axis.
@@ -213,11 +213,51 @@ options={{
 
 ## ReboundSystem
 
-I have to point out here that collisions are relatively easy to model here because everything is a rectangle and doesn't rotate. Assuming entities are perfectly elastic, we can model the rebound between moving entities as a trade of velocities. Some entities should also be immovable, like walls. If the other entity doesn't have a velocity component, we'll reverse the velocity of the moving entity on its axis of impact.
+Collisions are relatively easy to model here because everything is a rectangle and doesn't rotate. Assuming entities are perfectly elastic, we can model the rebound between moving entities as a trade of velocities. But some entities should be immovable, like walls. If the other entity doesn't have a velocity component, we'll reverse the velocity of the moving entity on its axis of impact.
 
 So we need to know the axis of the collision. As you explore collisions above, you'll see that the overlap with the smaller absolute value generally indicates the axis. That stops being true as the overlap becomes more complete, but hopefully our rebound system prevents this from happening!
 
-By saving the value of the overlap, we can also cancel it out on impact. Entities overlapping for more than a single tick are a rich source of bugs in this model.
+In addition to the velocity updates, we can use the saved overlap value to instantly place entities safely outside collision bounds, which instantly fixed a lot of bugs.
+
+There are a couple of interesting loops to notice in the reboundSystem. First of all, we're not applying the new position/velocity values as soon as we discover them. If we did, entities that get checked later in the `reboundSystem` wouldn't be responding to their counterpart's velocity at the time of impact, but to the velocity they themselves had imparted! So we collect all the updates and apply them in a second loop.
+
+There's also a loop over multiple collisions that might accrue on a single entity. If an entity runs directly into a corner formed by 2 walls, though the collisions may be simultaneous, we can treat them collisions sequentially. Wall-X reverses X velocity, then wall-Y reverses the Y velocity, and the entity flies out in the opposite direction.
+
+It was a lot of work, but now we can bounce other entities around and keep the game contained with walls, which we got practically for free.
+
+<Sandbox
+  template="vanilla-ts"
+  files={{
+    "/index.html": indexHtml2,
+    "/styles.css": styles2,
+    "/index.ts": indexTs2,
+    "/src/engine.ts": engineTs5,
+    "/src/renderSystem.ts": renderSystemTs5,
+    "/src/inputSystem.ts": inputSystemTs5,
+    "/src/momentumSystem.ts": momentumSystemTs5,
+    "/src/collisionSystem.ts": collisionSystemTs5,
+    "/src/reboundSystem.ts": reboundSystemTs5,
+    "/src/forEntsWith.ts": forEntsWithTs5,
+    "/src/entities.ts": entitiesTs5,
+    "/package.json": `{
+      "dependencies": {},
+        "devDependencies": {
+          "typescript": "^4.0.0"
+        },
+      "main": "/index.html"
+    }`,
+    "/sandbox.config.json": `{ "hardReloadOnChange" :  true }`,
+
+}}
+options={{
+    visibleFiles: ["/src/collisionSystem.ts", "/src/reboundSystem.ts", "/src/entities.ts"],
+    activeFile: "/src/collisionSystem.ts",
+  }}
+/>
+
+## Win Condition
+
+It's finally time to make the game winnable. Green entities are bouncing around turning other entities green on contact. The objective is to shepherd two pink entities into the yellow safe-zone without turning green yourself.
 
 <Sandbox
   template="vanilla-ts"
@@ -252,4 +292,4 @@ options={{
 export default function MDXPage({ children }) {
   return <MdxLayout>{children}</MdxLayout>;
 }
-import { collisionLogSystem } from "./sandpackFiles/4/src/collisionLogSystem";
+import { threadId } from "worker_threads";

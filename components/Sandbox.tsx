@@ -4,7 +4,7 @@ import { Sandpack, SandpackInternal } from "@codesandbox/sandpack-react";
 import { atomDark } from "@codesandbox/sandpack-themes";
 import React from "react";
 
-export const Sandbox: SandpackInternal = ({ files, ...rest }) => {
+export const Sandbox: SandpackInternal = ({ ...rest }) => {
   const [isClient, setIsClient] = React.useState(false);
 
   React.useEffect(() => {
@@ -12,7 +12,7 @@ export const Sandbox: SandpackInternal = ({ files, ...rest }) => {
   }, []);
 
   return isClient ? (
-    <Sandpack theme={atomDark} files={files} {...rest} />
+    <Sandpack theme={atomDark} {...rest} />
   ) : (
     <div
       style={{
