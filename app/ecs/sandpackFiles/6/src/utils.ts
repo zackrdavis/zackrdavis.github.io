@@ -64,6 +64,8 @@ export const makeSquare = (opts: {
     },
     playerControl: opts.role === "player",
     friction: opts.role === "player" ? 0.8 : 0.01,
+    infectable: opts.role === "civilian",
+    infectious: opts.role === "zombie",
   } as Entity);
 
 export const makeWall = (opts: {

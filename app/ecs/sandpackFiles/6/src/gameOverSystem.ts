@@ -1,28 +1,55 @@
-import { Entity } from "./entities";
+// import { Entity } from "./entities";
 
-export const gameOverSystem = (entities: Entity[]) => {
-  let humans = 0;
+// export const gameOverSystem = (entities: Entity[]) => {
+//   let humans = 0;
 
-  for (const entity of entities) {
-    // Count the survivors.
-    if (entity.appearance?.color === "pink") {
-      humans++;
-    }
+//   for (const entity of entities) {
+//     // Count the survivors.
+//     if (entity.infectable) {
+//       humans++;
+//     }
 
-    if (entity.appearance?.color === "yellow" && entity.collisionBox) {
-      const { collisions } = entity.collisionBox;
+//     // Loop through goal's collisions to check for survivors.
+//     if (entity.goal && entity.collisionBox?.collisions.length) {
+//       for (const collision of entity.collisionBox.collisions) {
+//         const otherEnt = entities.find(
+//           (ent) => ent.id === collision.otherEntId
+//         );
 
-      for (const collision of collisions) {
-        const otherEnt = entities.find(
-          (ent) => ent.id === collision.otherEntId
-        );
+//         // Check if the player has collided with a zombie.
+//         if (otherEnt?.infectable) {
+//           console.log("Game Over");
+//           return;
+//         }
+//       }
+//     }
+//   }
+// };
 
-        // Check if the player has collided with a zombie.
-        if (otherEnt?.appearance?.color === "pink") {
-          console.log("Game Over");
-          return;
-        }
-      }
-    }
-  }
+const winText = {
+  id: "message",
+  appearance: {
+    color: "pink",
+    width: 250,
+    height: 60,
+    text: "You Win!",
+  },
+  position: {
+    x: 30,
+    y: 120,
+  },
+};
+
+const loseText = {
+  id: "message",
+  appearance: {
+    color: "green",
+    width: 280,
+    height: 60,
+    text: "You Lose!",
+  },
+  position: {
+    x: 10,
+    y: 120,
+  },
 };

@@ -33,7 +33,7 @@ export const reboundSystem = (entities: Entity[]) => {
         const otherEntity = entities.find((ent) => ent.id === otherEntId);
 
         // Skip if the other entity is not solid.
-        if (!otherEntity?.rigidBody) return false;
+        if (!otherEntity?.rigidBody) continue;
 
         // Get the collision axis.
         const xCollision = Math.abs(yOverlap) > Math.abs(xOverlap);

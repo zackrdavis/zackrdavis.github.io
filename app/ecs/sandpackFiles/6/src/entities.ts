@@ -128,32 +128,26 @@ const startWallRight = makeWall({
   y: 10,
 });
 
-const winText = {
-  id: "message",
+const goal = {
+  id: "goal",
+  goal: true,
   appearance: {
-    color: "pink",
-    width: 250,
-    height: 60,
-    text: "You Win!",
+    width: 50,
+    height: 50,
+    color: "orange",
   },
   position: {
-    x: 30,
-    y: 120,
+    x: 100,
+    y: 100,
   },
-};
-
-const loseText = {
-  id: "message",
-  appearance: {
-    color: "green",
-    width: 280,
-    height: 60,
-    text: "You Lose!",
+  collisionBox: {
+    width: 50,
+    height: 50,
+    collisions: [],
   },
-  position: {
-    x: 10,
-    y: 120,
-  },
+  // rigidBody: {
+  //   stuck: false,
+  // },
 };
 
 export const entities = [
@@ -174,6 +168,5 @@ export const entities = [
 
   startWallRight,
 
-  // loseText,
-  // winText,
+  goal,
 ];
