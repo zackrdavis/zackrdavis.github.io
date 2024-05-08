@@ -29,6 +29,9 @@ export type Entity = {
     height: number;
     collisions: Collision[];
   };
+  rigidBody?: {
+    stuck: boolean;
+  };
 };
 
 // Green
@@ -53,53 +56,8 @@ const entity1 = {
     height: 20,
     collisions: [],
   },
-};
-
-// Green
-const entity3 = {
-  id: "#ent3",
-  appearance: {
-    width: 20,
-    height: 20,
-    color: "mediumSeaGreen",
-  },
-  position: {
-    x: 200,
-    y: 200,
-  },
-  velocity: {
-    x: 0.8,
-    y: -1,
-  },
-  friction: 0.01,
-  collisionBox: {
-    width: 20,
-    height: 20,
-    collisions: [],
-  },
-};
-
-// Green
-const entity4 = {
-  id: "#ent4",
-  appearance: {
-    width: 20,
-    height: 20,
-    color: "mediumSeaGreen",
-  },
-  position: {
-    x: 220,
-    y: 220,
-  },
-  velocity: {
-    x: 0.8,
-    y: -1,
-  },
-  friction: 0.01,
-  collisionBox: {
-    width: 20,
-    height: 20,
-    collisions: [],
+  rigidBody: {
+    stuck: false,
   },
 };
 
@@ -113,8 +71,6 @@ const entity2 = {
     color: "tomato",
   },
   position: {
-    // x: 160,
-    // y: 140,
     x: 260,
     y: 220,
   },
@@ -127,6 +83,9 @@ const entity2 = {
     width: 20,
     height: 20,
     collisions: [],
+  },
+  rigidBody: {
+    stuck: false,
   },
 };
 
@@ -146,6 +105,9 @@ const wallTop = {
     height: 20,
     collisions: [],
   },
+  rigidBody: {
+    stuck: true,
+  },
 };
 
 const wallBottom = {
@@ -163,6 +125,9 @@ const wallBottom = {
     width: 280,
     height: 20,
     collisions: [],
+  },
+  rigidBody: {
+    stuck: true,
   },
 };
 
@@ -182,6 +147,9 @@ const wallLeft = {
     height: 280,
     collisions: [],
   },
+  rigidBody: {
+    stuck: true,
+  },
 };
 
 const wallRight = {
@@ -200,15 +168,14 @@ const wallRight = {
     height: 280,
     collisions: [],
   },
+  rigidBody: {
+    stuck: true,
+  },
 };
 
 export const entities = [
   entity1,
   entity2,
-
-  entity3,
-  entity4,
-
   wallTop,
   wallBottom,
   wallLeft,

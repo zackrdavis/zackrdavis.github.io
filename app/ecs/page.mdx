@@ -42,6 +42,16 @@ import reboundSystemTs5 from "!!raw-loader!./sandpackFiles/5/src/reboundSystem.t
 import forEntsWithTs5 from "!!raw-loader!./sandpackFiles/5/src/forEntsWith.ts";
 import entitiesTs5 from "!!raw-loader!./sandpackFiles/5/src/entities.ts";
 
+import engineTs6 from "!!raw-loader!./sandpackFiles/6/src/engine.ts";
+import renderSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/renderSystem.ts";
+import inputSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/inputSystem.ts";
+import momentumSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/momentumSystem.ts";
+import collisionSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/collisionSystem.ts";
+import reboundSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/reboundSystem.ts";
+import zombieSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/zombieSystem.ts";
+import utilsTs6 from "!!raw-loader!./sandpackFiles/6/src/utils.ts";
+import entitiesTs6 from "!!raw-loader!./sandpackFiles/6/src/entities.ts";
+
 # Entity + Component + System
 
 ## A surprisingly simple way to build a universe
@@ -213,17 +223,17 @@ options={{
 
 ## ReboundSystem
 
-Collisions are relatively easy to model here because everything is a rectangle and doesn't rotate. Assuming entities are perfectly elastic, we can model the rebound between moving entities as a trade of velocities. But some entities should be immovable, like walls. If the other entity doesn't have a velocity component, we'll reverse the velocity of the moving entity on its axis of impact.
+Not all entities should rebound. To make the rebound capacity explicit, I'll add a `rigidBody` component, with a nested property `stuck` to indicate that an entity is immovable, useful for walls. The `reboundSystem` will only act on entities with `rigidBody` components.
 
-So we need to know the axis of the collision. As you explore collisions above, you'll see that the overlap with the smaller absolute value generally indicates the axis. That stops being true as the overlap becomes more complete, but hopefully our rebound system prevents this from happening!
+Collisions are relatively easy to model here because everything is a rectangle and doesn't rotate. Assuming entities are perfectly elastic, we can model the rebound between moving entities as a trade of velocities on the impact axis. If the other entity is stuck we reverse the moving entity's velocity on the impact axis instead.
 
-In addition to the velocity updates, we can use the saved overlap value to instantly place entities safely outside collision bounds, which instantly fixed a lot of bugs.
+So we need to know the axis of the collision. As you explore collisions above, you'll see that the overlap with the smaller absolute value generally indicates the axis. That stops being true as the overlap becomes more complete, but hopefully our rebound system prevents this from happening! The overlap value also lets us place entities safely outside of collision bounds. Lots of buggy behavior just vanished when I figured this out.
 
 There are a couple of interesting loops to notice in the reboundSystem. First of all, we're not applying the new position/velocity values as soon as we discover them. If we did, entities that get checked later in the `reboundSystem` wouldn't be responding to their counterpart's velocity at the time of impact, but to the velocity they themselves had imparted! So we collect all the updates and apply them in a second loop.
 
-There's also a loop over multiple collisions that might accrue on a single entity. If an entity runs directly into a corner formed by 2 walls, though the collisions may be simultaneous, we can treat them collisions sequentially. Wall-X reverses X velocity, then wall-Y reverses the Y velocity, and the entity flies out in the opposite direction.
+There's also a loop over multiple collisions accrued on a single entity, like when an entity runs directly into a corner formed by 2 walls. Though the collisions may be simultaneous, we treat them sequentially: Wall-X reverses X velocity, then wall-Y reverses the Y velocity, and the entity flies back in the opposite direction.
 
-It was a lot of work, but now we can bounce other entities around and keep the game contained with walls, which we got practically for free.
+It was a lot of work, but things are getting interesting in there. We can bounce other entities around and keep everything contained to the canvas with walls, which came practically for free.
 
 <Sandbox
   template="vanilla-ts"
@@ -257,7 +267,21 @@ options={{
 
 ## Win Condition
 
-It's finally time to make the game winnable. Green entities are bouncing around turning other entities green on contact. The objective is to shepherd two pink entities into the yellow safe-zone without turning green yourself.
+It's finally time to make the game winnable. You win if you can shepherd a pink survivor to the yellow safe-zone. You lose if green squares, which are zombies, infect all of the pink squares. Your player square is immune to zombies.
+
+Three new systems are needed here:
+
+- `infectionSystem`: Convert pink squares to green on contact with zombies.
+- `lurchSystem`: Give zombies a bit of random movement when they run out of momentum.
+- `gameOverSystem`: Detect win/loss conditions and show a message. We'll update the `appearance` component with some _very_ basic text rendering to support this.
+
+We'll also want some new components. We could handle all of the logic above using `appearance.color`, but better to be explicit.
+
+- `infectious`: A flag to indicate a zombie.
+- `infectable`: A flag to indicate that a square can become a zombie.
+- `goal`: A flag to indicate the goal box.
+
+We'll need a lot of entities for this, so I've added some utility functions to reduce boilerplate, `makeSquare` and `makeWall`.
 
 <Sandbox
   template="vanilla-ts"
@@ -265,14 +289,15 @@ It's finally time to make the game winnable. Green entities are bouncing around 
     "/index.html": indexHtml2,
     "/styles.css": styles2,
     "/index.ts": indexTs2,
-    "/src/engine.ts": engineTs5,
-    "/src/renderSystem.ts": renderSystemTs5,
-    "/src/inputSystem.ts": inputSystemTs5,
-    "/src/momentumSystem.ts": momentumSystemTs5,
-    "/src/collisionSystem.ts": collisionSystemTs5,
-    "/src/reboundSystem.ts": reboundSystemTs5,
-    "/src/forEntsWith.ts": forEntsWithTs5,
-    "/src/entities.ts": entitiesTs5,
+    "/src/engine.ts": engineTs6,
+    "/src/renderSystem.ts": renderSystemTs6,
+    "/src/inputSystem.ts": inputSystemTs6,
+    "/src/momentumSystem.ts": momentumSystemTs6,
+    "/src/collisionSystem.ts": collisionSystemTs6,
+    "/src/reboundSystem.ts": reboundSystemTs6,
+    "/src/zombieSystem.ts": zombieSystemTs6,
+    "/src/utils.ts": utilsTs6,
+    "/src/entities.ts": entitiesTs6,
     "/package.json": `{
       "dependencies": {},
         "devDependencies": {
@@ -286,6 +311,9 @@ It's finally time to make the game winnable. Green entities are bouncing around 
 options={{
     visibleFiles: ["/src/collisionSystem.ts", "/src/reboundSystem.ts", "/src/entities.ts"],
     activeFile: "/src/collisionSystem.ts",
+    classes: {
+      "sp-layout": "custom-layout",
+    },
   }}
 />
 
@@ -293,3 +321,5 @@ export default function MDXPage({ children }) {
   return <MdxLayout>{children}</MdxLayout>;
 }
 import { threadId } from "worker_threads";
+import { verify } from "crypto";
+import { zombieSystem } from "./sandpackFiles/6/src/zombieSystem";

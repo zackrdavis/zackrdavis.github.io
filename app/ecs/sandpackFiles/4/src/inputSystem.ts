@@ -1,6 +1,6 @@
 import { Entity } from "./entities";
 
-const maxSpeed = 5;
+const maxSpeed = 7;
 const accel = 3;
 
 const pressedKeys = {

@@ -56,7 +56,7 @@ const entity2 = {
     x: 0,
     y: 0,
   },
-  friction: 0.05,
+  friction: 0.8,
 };
 
 export const entities = [entity1, entity2];
