@@ -3,8 +3,9 @@ import { inputSystem } from "./inputSystem";
 import { momentumSystem } from "./momentumSystem";
 import { collisionSystem } from "./collisionSystem";
 import { reboundSystem } from "./reboundSystem";
-// import { zombieSystem } from "./zombieSystem";
-// import { gameoverSystem } from "./gameoverSystem";
+import { zombieSystem } from "./zombieSystem";
+import { lurchSystem } from "./lurchSystem";
+import { gameOverSystem } from "./gameOverSystem";
 import { entities } from "./entities";
 
 const systems = [
@@ -13,8 +14,9 @@ const systems = [
   reboundSystem,
   momentumSystem,
   collisionSystem,
-  // zombieSystem,
-  // gameoverSystem,
+  zombieSystem,
+  lurchSystem,
+  gameOverSystem,
   // collisionLogSystem,
 ];
 

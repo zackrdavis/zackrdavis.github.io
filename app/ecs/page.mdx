@@ -49,6 +49,8 @@ import momentumSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/momentumSystem
 import collisionSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/collisionSystem.ts";
 import reboundSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/reboundSystem.ts";
 import zombieSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/zombieSystem.ts";
+import lurchSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/lurchSystem.ts";
+import gameOverSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/gameOverSystem.ts";
 import utilsTs6 from "!!raw-loader!./sandpackFiles/6/src/utils.ts";
 import entitiesTs6 from "!!raw-loader!./sandpackFiles/6/src/entities.ts";
 
@@ -296,6 +298,8 @@ We'll need a lot of entities for this, so I've added some utility functions to r
     "/src/collisionSystem.ts": collisionSystemTs6,
     "/src/reboundSystem.ts": reboundSystemTs6,
     "/src/zombieSystem.ts": zombieSystemTs6,
+    "/src/lurchSystem.ts": lurchSystemTs6,
+    "/src/gameOverSystem.ts": gameOverSystemTs6,
     "/src/utils.ts": utilsTs6,
     "/src/entities.ts": entitiesTs6,
     "/package.json": `{
@@ -323,3 +327,5 @@ export default function MDXPage({ children }) {
 import { threadId } from "worker_threads";
 import { verify } from "crypto";
 import { zombieSystem } from "./sandpackFiles/6/src/zombieSystem";
+import { gameOverSystem } from "./sandpackFiles/6/src/gameOverSystem";
+import { lurchSystem } from "./sandpackFiles/6/src/lurchSystem";

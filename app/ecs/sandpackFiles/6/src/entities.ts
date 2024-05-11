@@ -41,6 +41,7 @@ export type Entity = {
 };
 
 const player = makeSquare({
+  id: "player",
   role: "player",
   x: 30,
   y: 100,
@@ -68,22 +69,14 @@ const zombie1 = makeSquare({
   role: "zombie",
   x: 120,
   y: 140,
-  vx: 0.8,
-  vy: -1,
+  vx: -0,
+  vy: 1.5,
 });
 
 const zombie2 = makeSquare({
   role: "zombie",
   x: 200,
   y: 200,
-  vx: 0.8,
-  vy: -1,
-});
-
-const zombie3 = makeSquare({
-  role: "zombie",
-  x: 220,
-  y: 220,
   vx: 0.8,
   vy: -1,
 });
@@ -120,11 +113,19 @@ const wallRight = makeWall({
   y: 10,
 });
 
-const startWallRight = makeWall({
+const startWall = makeWall({
   orientation: "y",
   length: 90,
   thickness: 20,
   x: 70,
+  y: 10,
+});
+
+const goalWall = makeWall({
+  orientation: "y",
+  length: 50,
+  thickness: 20,
+  x: 200,
   y: 10,
 });
 
@@ -137,7 +138,7 @@ const goal = {
     color: "orange",
   },
   position: {
-    x: 100,
+    x: 20,
     y: 100,
   },
   collisionBox: {
@@ -145,13 +146,10 @@ const goal = {
     height: 50,
     collisions: [],
   },
-  // rigidBody: {
-  //   stuck: false,
-  // },
 };
 
 export const entities = [
-  player,
+  goal,
 
   civ1,
   civ2,
@@ -159,14 +157,14 @@ export const entities = [
 
   zombie1,
   zombie2,
-  zombie3,
+
+  player,
 
   wallTop,
   wallBottom,
   wallLeft,
   wallRight,
 
-  startWallRight,
-
-  goal,
+  startWall,
+  goalWall,
 ];
