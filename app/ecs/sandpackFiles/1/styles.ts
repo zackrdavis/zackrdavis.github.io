@@ -1,29 +1,16 @@
 export const styles = `body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    font-size: 30px;
-    color: white;
     width: 100vw;
     height: 100vh;
+    background: black;
     display: flex;
-    justify-content: center;
-    gap: 20px;
     align-items: center;
+    justify-content: center;
   }
 
-  .ent {
-    border-radius:100%;
-    min-width: 100px;
-    min-height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  #ent1 {
-    background: mediumSeaGreen;
-  }
-
-  #ent2 {
-    background: tomato;
+  canvas {
+    width: auto;
+    height: 99%;
+    aspect-ratio: 1;
+    background: white;
   }`;

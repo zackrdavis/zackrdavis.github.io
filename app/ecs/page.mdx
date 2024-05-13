@@ -6,7 +6,7 @@ import { styles as styles1 } from "./sandpackFiles/1/styles.ts";
 import indexHtml1 from "!!raw-loader!./sandpackFiles/1/index.html";
 import indexTs1 from "!!raw-loader!./sandpackFiles/1/index.ts";
 import engineTs1 from "!!raw-loader!./sandpackFiles/1/src/engine.ts";
-import renderSystemTs1 from "!!raw-loader!./sandpackFiles/1/src/renderSystem.ts";
+import systemsTs1 from "!!raw-loader!./sandpackFiles/1/src/systems.ts";
 import entitiesTs1 from "!!raw-loader!./sandpackFiles/1/src/entities.ts";
 
 import { styles as styles2 } from "./sandpackFiles/2/styles.ts";
@@ -58,21 +58,21 @@ import entitiesTs6 from "!!raw-loader!./sandpackFiles/6/src/entities.ts";
 
 ## A surprisingly simple way to build a universe
 
-If you're looking for a programming project that's as far as possible from building a React app or a CRUD API, may I suggest handcrafting a tiny game engine and setting a universe in motion?
+If you're looking for a programming project that's as far as possible from building a React app, may I suggest handcrafting a tiny game engine and setting a universe in motion?
 
-That's what I was after when I came across a handful of blog posts about the Entity-Component-System architecture (ECS). Internet people say that ECS makes games easy to extend in an open-ended, additive process. That sounds like my ideal of recreational programming. There are lots of ways to build an ECS, and lots of optimization tricks to make it work at scale. I made mine up as I went along and didn't do any optimization. In the end, without any particular planning, I ended up with something fun. The scale was tiny and I don't have any other gamedev experience to compare it to, but I think ECS delivered.
+That's what I was after when I came across a handful of blog posts about the Entity-Component-System architecture (ECS). First it was the [Starmancer devblog](https://www.playstarmancer.com/devblog/2018/9/25/component-system-same-face-new-engine), which didn't reference ECS directly but gave a feel for the pleasure of a radically extensible game engine. Then I found Maxwell Forbes' magisterial series on [building an ECS in Typescript](https://maxwellforbes.com/posts/typescript-ecs-what/).
 
-I'll demonstrate the core of the engine and then start adding game dynamics. By the end, I hope making your own tiny game engine seems both approachable and fun.
+Proponents say that ECS manages the complexity of interacting game dynamics by keeping them decoupled. If you're less worried about what breaks when you add or edit a game dynamic, then you're closer to an open-ended, additive process – my ideal of recreational programming.
+
+There are lots of ways to build an ECS, and lots of optimization tricks to make it work at scale. I made mine up as I went along and didn't do any optimization, but I ended up with something pretty fun. I've never made a real-time game before, so I was pleasantly surprised that I could noodle my way to where I ended up.
 
 ## The Concept
 
-_Entities_ are just bags of properties. These properties are called _components_, and they change over time thanks to _systems_.
+_Entities_ are just bags of properties. These properties are called _components_, and they store the state of the game. They change over time thanks to _systems_. A system is concerned with one or more specific components. It looks at every entity with those components and makes some changes. At every tick of game time, each system takes its turn processing its relevant entities. I think this is a decent minimal definition of an ECS, but feel free to consider this an engagement gambit: tell me how I'm wrong!
 
-A system is concerned with one or more specific components. It looks at every entity with those components and makes some changes. At every tick of game time, each system takes its turn processing all of its relevant entities. Systems run in the same order every time.
+One thing missing from my implementation is a way for systems to efficiently query for entities they should act on, a basic affordance of any real ECS engine. I never encountered any performance issues at this tiny scale, so I couldn't bring myself to obscure the beautiful simplicity of the core loops.
 
-Below, there are two entities, one using the `incrementSystem` and the other using that _and_ the `rotateSystem`. There's also a special `renderSystem`. Soon we'll switch these systems and components out, but the core loop won't change as we progress to a game with collision physics.
-
-A couple notes about these code sandboxes: they're made with the incredible [Sandpack](https://sandpack.codesandbox.io/), and I'll often hide some files to keep focus on what's changing. You can always click "Open Sandbox" to see the full code.
+A couple notes about these code sandboxes: they're made with the wonderful [Sandpack](https://sandpack.codesandbox.io/), and I'll often hide some files to keep focus on what's changing. You can always click "Open Sandbox" to see the full code.
 
 <Sandbox
   template="vanilla-ts"
@@ -81,7 +81,7 @@ A couple notes about these code sandboxes: they're made with the incredible [San
     "/styles.css": styles1,
     "/index.ts": indexTs1,
     "/src/engine.ts": engineTs1,
-    "/src/renderSystem.ts": renderSystemTs1,
+    "/src/systems.ts": systemsTs1,
     "/src/entities.ts":entitiesTs1,
     "/package.json": `{
       "dependencies": {},
@@ -94,20 +94,24 @@ A couple notes about these code sandboxes: they're made with the incredible [San
 
 }}
 options={{
-  visibleFiles: ["/src/engine.ts","/src/entities.ts", "/src/renderSystem.ts",],
+  visibleFiles: ["/src/engine.ts","/src/entities.ts", "/src/systems.ts",],
   activeFile: "/src/engine.ts",
 }}
 />
 
-## Universe Input/Output
-
-The `renderSystem` is an odd duck. It knows about non-gameworld things like the DOM (or, depending on our rendering target, the canvas API or even WebSockets). And we'll need another special system, `inputSystem`, to listen for keyboard events. I want to keep these these "impure" systems as self-contained as possible. This makes the game easier to test and more portable to other platforms.
-
-Below, we've switched our rendering from div styling to canvas drawing and increased the framerate to ~30fps. The count and rotation properties are gone, replaced by the ones our game will actually use:
+There are three entities above, using different combinations of three components:
 
 - `position`: Where is the entity in 2D space; where should we draw it?
 - `appearance`: How does the entity look in terms of width, height and fill-color? This could later refer to a sprite or a 3D model.
-- `playerControl`: Does the entity respond to keyboard input?
+- `velocity`: How does its position change before the next tick?
+
+The `momentumSystem` sees that Red and Green have position and velocity, so it updates their position _by_ their velocity. So simple! Notice how there's not a 1-to-1 mapping between components and systems. Systems generally act as causal links between bits of state.
+
+## Universe Input/Output
+
+The `renderSystem` is an odd duck. It knows about non-gameworld things like the DOM and the canvas API. And we'll need another special system, `inputSystem`, to listen for keyboard events. It feels pretty natural to keep these "impure" systems self-contained, which makes it easier to write tests, or even port the game to another platform, like a Node server.
+
+Below, we've switched our rendering from div styling to canvas drawing and increased the framerate to ~30fps. The count and rotation properties are gone, replaced by the ones our game will actually use:
 
 Notice how these components don't map 1-to-1 onto systems. `renderSystem` needs `position` and `appearance`, while `inputSystem` needs `playerControl` and `position`. Systems act as causal links between changing bits of state.
 

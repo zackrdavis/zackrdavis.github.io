@@ -3,21 +3,69 @@ export type Entity = {
   id: string;
 
   // Optional Components
-  count?: number;
-  angle?: number;
-};
-
-// Green
-const entity1 = {
-  id: "#ent1",
-  count: 0,
+  appearance?: {
+    color: string;
+    width: number;
+    height: number;
+  };
+  position?: {
+    x: number;
+    y: number;
+  };
+  velocity?: {
+    x: number;
+    y: number;
+  };
 };
 
 // Red
-const entity2 = {
-  id: "#ent2",
-  count: 10,
-  angle: 0,
+const red = {
+  id: "red",
+  appearance: {
+    width: 20,
+    height: 20,
+    color: "tomato",
+  },
+  position: {
+    x: 0,
+    y: 0,
+  },
+  velocity: {
+    x: 0.2,
+    y: 0.2,
+  },
 };
 
-export const entities = [entity1, entity2];
+// Green
+const green: Entity = {
+  id: "green",
+  appearance: {
+    width: 20,
+    height: 20,
+    color: "mediumSeaGreen",
+  },
+  position: {
+    x: 300,
+    y: 0,
+  },
+  velocity: {
+    x: -0.4,
+    y: 0.4,
+  },
+};
+
+// Pink
+const pink = {
+  id: "pink",
+  appearance: {
+    width: 20,
+    height: 20,
+    color: "pink",
+  },
+  position: {
+    x: 150,
+    y: 150,
+  },
+};
+
+export const entities = [red, green, pink];
