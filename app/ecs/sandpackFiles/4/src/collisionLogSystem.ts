@@ -3,7 +3,7 @@ import { Entity } from "./entities";
 let lastLog = "";
 
 export const collisionLogSystem = (entities: Entity[]) => {
-  const { collisionBox } = entities[1];
+  const { collisionBox } = entities[2];
 
   const logText = collisionBox?.collisions?.length
     ? JSON.stringify(collisionBox.collisions, null, 2)

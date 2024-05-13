@@ -103,4 +103,4 @@ const entity3 = {
   },
 };
 
-export const entities = [entity1, entity2, entity3];
+export const entities = [entity1, entity3, entity2];
