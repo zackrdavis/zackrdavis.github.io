@@ -12,36 +12,65 @@ export type Entity = {
     x: number;
     y: number;
   };
+  velocity?: {
+    x: number;
+    y: number;
+  };
+  friction?: number;
   playerControl?: boolean;
 };
 
-// Green
-const entity1 = {
-  id: "#ent1",
-  appearance: {
-    width: 20,
-    height: 20,
-    color: "mediumSeaGreen",
-  },
-  position: {
-    x: 120,
-    y: 140,
-  },
-};
-
 // Red
-const entity2 = {
-  id: "#ent2",
+const red = {
+  id: "red",
   appearance: {
     width: 20,
     height: 20,
     color: "tomato",
   },
   position: {
-    x: 160,
-    y: 140,
+    x: 100,
+    y: 100,
   },
+  velocity: {
+    x: 0,
+    y: 0,
+  },
+  friction: 0.8,
   playerControl: true,
 };
 
-export const entities = [entity1, entity2];
+// Green
+const green = {
+  id: "green",
+  appearance: {
+    width: 20,
+    height: 20,
+    color: "mediumSeaGreen",
+  },
+  position: {
+    x: 300,
+    y: 0,
+  },
+  velocity: {
+    x: -2,
+    y: 2,
+  },
+  friction: 0.01,
+};
+
+// Pink
+const pink = {
+  id: "pink",
+  appearance: {
+    width: 20,
+    height: 20,
+    color: "pink",
+  },
+  position: {
+    x: 150,
+    y: 150,
+  },
+};
+
+export const entities: Entity[] = [red, green, pink];

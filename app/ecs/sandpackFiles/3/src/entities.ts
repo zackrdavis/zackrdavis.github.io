@@ -1,3 +1,9 @@
+type Collision = {
+  otherEntId: string;
+  xOverlap: number;
+  yOverlap: number;
+};
+
 export type Entity = {
   // Mandatory
   id: string;
@@ -18,25 +24,35 @@ export type Entity = {
     y: number;
   };
   friction?: number;
+  collisionBox?: {
+    width: number;
+    height: number;
+    collisions: Collision[];
+  };
 };
 
 // Green
 const entity1 = {
   id: "#ent1",
   appearance: {
-    width: 20,
-    height: 20,
+    width: 50,
+    height: 50,
     color: "mediumSeaGreen",
   },
   position: {
     x: 120,
-    y: 140,
+    y: 50,
   },
   velocity: {
-    x: 0.8,
-    y: -1,
+    x: 0,
+    y: 0,
   },
   friction: 0.01,
+  collisionBox: {
+    width: 50,
+    height: 50,
+    collisions: [],
+  },
 };
 
 // Red
@@ -46,7 +62,7 @@ const entity2 = {
   appearance: {
     width: 20,
     height: 20,
-    color: "tomato",
+    color: "rgba(255, 0, 0, 0.5)",
   },
   position: {
     x: 160,
@@ -57,6 +73,34 @@ const entity2 = {
     y: 0,
   },
   friction: 0.8,
+  collisionBox: {
+    width: 20,
+    height: 20,
+    collisions: [],
+  },
 };
 
-export const entities = [entity1, entity2];
+const entity3 = {
+  id: "#ent3",
+  appearance: {
+    width: 10,
+    height: 70,
+    color: "gray",
+  },
+  position: {
+    x: 50,
+    y: 140,
+  },
+  velocity: {
+    x: 0,
+    y: 0,
+  },
+  friction: 0.01,
+  collisionBox: {
+    width: 10,
+    height: 70,
+    collisions: [],
+  },
+};
+
+export const entities: Entity[] = [entity1, entity3, entity2];

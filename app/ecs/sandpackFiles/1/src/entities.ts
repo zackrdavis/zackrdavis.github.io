@@ -37,7 +37,7 @@ const red = {
 };
 
 // Green
-const green: Entity = {
+const green = {
   id: "green",
   appearance: {
     width: 20,
@@ -68,4 +68,4 @@ const pink = {
   },
 };
 
-export const entities = [red, green, pink];
+export const entities: Entity[] = [red, green, pink];

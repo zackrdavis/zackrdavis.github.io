@@ -2,15 +2,16 @@ import { renderSystem } from "./renderSystem";
 import { inputSystem } from "./inputSystem";
 import { momentumSystem } from "./momentumSystem";
 import { collisionSystem } from "./collisionSystem";
-import { collisionLogSystem } from "./collisionLogSystem";
+import { reboundSystem } from "./reboundSystem";
 import { entities } from "./entities";
 
 const systems = [
   inputSystem,
   renderSystem,
+  reboundSystem,
   momentumSystem,
   collisionSystem,
-  collisionLogSystem,
+  // collisionLogSystem,
 ];
 
 // At each tick, run all systems against all entities.

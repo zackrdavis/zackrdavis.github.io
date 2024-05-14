@@ -8,7 +8,7 @@ export const styles = `body {
     justify-content: center;
   }
 
-  #canvas {
+  canvas {
     width: auto;
     height: 99%;
     aspect-ratio: 1;

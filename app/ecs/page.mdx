@@ -2,34 +2,37 @@ import { MdxLayout } from "../../components/MdxLayout";
 import { ImageFull } from "../../components/ImageFull";
 import { Sandbox } from "../../components/Sandbox";
 
-import { styles as styles1 } from "./sandpackFiles/1/styles.ts";
-import indexHtml1 from "!!raw-loader!./sandpackFiles/1/index.html";
-import indexTs1 from "!!raw-loader!./sandpackFiles/1/index.ts";
+import { styles } from "./sandpackFiles/1/styles.ts";
+import indexHtml from "!!raw-loader!./sandpackFiles/1/index.html";
+import indexTs from "!!raw-loader!./sandpackFiles/1/index.ts";
+
 import engineTs1 from "!!raw-loader!./sandpackFiles/1/src/engine.ts";
-import systemsTs1 from "!!raw-loader!./sandpackFiles/1/src/systems.ts";
 import entitiesTs1 from "!!raw-loader!./sandpackFiles/1/src/entities.ts";
+import renderSystemTs1 from "!!raw-loader!./sandpackFiles/1/src/renderSystem.ts";
+import momentumSystemTs1 from "!!raw-loader!./sandpackFiles/1/src/momentumSystem.ts";
 
-import { styles as styles2 } from "./sandpackFiles/2/styles.ts";
-import indexHtml2 from "!!raw-loader!./sandpackFiles/2/index.html";
-import indexTs2 from "!!raw-loader!./sandpackFiles/2/index.ts";
 import engineTs2 from "!!raw-loader!./sandpackFiles/2/src/engine.ts";
-import renderSystemTs2 from "!!raw-loader!./sandpackFiles/2/src/renderSystem.ts";
-import inputSystemTs2 from "!!raw-loader!./sandpackFiles/2/src/inputSystem.ts";
 import entitiesTs2 from "!!raw-loader!./sandpackFiles/2/src/entities.ts";
+import renderSystemTs2 from "!!raw-loader!./sandpackFiles/2/src/renderSystem.ts";
+import momentumSystemTs2 from "!!raw-loader!./sandpackFiles/2/src/momentumSystem.ts";
+import inputSystemTs2 from "!!raw-loader!./sandpackFiles/2/src/inputSystem.ts";
 
+import indexHtml3 from "!!raw-loader!./sandpackFiles/3/index.html";
 import engineTs3 from "!!raw-loader!./sandpackFiles/3/src/engine.ts";
+import entitiesTs3 from "!!raw-loader!./sandpackFiles/3/src/entities.ts";
 import renderSystemTs3 from "!!raw-loader!./sandpackFiles/3/src/renderSystem.ts";
 import inputSystemTs3 from "!!raw-loader!./sandpackFiles/3/src/inputSystem.ts";
 import momentumSystemTs3 from "!!raw-loader!./sandpackFiles/3/src/momentumSystem.ts";
-import entitiesTs3 from "!!raw-loader!./sandpackFiles/3/src/entities.ts";
+import collisionSystemTs3 from "!!raw-loader!./sandpackFiles/3/src/collisionSystem.ts";
+import collisionLogSystemTs3 from "!!raw-loader!./sandpackFiles/3/src/collisionLogSystem.ts";
+import forEntsWithTs3 from "!!raw-loader!./sandpackFiles/3/src/forEntsWith.ts";
 
-import indexHtml4 from "!!raw-loader!./sandpackFiles/4/index.html";
 import engineTs4 from "!!raw-loader!./sandpackFiles/4/src/engine.ts";
 import renderSystemTs4 from "!!raw-loader!./sandpackFiles/4/src/renderSystem.ts";
 import inputSystemTs4 from "!!raw-loader!./sandpackFiles/4/src/inputSystem.ts";
 import momentumSystemTs4 from "!!raw-loader!./sandpackFiles/4/src/momentumSystem.ts";
 import collisionSystemTs4 from "!!raw-loader!./sandpackFiles/4/src/collisionSystem.ts";
-import collisionLogSystemTs4 from "!!raw-loader!./sandpackFiles/4/src/collisionLogSystem.ts";
+import reboundSystemTs4 from "!!raw-loader!./sandpackFiles/4/src/reboundSystem.ts";
 import forEntsWithTs4 from "!!raw-loader!./sandpackFiles/4/src/forEntsWith.ts";
 import entitiesTs4 from "!!raw-loader!./sandpackFiles/4/src/entities.ts";
 
@@ -39,20 +42,11 @@ import inputSystemTs5 from "!!raw-loader!./sandpackFiles/5/src/inputSystem.ts";
 import momentumSystemTs5 from "!!raw-loader!./sandpackFiles/5/src/momentumSystem.ts";
 import collisionSystemTs5 from "!!raw-loader!./sandpackFiles/5/src/collisionSystem.ts";
 import reboundSystemTs5 from "!!raw-loader!./sandpackFiles/5/src/reboundSystem.ts";
-import forEntsWithTs5 from "!!raw-loader!./sandpackFiles/5/src/forEntsWith.ts";
+import zombieSystemTs5 from "!!raw-loader!./sandpackFiles/5/src/zombieSystem.ts";
+import lurchSystemTs5 from "!!raw-loader!./sandpackFiles/5/src/lurchSystem.ts";
+import gameOverSystemTs5 from "!!raw-loader!./sandpackFiles/5/src/gameOverSystem.ts";
+import utilsTs5 from "!!raw-loader!./sandpackFiles/5/src/utils.ts";
 import entitiesTs5 from "!!raw-loader!./sandpackFiles/5/src/entities.ts";
-
-import engineTs6 from "!!raw-loader!./sandpackFiles/6/src/engine.ts";
-import renderSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/renderSystem.ts";
-import inputSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/inputSystem.ts";
-import momentumSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/momentumSystem.ts";
-import collisionSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/collisionSystem.ts";
-import reboundSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/reboundSystem.ts";
-import zombieSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/zombieSystem.ts";
-import lurchSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/lurchSystem.ts";
-import gameOverSystemTs6 from "!!raw-loader!./sandpackFiles/6/src/gameOverSystem.ts";
-import utilsTs6 from "!!raw-loader!./sandpackFiles/6/src/utils.ts";
-import entitiesTs6 from "!!raw-loader!./sandpackFiles/6/src/entities.ts";
 
 # Entity + Component + System
 
@@ -60,29 +54,31 @@ import entitiesTs6 from "!!raw-loader!./sandpackFiles/6/src/entities.ts";
 
 If you're looking for a programming project that's as far as possible from building a React app, may I suggest handcrafting a tiny game engine and setting a universe in motion?
 
-That's what I was after when I came across a handful of blog posts about the Entity-Component-System architecture (ECS). First it was the [Starmancer devblog](https://www.playstarmancer.com/devblog/2018/9/25/component-system-same-face-new-engine), which didn't reference ECS directly but gave a feel for the pleasure of a radically extensible game engine. Then I found Maxwell Forbes' magisterial series on [building an ECS in Typescript](https://maxwellforbes.com/posts/typescript-ecs-what/).
+That's what I was after when I came across a handful of blog posts about the Entity-Component-System pattern, commonly known as ECS. First it was the [Starmancer devblog](https://www.playstarmancer.com/devblog/2018/9/25/component-system-same-face-new-engine), which didn't reference ECS directly but gave a feel for the pleasure of a radically extensible game engine. Then I found Maxwell Forbes' magisterial sequence on [building an ECS in Typescript](https://maxwellforbes.com/posts/typescript-ecs-what/).
 
-Proponents say that ECS manages the complexity of interacting game dynamics by keeping them decoupled. If you're less worried about what breaks when you add or edit a game dynamic, then you're closer to an open-ended, additive process – my ideal of recreational programming.
+Proponents say that ECS manages the complexity of interacting game dynamics by keeping them decoupled as single-responsibility systems. If you're less worried about what breaks when you add or edit a game dynamic, then you're closer to an open-ended, additive process – my ideal of recreational programming.
 
 There are lots of ways to build an ECS, and lots of optimization tricks to make it work at scale. I made mine up as I went along and didn't do any optimization, but I ended up with something pretty fun. I've never made a real-time game before, so I was pleasantly surprised that I could noodle my way to where I ended up.
 
-## The Concept
+## The Core
 
 _Entities_ are just bags of properties. These properties are called _components_, and they store the state of the game. They change over time thanks to _systems_. A system is concerned with one or more specific components. It looks at every entity with those components and makes some changes. At every tick of game time, each system takes its turn processing its relevant entities. I think this is a decent minimal definition of an ECS, but feel free to consider this an engagement gambit: tell me how I'm wrong!
 
-One thing missing from my implementation is a way for systems to efficiently query for entities they should act on, a basic affordance of any real ECS engine. I never encountered any performance issues at this tiny scale, so I couldn't bring myself to obscure the beautiful simplicity of the core loops.
+One thing missing from my implementation is a way for systems to efficiently query for entities they should act on, a basic affordance of any real engine. I never encountered any performance issues at this tiny scale, so I couldn't bring myself to obscure the beautiful simplicity of the core loops.
 
 A couple notes about these code sandboxes: they're made with the wonderful [Sandpack](https://sandpack.codesandbox.io/), and I'll often hide some files to keep focus on what's changing. You can always click "Open Sandbox" to see the full code.
 
 <Sandbox
   template="vanilla-ts"
   files={{
-    "/index.html": indexHtml1,
-    "/styles.css": styles1,
-    "/index.ts": indexTs1,
+    "/index.html": indexHtml,
+    "/styles.css": styles,
+    "/index.ts": indexTs,
+
     "/src/engine.ts": engineTs1,
-    "/src/systems.ts": systemsTs1,
     "/src/entities.ts":entitiesTs1,
+    "/src/renderSystem.ts": renderSystemTs1,
+    "/src/momentumSystem.ts": momentumSystemTs1,
     "/package.json": `{
       "dependencies": {},
         "devDependencies": {
@@ -94,39 +90,39 @@ A couple notes about these code sandboxes: they're made with the wonderful [Sand
 
 }}
 options={{
-  visibleFiles: ["/src/engine.ts","/src/entities.ts", "/src/systems.ts",],
+  visibleFiles: ["/src/engine.ts","/src/entities.ts","/src/momentumSystem.ts", "/src/renderSystem.ts", ,],
   activeFile: "/src/engine.ts",
 }}
 />
 
-There are three entities above, using different combinations of three components:
+There are three entities above, using some combination of three components:
 
 - `position`: Where is the entity in 2D space; where should we draw it?
 - `appearance`: How does the entity look in terms of width, height and fill-color? This could later refer to a sprite or a 3D model.
 - `velocity`: How does its position change before the next tick?
 
-The `momentumSystem` sees that Red and Green have position and velocity, so it updates their position _by_ their velocity. So simple! Notice how there's not a 1-to-1 mapping between components and systems. Systems generally act as causal links between bits of state.
+The `momentumSystem` sees that Red and Green have position and velocity, so it updates their position by their velocity. Notice how there's not a 1-to-1 mapping of systems to components. Systems generally act as causal links _between_ bits of state.
 
 ## Universe Input/Output
 
-The `renderSystem` is an odd duck. It knows about non-gameworld things like the DOM and the canvas API. And we'll need another special system, `inputSystem`, to listen for keyboard events. It feels pretty natural to keep these "impure" systems self-contained, which makes it easier to write tests, or even port the game to another platform, like a Node server.
+The `renderSystem` is an odd duck. It knows about non-gameworld things like the DOM and the canvas API. Similarly, the `inputSystem` below has many lines of code for translating keyboard events to player intent. As long as platform details are isolated to these systems, we should have an easy time writing tests for the other systems, and even porting the game to another platform like a Node server.
 
-Below, we've switched our rendering from div styling to canvas drawing and increased the framerate to ~30fps. The count and rotation properties are gone, replaced by the ones our game will actually use:
-
-Notice how these components don't map 1-to-1 onto systems. `renderSystem` needs `position` and `appearance`, while `inputSystem` needs `playerControl` and `position`. Systems act as causal links between changing bits of state.
+The `inputSystem` only looks at entities with `velocity` and `playerControlled`, and updates their velocity based on keypresses, affecting them a bit like a strong wind. I've also updated the `momentumSystem` to look at the `friction` component, which will slow down entities over time.
 
 At this point you can click the canvas and use your arrow keys or WASD to move the red square.
 
 <Sandbox
   template="vanilla-ts"
   files={{
-    "/index.html": indexHtml2,
-    "/styles.css": styles2,
-    "/index.ts": indexTs2,
+    "/index.html": indexHtml,
+    "/styles.css": styles,
+    "/index.ts": indexTs,
+
     "/src/engine.ts": engineTs2,
-    "/src/renderSystem.ts": renderSystemTs2,
-    "/src/inputSystem.ts": inputSystemTs2,
     "/src/entities.ts": entitiesTs2,
+    "/src/renderSystem.ts": renderSystemTs2,
+    "/src/momentumSystem.ts": momentumSystemTs2,
+    "/src/inputSystem.ts": inputSystemTs2,
     "/package.json": `{
       "dependencies": {},
         "devDependencies": {
@@ -145,43 +141,21 @@ options={{
 
 ## Toy Physics
 
-Already fun! But I wish the toy universe would do something when I'm not pressing buttons. Lets build a system to simulate momentum, with some friction so entities don't just fly away.
+Already fun! Students of _this_ universe might notice that all of these systems treat the velocity's X and Y aspect independently, so a diagonal movement will be faster than a cardinal one, and friction might bring an entity to a stop on one axis before the other, imparting a curved path. The physics feel surprisingly nice despite this, so I'm calling it good enough.
 
-For the player entity to participate in the new dynamic, the `inputSystem` will stop setting location directly and instead affect velocity, a bit like a strong wind. The new `momentumSystem` will apply velocity to position, and then apply friction to velocity, so we need these new components:
+Now it's time to add collision-detection, which will be the basis of all interaction between entities. On my first pass I thought collision and rebound would be a single system, but what if we want game conditions triggered by an invisible box? Discovering collisions should be separate from reacting to them.
 
-- `velocity`: Rate of movement on both the X and the Y axis.
-- `friction`: Decay rate for the velocity. This could be hardcoded in the momentum system, but extra friction on the player offers more control.
+I'm used to thinking of collision as a broadcast event, like the browser's `mouseEnter`, but event APIs differ between platforms, and in any case the event would have to be saved for other systems for an entire tick, likely as a component. A broadcast-free pattern emerges: the `collisionSystem` looks at entity edges and adds `collision` components to overlapping entities. Other systems can use these however they need to.
 
-Students of _this_ universe might notice that all of these systems treat the velocity's X and Y aspect independently, so a diagonal movement will be faster than a cardinal one, and friction might bring an entity to a stop on one axis before the other, imparting a curved trajectory. The physics feel surprisingly nice despite this, so I'm calling it good enough.
+We'll have to compare edges between every collidable entity, so I've written a helper function, `forEntsAndPeersWith`, to make this nested looping readable and type-safe. It also provides a filtered list of collidable peers for each entity.
 
-You might also notice that when systems update components, they're mutating the entities in place, something to avoid in React land. This is a bit faster than creating new entities for every system at every tick, and saves on garbage-collection.
+The first thing to do is clear any existing collision events from the previous tick. Because systems always run in the same order, we know that all the other systems have had a chance to see them already. Then we look at the new state of play. We compare the left, right, top, and bottom edges of every entity. If there's overlap on BOTH X and Y axes, we know they're occupying some of the same space, and we can add a collision to the `collisionBox` component. That will contain the following data:
 
-<Sandbox
-  template="vanilla-ts"
-  files={{
-    "/index.html": indexHtml2,
-    "/styles.css": styles2,
-    "/index.ts": indexTs2,
-    "/src/engine.ts": engineTs3,
-    "/src/renderSystem.ts": renderSystemTs3,
-    "/src/inputSystem.ts": inputSystemTs3,
-    "/src/momentumSystem.ts": momentumSystemTs3,
-    "/src/entities.ts": entitiesTs3,
-    "/package.json": `{
-      "dependencies": {},
-        "devDependencies": {
-          "typescript": "^4.0.0"
-        },
-      "main": "/index.html"
-    }`,
-    "/sandbox.config.json": `{ "hardReloadOnChange" :  true }`,
+- `xOverlap`: Overlap on the X axis.
+- `yOverlap`: Overlap on the Y axis.
+- `otherEntId`: The other driver's ID. This lets us get data for rebounds and more.
 
-}}
-options={{
-    visibleFiles: ["/src/momentumSystem.ts", "/src/inputSystem.ts", "/src/entities.ts"],
-    activeFile: "/src/momentumSystem.ts",
-  }}
-/>
+Below, I've provided a real-time display of the overlap data on the red player-controlled entity, which I've also made transparent.
 
 It's time to add collision-detection, which will be the basis of all interaction between entities. On my first pass I thought collision and rebound would be a single system, but what if we want game conditions triggered by an invisible box? Discovering collisions should be separate from reacting to them.
 
@@ -200,17 +174,18 @@ Below, I've provided a real-time display of the overlap data on the red player-c
 <Sandbox
   template="vanilla-ts"
   files={{
-    "/index.html": indexHtml4,
-    "/styles.css": styles2,
-    "/index.ts": indexTs2,
-    "/src/engine.ts": engineTs4,
-    "/src/renderSystem.ts": renderSystemTs4,
-    "/src/inputSystem.ts": inputSystemTs4,
-    "/src/momentumSystem.ts": momentumSystemTs4,
-    "/src/collisionSystem.ts": collisionSystemTs4,
-    "/src/collisionLogSystem.ts": collisionLogSystemTs4,
-    "/src/forEntsWith.ts": forEntsWithTs4,
-    "/src/entities.ts": entitiesTs4,
+    "/index.html": indexHtml3,
+    "/styles.css": styles,
+    "/index.ts": indexTs,
+
+    "/src/engine.ts": engineTs3,
+    "/src/renderSystem.ts": renderSystemTs3,
+    "/src/inputSystem.ts": inputSystemTs3,
+    "/src/momentumSystem.ts": momentumSystemTs3,
+    "/src/collisionSystem.ts": collisionSystemTs3,
+    "/src/collisionLogSystem.ts": collisionLogSystemTs3,
+    "/src/forEntsWith.ts": forEntsWithTs3,
+    "/src/entities.ts": entitiesTs3,
     "/package.json": `{
       "dependencies": {},
         "devDependencies": {
@@ -244,17 +219,18 @@ It was a lot of work, but things are getting interesting in there. We can bounce
 <Sandbox
   template="vanilla-ts"
   files={{
-    "/index.html": indexHtml2,
-    "/styles.css": styles2,
-    "/index.ts": indexTs2,
-    "/src/engine.ts": engineTs5,
-    "/src/renderSystem.ts": renderSystemTs5,
-    "/src/inputSystem.ts": inputSystemTs5,
-    "/src/momentumSystem.ts": momentumSystemTs5,
-    "/src/collisionSystem.ts": collisionSystemTs5,
-    "/src/reboundSystem.ts": reboundSystemTs5,
-    "/src/forEntsWith.ts": forEntsWithTs5,
-    "/src/entities.ts": entitiesTs5,
+    "/index.html": indexHtml,
+    "/styles.css": styles,
+    "/index.ts": indexTs,
+
+    "/src/engine.ts": engineTs4,
+    "/src/renderSystem.ts": renderSystemTs4,
+    "/src/inputSystem.ts": inputSystemTs4,
+    "/src/momentumSystem.ts": momentumSystemTs4,
+    "/src/collisionSystem.ts": collisionSystemTs4,
+    "/src/reboundSystem.ts": reboundSystemTs4,
+    "/src/forEntsWith.ts": forEntsWithTs4,
+    "/src/entities.ts": entitiesTs4,
     "/package.json": `{
       "dependencies": {},
         "devDependencies": {
@@ -292,20 +268,21 @@ We'll need a lot of entities for this, so I've added some utility functions to r
 <Sandbox
   template="vanilla-ts"
   files={{
-    "/index.html": indexHtml2,
-    "/styles.css": styles2,
-    "/index.ts": indexTs2,
-    "/src/engine.ts": engineTs6,
-    "/src/renderSystem.ts": renderSystemTs6,
-    "/src/inputSystem.ts": inputSystemTs6,
-    "/src/momentumSystem.ts": momentumSystemTs6,
-    "/src/collisionSystem.ts": collisionSystemTs6,
-    "/src/reboundSystem.ts": reboundSystemTs6,
-    "/src/zombieSystem.ts": zombieSystemTs6,
-    "/src/lurchSystem.ts": lurchSystemTs6,
-    "/src/gameOverSystem.ts": gameOverSystemTs6,
-    "/src/utils.ts": utilsTs6,
-    "/src/entities.ts": entitiesTs6,
+    "/index.html": indexHtml,
+    "/styles.css": styles,
+    "/index.ts": indexTs,
+
+    "/src/engine.ts": engineTs5,
+    "/src/renderSystem.ts": renderSystemTs5,
+    "/src/inputSystem.ts": inputSystemTs5,
+    "/src/momentumSystem.ts": momentumSystemTs5,
+    "/src/collisionSystem.ts": collisionSystemTs5,
+    "/src/reboundSystem.ts": reboundSystemTs5,
+    "/src/zombieSystem.ts": zombieSystemTs5,
+    "/src/lurchSystem.ts": lurchSystemTs5,
+    "/src/gameOverSystem.ts": gameOverSystemTs5,
+    "/src/utils.ts": utilsTs5,
+    "/src/entities.ts": entitiesTs5,
     "/package.json": `{
       "dependencies": {},
         "devDependencies": {
@@ -330,6 +307,6 @@ export default function MDXPage({ children }) {
 }
 import { threadId } from "worker_threads";
 import { verify } from "crypto";
-import { zombieSystem } from "./sandpackFiles/6/src/zombieSystem";
-import { gameOverSystem } from "./sandpackFiles/6/src/gameOverSystem";
-import { lurchSystem } from "./sandpackFiles/6/src/lurchSystem";
+import { zombieSystem } from "./sandpackFiles/5/src/zombieSystem";
+import { gameOverSystem } from "./sandpackFiles/5/src/gameOverSystem";
+import { lurchSystem } from "./sandpackFiles/5/src/lurchSystem";

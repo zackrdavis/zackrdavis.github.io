@@ -1,5 +1,5 @@
 import { Entity } from "./entities";
-import { forEntsWith } from "./forEntsWith";
+import { forEntsWith } from "./utils";
 
 export const collisionSystem = (entities: Entity[]) => {
   forEntsWith(["collisionBox", "position"], entities, (entity1, peers) => {

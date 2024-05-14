@@ -60,7 +60,12 @@ export const inputSystem = (entities: Entity[]) => {
     const changeVelY = bothY ? 0 : down ? accel : up ? -accel : 0;
 
     for (const entity of entities) {
-      if (entity.velocity && entity.playerControl) {
+      if (
+        entity.velocity &&
+        entity.playerControl
+        // // block controls on colliding entities
+        // entity.collisionBox?.collisions.length === 0
+      ) {
         const { x, y } = entity.velocity;
 
         // Determine the change in velocity.

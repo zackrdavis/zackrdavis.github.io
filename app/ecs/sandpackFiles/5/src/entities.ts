@@ -1,3 +1,5 @@
+import { makeSquare, makeWall } from "./utils";
+
 type Collision = {
   otherEntId: string;
   xOverlap: number;
@@ -14,6 +16,7 @@ export type Entity = {
     color: string;
     width: number;
     height: number;
+    text?: string;
   };
   position?: {
     x: number;
@@ -32,152 +35,136 @@ export type Entity = {
   rigidBody?: {
     stuck: boolean;
   };
+  infectable?: boolean;
+  infectious?: boolean;
+  goal?: boolean;
 };
 
-// Green
-const entity1 = {
-  id: "#ent1",
-  appearance: {
-    width: 20,
-    height: 20,
-    color: "mediumSeaGreen",
-  },
-  position: {
-    x: 120,
-    y: 140,
-  },
-  velocity: {
-    x: 0.8,
-    y: -1,
-  },
-  friction: 0.01,
-  collisionBox: {
-    width: 20,
-    height: 20,
-    collisions: [],
-  },
-  rigidBody: {
-    stuck: false,
-  },
-};
+const player = makeSquare({
+  id: "player",
+  role: "player",
+  x: 30,
+  y: 100,
+});
 
-// Red
-const entity2 = {
-  id: "#ent2",
-  playerControl: true,
-  appearance: {
-    width: 20,
-    height: 20,
-    color: "tomato",
-  },
-  position: {
-    x: 260,
-    y: 220,
-  },
-  velocity: {
-    x: 0,
-    y: 0,
-  },
-  friction: 0.8,
-  collisionBox: {
-    width: 20,
-    height: 20,
-    collisions: [],
-  },
-  rigidBody: {
-    stuck: false,
-  },
-};
+const civ1 = makeSquare({
+  role: "civilian",
+  x: 15,
+  y: 15,
+});
 
-const wallTop = {
-  id: "wallTop",
-  appearance: {
-    width: 280,
-    height: 20,
-    color: "gray",
-  },
-  position: {
-    x: 10,
-    y: -10,
-  },
-  collisionBox: {
-    width: 280,
-    height: 20,
-    collisions: [],
-  },
-  rigidBody: {
-    stuck: true,
-  },
-};
+const civ2 = makeSquare({
+  role: "civilian",
+  x: 40,
+  y: 20,
+});
 
-const wallBottom = {
-  id: "wallBottom",
-  appearance: {
-    width: 280,
-    height: 20,
-    color: "gray",
-  },
-  position: {
-    x: 10,
-    y: 290,
-  },
-  collisionBox: {
-    width: 280,
-    height: 20,
-    collisions: [],
-  },
-  rigidBody: {
-    stuck: true,
-  },
-};
+const civ3 = makeSquare({
+  role: "civilian",
+  x: 20,
+  y: 50,
+});
 
-const wallLeft = {
-  id: "wallLeft",
-  appearance: {
-    width: 20,
-    height: 280,
-    color: "gray",
-  },
-  position: {
-    x: -10,
-    y: 10,
-  },
-  collisionBox: {
-    width: 20,
-    height: 280,
-    collisions: [],
-  },
-  rigidBody: {
-    stuck: true,
-  },
-};
+const zombie1 = makeSquare({
+  role: "zombie",
+  x: 120,
+  y: 140,
+  vx: -0,
+  vy: 1.5,
+});
 
-const wallRight = {
-  id: "wallRight",
+const zombie2 = makeSquare({
+  role: "zombie",
+  x: 200,
+  y: 200,
+  vx: 0.8,
+  vy: -1,
+});
+
+const wallTop = makeWall({
+  orientation: "x",
+  length: 280,
+  thickness: 20,
+  x: 10,
+  y: -10,
+});
+
+const wallBottom = makeWall({
+  orientation: "x",
+  length: 280,
+  thickness: 20,
+  x: 10,
+  y: 290,
+});
+
+const wallLeft = makeWall({
+  orientation: "y",
+  length: 280,
+  thickness: 20,
+  x: -10,
+  y: 10,
+});
+
+const wallRight = makeWall({
+  orientation: "y",
+  length: 280,
+  thickness: 20,
+  x: 290,
+  y: 10,
+});
+
+const startWall = makeWall({
+  orientation: "y",
+  length: 90,
+  thickness: 20,
+  x: 70,
+  y: 10,
+});
+
+const goalWall = makeWall({
+  orientation: "y",
+  length: 50,
+  thickness: 20,
+  x: 200,
+  y: 10,
+});
+
+const goal = {
+  id: "goal",
+  goal: true,
   appearance: {
-    width: 20,
-    height: 280,
-    color: "gray",
+    width: 50,
+    height: 50,
+    color: "orange",
   },
   position: {
-    x: 290,
-    y: 10,
+    x: 20,
+    y: 100,
   },
   collisionBox: {
-    width: 20,
-    height: 280,
+    width: 50,
+    height: 50,
     collisions: [],
-  },
-  rigidBody: {
-    stuck: true,
   },
 };
 
 export const entities = [
-  entity1,
-  entity2,
+  goal,
+
+  civ1,
+  civ2,
+  civ3,
+
+  zombie1,
+  zombie2,
+
+  player,
+
   wallTop,
   wallBottom,
   wallLeft,
   wallRight,
+
+  startWall,
+  goalWall,
 ];

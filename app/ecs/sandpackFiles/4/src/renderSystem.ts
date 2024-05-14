@@ -6,7 +6,7 @@ let context: CanvasRenderingContext2D | null | undefined;
 export const renderSystem = (entities: Entity[]) => {
   if (!canvas || !context) {
     // Find canvas and context.
-    canvas = document.querySelector("#canvas");
+    canvas = document.querySelector("canvas");
     context = canvas?.getContext("2d");
   } else {
     // Clear the canvas.
