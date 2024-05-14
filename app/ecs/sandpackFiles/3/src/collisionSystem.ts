@@ -2,7 +2,15 @@ import { Entity } from "./entities";
 import { forEntsWith } from "./forEntsWith";
 
 export const collisionSystem = (entities: Entity[]) => {
-  forEntsWith(["collisionBox", "position"], entities, (entity1, peers) => {
+  // Get entities with collisionBox and position.
+  const withNeeded = entities.filter(
+    (e) => e.collisionBox && e.position
+  ) as Pick<Required<Entity>, "collisionBox" | "position" | "id">[];
+
+  withNeeded.forEach((entity1) => {
+    // Get peers without the current entity.
+    const peers = withNeeded.filter((e) => e !== entity1);
+
     // Reset collision events.
     entity1.collisionBox.collisions.length = 0;
 
@@ -28,8 +36,7 @@ export const collisionSystem = (entities: Entity[]) => {
       let xOverlap = 0;
       let yOverlap = 0;
 
-      if(right1 > right2)
-      xOverlap = right1 - left2;
+      if (right1 > right2) xOverlap = right1 - left2;
       // } else if (right2 >= left1 && left2 <= left1) {
       // left1 crosses right2
       xOverlap = left1 - right2;

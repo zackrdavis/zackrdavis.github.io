@@ -25,7 +25,6 @@ import inputSystemTs3 from "!!raw-loader!./sandpackFiles/3/src/inputSystem.ts";
 import momentumSystemTs3 from "!!raw-loader!./sandpackFiles/3/src/momentumSystem.ts";
 import collisionSystemTs3 from "!!raw-loader!./sandpackFiles/3/src/collisionSystem.ts";
 import collisionLogSystemTs3 from "!!raw-loader!./sandpackFiles/3/src/collisionLogSystem.ts";
-import forEntsWithTs3 from "!!raw-loader!./sandpackFiles/3/src/forEntsWith.ts";
 
 import engineTs4 from "!!raw-loader!./sandpackFiles/4/src/engine.ts";
 import renderSystemTs4 from "!!raw-loader!./sandpackFiles/4/src/renderSystem.ts";
@@ -105,9 +104,9 @@ The `momentumSystem` sees that Red and Green have position and velocity, so it u
 
 ## Universe Input/Output
 
-The `renderSystem` is an odd duck. It knows about non-gameworld things like the DOM and the canvas API. Similarly, the `inputSystem` below has many lines of code for translating keyboard events to player intent. As long as platform details are isolated to these systems, we should have an easy time writing tests for the other systems, and even porting the game to another platform like a Node server.
+The `renderSystem` is an odd one because it knows about non-gameworld things like the DOM and the canvas API. Similarly, the `inputSystem` below has many lines of code for translating keyboard events to player intent. As long as platform details are isolated to these systems, we should have an easy time writing tests for the other systems, and even porting the game to another platform like a Node server.
 
-The `inputSystem` only looks at entities with `velocity` and `playerControlled`, and updates their velocity based on keypresses, affecting them a bit like a strong wind. I've also updated the `momentumSystem` to look at the `friction` component, which will slow down entities over time.
+The `inputSystem` only looks at entities with `velocity` and `playerControlled`, and updates their velocity based on keypresses, affecting them a bit like a strong wind. I've also updated the `momentumSystem` to look at the new `friction` component, which will slow down entities over time.
 
 At this point you can click the canvas and use your arrow keys or WASD to move the red square.
 
@@ -147,8 +146,6 @@ Now it's time to add collision-detection, which will be the basis of all interac
 
 I'm used to thinking of collision as a broadcast event, like the browser's `mouseEnter`, but event APIs differ between platforms, and in any case the event would have to be saved for other systems for an entire tick, likely as a component. A broadcast-free pattern emerges: the `collisionSystem` looks at entity edges and adds `collision` components to overlapping entities. Other systems can use these however they need to.
 
-We'll have to compare edges between every collidable entity, so I've written a helper function, `forEntsAndPeersWith`, to make this nested looping readable and type-safe. It also provides a filtered list of collidable peers for each entity.
-
 The first thing to do is clear any existing collision events from the previous tick. Because systems always run in the same order, we know that all the other systems have had a chance to see them already. Then we look at the new state of play. We compare the left, right, top, and bottom edges of every entity. If there's overlap on BOTH X and Y axes, we know they're occupying some of the same space, and we can add a collision to the `collisionBox` component. That will contain the following data:
 
 - `xOverlap`: Overlap on the X axis.
@@ -160,8 +157,6 @@ Below, I've provided a real-time display of the overlap data on the red player-c
 It's time to add collision-detection, which will be the basis of all interaction between entities. On my first pass I thought collision and rebound would be a single system, but what if we want game conditions triggered by an invisible box? Discovering collisions should be separate from reacting to them.
 
 I'm used to thinking of collision as a broadcast event, like the browser's `mouseEnter`, but event APIs differ between platforms, and in any case the event would have to be saved for other systems for an entire tick, likely as a component. A broadcast-free pattern emerges: the `collisionSystem` looks at entity edges and adds `collision` components to overlapping entities. Other systems can use these however they need to.
-
-We'll have to compare edges between every collidable entity, so I've written a helper function, `forEntsWith`, to make this nested looping readable and type-safe. It provides a filtered list of collidable peers for each entity.
 
 The first thing to do is clear any existing collision events from the previous tick. Because systems always run in the same order, we know that all the other systems have had a chance to see them already. Then we look at the new state of play. We compare the left, right, top, and bottom edges of every entity. If there's overlap on BOTH X and Y axes, we know they're occupying some of the same space, and we can add a collision to the `collisionBox` component. That will contain the following data:
 
@@ -184,7 +179,6 @@ Below, I've provided a real-time display of the overlap data on the red player-c
     "/src/momentumSystem.ts": momentumSystemTs3,
     "/src/collisionSystem.ts": collisionSystemTs3,
     "/src/collisionLogSystem.ts": collisionLogSystemTs3,
-    "/src/forEntsWith.ts": forEntsWithTs3,
     "/src/entities.ts": entitiesTs3,
     "/package.json": `{
       "dependencies": {},
@@ -197,7 +191,7 @@ Below, I've provided a real-time display of the overlap data on the red player-c
 
 }}
 options={{
-    visibleFiles: ["/src/collisionSystem.ts", "/src/forEntsWith.ts", "/src/entities.ts"],
+    visibleFiles: ["/src/collisionSystem.ts", "/src/entities.ts"],
     activeFile: "/src/collisionSystem.ts",
   }}
 />
