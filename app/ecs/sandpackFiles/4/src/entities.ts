@@ -34,36 +34,9 @@ export type Entity = {
   };
 };
 
-// Green
-const entity1 = {
-  id: "#ent1",
-  appearance: {
-    width: 20,
-    height: 20,
-    color: "mediumSeaGreen",
-  },
-  position: {
-    x: 120,
-    y: 140,
-  },
-  velocity: {
-    x: 0.8,
-    y: -1,
-  },
-  friction: 0.01,
-  collisionBox: {
-    width: 20,
-    height: 20,
-    collisions: [],
-  },
-  rigidBody: {
-    stuck: false,
-  },
-};
-
 // Red
-const entity2 = {
-  id: "#ent2",
+const red = {
+  id: "red",
   playerControl: true,
   appearance: {
     width: 20,
@@ -79,6 +52,33 @@ const entity2 = {
     y: 0,
   },
   friction: 0.8,
+  collisionBox: {
+    width: 20,
+    height: 20,
+    collisions: [],
+  },
+  rigidBody: {
+    stuck: false,
+  },
+};
+
+// Green
+const green = {
+  id: "green",
+  appearance: {
+    width: 20,
+    height: 20,
+    color: "mediumSeaGreen",
+  },
+  position: {
+    x: 120,
+    y: 140,
+  },
+  velocity: {
+    x: 0.8,
+    y: -1,
+  },
+  friction: 0.01,
   collisionBox: {
     width: 20,
     height: 20,
@@ -173,11 +173,33 @@ const wallRight = {
   },
 };
 
+const middleWall = {
+  id: "middleWall",
+  appearance: {
+    width: 10,
+    height: 50,
+    color: "gray",
+  },
+  position: {
+    x: 150,
+    y: 50,
+  },
+  collisionBox: {
+    width: 10,
+    height: 50,
+    collisions: [],
+  },
+  rigidBody: {
+    stuck: true,
+  },
+};
+
 export const entities = [
-  entity1,
-  entity2,
+  green,
+  red,
   wallTop,
   wallBottom,
   wallLeft,
   wallRight,
+  middleWall,
 ];

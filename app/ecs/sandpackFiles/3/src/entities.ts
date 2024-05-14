@@ -31,33 +31,9 @@ export type Entity = {
   };
 };
 
-// Green
-const entity1 = {
-  id: "#ent1",
-  appearance: {
-    width: 50,
-    height: 50,
-    color: "mediumSeaGreen",
-  },
-  position: {
-    x: 120,
-    y: 50,
-  },
-  velocity: {
-    x: 0,
-    y: 0,
-  },
-  friction: 0.01,
-  collisionBox: {
-    width: 50,
-    height: 50,
-    collisions: [],
-  },
-};
-
 // Red
-const entity2 = {
-  id: "#ent2",
+const red = {
+  id: "red",
   playerControl: true,
   appearance: {
     width: 20,
@@ -80,12 +56,36 @@ const entity2 = {
   },
 };
 
-const entity3 = {
-  id: "#ent3",
+// Green
+const green = {
+  id: "green",
+  appearance: {
+    width: 50,
+    height: 50,
+    color: "mediumSeaGreen",
+  },
+  position: {
+    x: 120,
+    y: 50,
+  },
+  velocity: {
+    x: 0,
+    y: 0,
+  },
+  friction: 0.01,
+  collisionBox: {
+    width: 50,
+    height: 50,
+    collisions: [],
+  },
+};
+
+const pink = {
+  id: "pink",
   appearance: {
     width: 10,
     height: 70,
-    color: "gray",
+    color: "pink",
   },
   position: {
     x: 50,
@@ -103,4 +103,4 @@ const entity3 = {
   },
 };
 
-export const entities: Entity[] = [entity1, entity3, entity2];
+export const entities: Entity[] = [green, pink, red];

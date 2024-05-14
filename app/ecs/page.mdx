@@ -59,9 +59,11 @@ Proponents say that ECS manages the complexity of interacting game dynamics by k
 
 There are lots of ways to build an ECS, and lots of optimization tricks to make it work at scale. I made mine up as I went along and didn't do any optimization, but I ended up with something pretty fun. I've never made a real-time game before, so I was pleasantly surprised that I could noodle my way to where I ended up.
 
-## The Core
+## The Core Loops
 
-_Entities_ are just bags of properties. These properties are called _components_, and they store the state of the game. They change over time thanks to _systems_. A system is concerned with one or more specific components. It looks at every entity with those components and makes some changes. At every tick of game time, each system takes its turn processing its relevant entities. I think this is a decent minimal definition of an ECS.
+_Entities_ are just bags of data. These data are called _components_, and they store the state of the game. They change over time thanks to _systems_. A system is concerned with one or more specific components. It looks at every entity with those components and makes some changes. At every tick of game time, each system takes its turn processing its relevant entities.
+
+I think this is a decent minimal definition of an ECS, but I'm not trying to be too rigorous here. My entities are simple objects whose properties I'm calling components.
 
 One thing missing from my implementation is a way for systems to efficiently query for entities they should act on, a basic affordance of any real engine. I never encountered any performance issues at this tiny scale, so I couldn't bring myself to obscure the beautiful simplicity of the core loops.
 
@@ -97,14 +99,15 @@ options={{
 There are three entities above, using some combination of three components:
 
 - `position`: Where is the entity in 2D space; where should we draw it?
-- `appearance`: How does the entity look in terms of width, height and fill-color? This could later refer to a sprite or a 3D model.
 - `velocity`: How does its position change before the next tick?
+- `appearance`: How does the entity look in terms of width, height and fill-color? This could later refer to a sprite or a 3D model.
 
 The `momentumSystem` sees that Red and Green have position and velocity, so it updates their position by their velocity. Notice how there's not a 1-to-1 mapping of systems to components. Systems generally act as causal links _between_ bits of state.
 
 ## Universe Input/Output
 
-The `renderSystem` is an odd one because it knows about non-gameworld things like the DOM and the canvas API. Similarly, the `inputSystem` below has many lines of code for translating keyboard events to player intent. As long as platform details are isolated to these systems, we should have an easy time writing tests for the other systems, and even porting the game to another platform like a Node server.
+The `renderSystem` is an odd one because it knows about non-gameworld things like the DOM and the canvas API.
+Similarly, the `inputSystem` below is mainly code for translating keyboard events to player intent. As long as platform details are isolated to these systems, we should have an easy time writing tests for the other systems, and even porting the game to another platform like a Node server. There's something really satisfying in the isolation of these I/O systems, like I've built a terrarium and all I can do is look through the glass and tap on it.
 
 The `inputSystem` only looks at entities with `velocity` and `playerControlled`, and updates their velocity based on keypresses, affecting them a bit like a strong wind. I've also updated the `momentumSystem` to look at the new `friction` component, which will slow down entities over time.
 
@@ -133,30 +136,16 @@ At this point you can click the canvas and use your arrow keys or WASD to move t
 
 }}
 options={{
-    visibleFiles: ["/src/engine.ts", "/src/inputSystem.ts", "/src/renderSystem.ts", "/src/entities.ts"],
+    visibleFiles: ["/src/engine.ts", "/src/inputSystem.ts", "/src/momentumSystem.ts", "/src/entities.ts"],
     activeFile: "/src/engine.ts",
   }}
 />
 
-## Toy Physics
+Already fun! Students of _this_ universe might notice that all of these systems treat the velocity's X and Y aspect independently, so a diagonal movement will be faster than a cardinal one, and friction might bring an entity to a stop on one axis before the other, imparting a curved path. The controls feel surprisingly nice despite this, so I'm calling it good enough.
 
-Already fun! Students of _this_ universe might notice that all of these systems treat the velocity's X and Y aspect independently, so a diagonal movement will be faster than a cardinal one, and friction might bring an entity to a stop on one axis before the other, imparting a curved path. The physics feel surprisingly nice despite this, so I'm calling it good enough.
+Now it's time to add collision-detection, the basis of all interaction between entities in this game. On my first pass I thought collision and rebound would be a single system, but what if we want game conditions triggered by an invisible box? Discovering collisions should be separate from reacting to them.
 
-Now it's time to add collision-detection, which will be the basis of all interaction between entities. On my first pass I thought collision and rebound would be a single system, but what if we want game conditions triggered by an invisible box? Discovering collisions should be separate from reacting to them.
-
-I'm used to thinking of collision as a broadcast event, like the browser's `mouseEnter`, but event APIs differ between platforms, and in any case the event would have to be saved for other systems for an entire tick, likely as a component. A broadcast-free pattern emerges: the `collisionSystem` looks at entity edges and adds `collision` components to overlapping entities. Other systems can use these however they need to.
-
-The first thing to do is clear any existing collision events from the previous tick. Because systems always run in the same order, we know that all the other systems have had a chance to see them already. Then we look at the new state of play. We compare the left, right, top, and bottom edges of every entity. If there's overlap on BOTH X and Y axes, we know they're occupying some of the same space, and we can add a collision to the `collisionBox` component. That will contain the following data:
-
-- `xOverlap`: Overlap on the X axis.
-- `yOverlap`: Overlap on the Y axis.
-- `otherEntId`: The other driver's ID. This lets us get data for rebounds and more.
-
-Below, I've provided a real-time display of the overlap data on the red player-controlled entity, which I've also made transparent.
-
-It's time to add collision-detection, which will be the basis of all interaction between entities. On my first pass I thought collision and rebound would be a single system, but what if we want game conditions triggered by an invisible box? Discovering collisions should be separate from reacting to them.
-
-I'm used to thinking of collision as a broadcast event, like the browser's `mouseEnter`, but event APIs differ between platforms, and in any case the event would have to be saved for other systems for an entire tick, likely as a component. A broadcast-free pattern emerges: the `collisionSystem` looks at entity edges and adds `collision` components to overlapping entities. Other systems can use these however they need to.
+I'm used to thinking of collision as a broadcast event, like the browser's `mouseEnter`, but event APIs differ between platforms, and in any case the event would have to be saved for other systems for an entire tick, likely as a component. A broadcast-free pattern emerges: the `collisionSystem` looks at entity edges and adds collison data to the `collisionBox` component of overlapping entities. Other systems can use these however they need to.
 
 The first thing to do is clear any existing collision events from the previous tick. Because systems always run in the same order, we know that all the other systems have had a chance to see them already. Then we look at the new state of play. We compare the left, right, top, and bottom edges of every entity. If there's overlap on BOTH X and Y axes, we know they're occupying some of the same space, and we can add a collision to the `collisionBox` component. That will contain the following data:
 
