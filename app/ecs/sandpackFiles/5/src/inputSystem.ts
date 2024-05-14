@@ -8,14 +8,10 @@ const pressedKeys = {
   ArrowDown: false,
   ArrowLeft: false,
   ArrowRight: false,
-  w: false,
-  a: false,
-  s: false,
-  d: false,
-  W: false,
-  A: false,
-  S: false,
-  D: false,
+  KeyW: false,
+  KeyS: false,
+  KeyA: false,
+  KeyD: false,
 };
 
 let listenerSet = false;
@@ -29,26 +25,26 @@ export const inputSystem = (entities: Entity[]) => {
   if (!listenerSet) {
     // Setup keyboard listeners.
     window.addEventListener("keydown", (e) => {
-      if (e.key in pressedKeys) pressedKeys[e.key] = true;
+      if (e.code in pressedKeys) pressedKeys[e.code] = true;
       e.preventDefault();
     });
 
     window.addEventListener("keyup", (e) => {
-      if (e.key in pressedKeys) pressedKeys[e.key] = false;
+      if (e.code in pressedKeys) pressedKeys[e.code] = false;
       e.preventDefault();
     });
 
     listenerSet = true;
   }
 
-  const { ArrowUp, ArrowLeft, ArrowDown, ArrowRight, w, a, s, d, W, A, S, D } =
+  const { ArrowUp, ArrowLeft, ArrowDown, ArrowRight, KeyW, KeyA, KeyS, KeyD } =
     pressedKeys;
 
   // What direction is being pressed?
-  const up = ArrowUp || w || W;
-  const left = ArrowLeft || a || A;
-  const down = ArrowDown || s || S;
-  const right = ArrowRight || d || D;
+  const up = ArrowUp || KeyW;
+  const left = ArrowLeft || KeyA;
+  const down = ArrowDown || KeyS;
+  const right = ArrowRight || KeyD;
 
   // Opposite directions cancel out the axis.
   const bothX = left && right;

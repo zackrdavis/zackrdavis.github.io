@@ -1,5 +1,8 @@
 import { Entity } from "./entities";
 
+let didWin = false;
+let didLose = false;
+
 export const gameOverSystem = (entities: Entity[]) => {
   let humans = 0;
   let atGoal = 0;
@@ -12,8 +15,6 @@ export const gameOverSystem = (entities: Entity[]) => {
 
     // Loop through goal's collisions to check for survivors.
     if (entity.infectable && entity.collisionBox?.collisions.length) {
-      console.log(entity.collisionBox?.collisions);
-
       for (const collision of entity.collisionBox.collisions) {
         const otherEnt = entities.find(
           (ent) => ent.id === collision.otherEntId
@@ -27,13 +28,13 @@ export const gameOverSystem = (entities: Entity[]) => {
     }
   }
 
-  if (humans === 0) {
-    console.log("You Lose!");
+  if (humans === 0 && !didWin && !didLose) {
+    didLose = true;
     entities.push(loseText);
   }
 
-  if (atGoal >= 1) {
-    console.log("You Win!");
+  if (atGoal >= 1 && !didWin && !didLose) {
+    didWin = true;
     entities.push(winText);
   }
 };

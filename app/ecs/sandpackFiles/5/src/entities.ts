@@ -116,7 +116,7 @@ const wallRight = makeWall({
 const startWall = makeWall({
   orientation: "y",
   length: 90,
-  thickness: 20,
+  thickness: 10,
   x: 70,
   y: 10,
 });
@@ -124,7 +124,7 @@ const startWall = makeWall({
 const goalWall = makeWall({
   orientation: "y",
   length: 50,
-  thickness: 20,
+  thickness: 10,
   x: 200,
   y: 10,
 });
@@ -133,16 +133,16 @@ const goal = {
   id: "goal",
   goal: true,
   appearance: {
-    width: 50,
+    width: 80,
     height: 50,
     color: "orange",
   },
   position: {
-    x: 20,
-    y: 100,
+    x: 210,
+    y: 10,
   },
   collisionBox: {
-    width: 50,
+    width: 80,
     height: 50,
     collisions: [],
   },
@@ -150,21 +150,16 @@ const goal = {
 
 export const entities = [
   goal,
-
   civ1,
   civ2,
   civ3,
-
   zombie1,
   zombie2,
-
   player,
-
   wallTop,
   wallBottom,
   wallLeft,
   wallRight,
-
   startWall,
   goalWall,
 ];
