@@ -41,7 +41,6 @@ export type Entity = {
 };
 
 const player = makeSquare({
-  id: "player",
   role: "player",
   x: 30,
   y: 100,
@@ -134,7 +133,7 @@ const goal = {
   goal: true,
   appearance: {
     width: 80,
-    height: 50,
+    height: 40,
     color: "orange",
   },
   position: {
@@ -143,7 +142,7 @@ const goal = {
   },
   collisionBox: {
     width: 80,
-    height: 50,
+    height: 40,
     collisions: [],
   },
 };

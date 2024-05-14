@@ -88,8 +88,8 @@ const pink = {
     color: "pink",
   },
   position: {
-    x: 50,
-    y: 140,
+    x: 110,
+    y: 100,
   },
   velocity: {
     x: 0,

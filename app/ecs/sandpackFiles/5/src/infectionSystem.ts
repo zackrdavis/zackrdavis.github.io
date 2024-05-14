@@ -1,6 +1,6 @@
 import { Entity } from "./entities";
 
-export const zombieSystem = (entities: Entity[]) => {
+export const infectionSystem = (entities: Entity[]) => {
   for (const entity of entities) {
     if (
       entity.infectable &&

@@ -30,12 +30,12 @@ export const gameOverSystem = (entities: Entity[]) => {
 
   if (humans === 0 && !didWin && !didLose) {
     didLose = true;
-    entities.push(loseText);
+    entities.unshift(loseText);
   }
 
   if (atGoal >= 1 && !didWin && !didLose) {
     didWin = true;
-    entities.push(winText);
+    entities.unshift(winText);
   }
 };
 
