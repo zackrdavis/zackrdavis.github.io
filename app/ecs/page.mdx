@@ -62,7 +62,7 @@ There are lots of ways to build an ECS, and lots of optimization tricks to make 
 
 ## The Core
 
-_Entities_ are just bags of properties. These properties are called _components_, and they store the state of the game. They change over time thanks to _systems_. A system is concerned with one or more specific components. It looks at every entity with those components and makes some changes. At every tick of game time, each system takes its turn processing its relevant entities. I think this is a decent minimal definition of an ECS, but feel free to consider this an engagement gambit: tell me how I'm wrong!
+_Entities_ are just bags of properties. These properties are called _components_, and they store the state of the game. They change over time thanks to _systems_. A system is concerned with one or more specific components. It looks at every entity with those components and makes some changes. At every tick of game time, each system takes its turn processing its relevant entities. I think this is a decent minimal definition of an ECS.
 
 One thing missing from my implementation is a way for systems to efficiently query for entities they should act on, a basic affordance of any real engine. I never encountered any performance issues at this tiny scale, so I couldn't bring myself to obscure the beautiful simplicity of the core loops.
 
