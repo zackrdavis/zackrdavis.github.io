@@ -3,7 +3,7 @@ import { Entity } from "./entities";
 export const collisionSystem = (entities: Entity[]) => {
   // Get entities with collisionBox and position.
   const withNeeded = entities.filter(
-    (e) => e.collisionBox && e.position
+    (e) => e.collisionBox && e.position && e.id
   ) as Pick<Required<Entity>, "collisionBox" | "position" | "id">[];
 
   withNeeded.forEach((entity1) => {

@@ -17,7 +17,6 @@ const systems = [
   infectionSystem,
   lurchSystem,
   gameOverSystem,
-  // collisionLogSystem,
 ];
 
 // At each tick, run all systems against all entities.

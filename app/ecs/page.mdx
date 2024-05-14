@@ -52,21 +52,21 @@ import entitiesTs5 from "!!raw-loader!./sandpackFiles/5/src/entities.ts";
 
 If you're looking for a programming project that's as far as possible from building a React app, may I suggest handcrafting a tiny game engine and setting a universe in motion?
 
-That's what I was after when I came across a handful of blog posts about the Entity-Component-System pattern, commonly known as ECS. First it was the [Starmancer devblog](https://www.playstarmancer.com/devblog/2018/9/25/component-system-same-face-new-engine), which didn't reference ECS directly but gave a feel for the pleasure of a radically extensible game engine. Then I found Maxwell Forbes' magisterial sequence on [building an ECS in Typescript](https://maxwellforbes.com/posts/typescript-ecs-what/).
+I've never made games before, but that's what I was after when I came across a handful of blog posts about the Entity-Component-System pattern, commonly known as ECS. First it was the [Starmancer devblog](https://www.playstarmancer.com/devblog/2018/9/25/component-system-same-face-new-engine), which didn't reference ECS directly but gave a feel for the pleasure of a radically extensible game. Then I found Maxwell Forbes' magisterial sequence on [building an ECS in Typescript](https://maxwellforbes.com/posts/typescript-ecs-what/).
 
-Proponents say that ECS manages the complexity of interacting game dynamics by keeping them decoupled as single-responsibility systems. If you're less worried about what breaks when you add or edit a game dynamic, then you're closer to an open-ended, additive process – my ideal of recreational programming.
+Proponents say that ECS manages the complexity of interacting game systems by keeping them decoupled as single-responsibility systems. If you're less worried about what breaks when you add or edit a game system, then you're closer to an open-ended, additive process – my ideal of recreational programming.
 
-There are lots of ways to build an ECS, and lots of optimization tricks to make it work at scale. I made mine up as I went along and didn't do any optimization, but within that framework I noodled my way to something pretty fun without ever feeling like the complexity was getting out of hand.
+There are lots of ECS engines out there, and lots of optimization tricks to make it work at scale. I made mine up as I went along and didn't do any optimization, but within that ad-hoc framework I noodled my way to something pretty fun.
 
 ## The Core
 
 _Entities_ are just bags of data. These data are called _components_, and they store the state of the game. They change over time thanks to _systems_. A system is concerned with only a few components. It looks at every entity with those components and makes some changes. At every tick of game time, each system takes its turn processing its relevant entities.
 
-I think this is a decent minimal definition of an ECS, but I'm not trying to be too rigorous here. My entities are simple objects whose properties I'm calling components.
+In that sense it really is miles from a React app, where we wait for user input and cascade through all the outcomes as quickly as possible. This is a continuous _Brrrrr_ of processing. It's refreshing.
 
-One thing missing from my implementation is a way for systems to efficiently query for entities they should act on, a basic affordance of any real engine. I just rummage through the properties of all my entities. But I never encountered any performance issues at this tiny scale, so I couldn't bring myself to obscure the beautiful simplicity of the core loops.
+One thing missing from my implementation is a way for systems to efficiently query for entities they should act on, a basic affordance of any real engine. I just rummage through the properties of all my entities, which are simple objects. At the tiny scale I was building on, I never encountered any performance issues, so I couldn't bring myself to obscure the beautiful simplicity of the core loops.
 
-A couple notes about these code sandboxes: they're made with the wonderful [Sandpack](https://sandpack.codesandbox.io/), and I'll often hide some files to keep focus on what's changing. You can always click "Open Sandbox" to see the full code.
+(These sandboxes are made with the wonderful [Sandpack](https://sandpack.codesandbox.io/), and I'll often hide some files to keep focus on what's changing. You can always click "Open Sandbox" to see the full code.
 
 <Sandbox
   template="vanilla-ts"
@@ -101,7 +101,9 @@ There are three entities above, using some combination of three components:
 - `position`: Where is the entity in 2D space; where should we draw it?
 - `velocity`: How does its position change before the next tick?
 
-The `momentumSystem` sees that Red and Green have position and velocity, so it updates their position by their velocity. Notice how there's not a 1-to-1 mapping of systems to components. Systems generally act as causal links _between_ bits of state.
+The `momentumSystem` sees that Red and Green have position and velocity, so it updates their position by their velocity.
+
+Notice how there's not a 1-to-1 mapping of systems to components. Systems generally act as causal links _between_ bits of state. More than once I added a system with a matching component to hold its data, then renamed one or the other when I realized the component naturally served multiple systems.
 
 ## Universe Input/Output
 
@@ -196,11 +198,11 @@ Collisions are relatively easy to model here because everything is a rectangle a
 
 So we need to know the axis of the collision. As you explore collisions above, you'll see that the overlap with the smaller absolute value generally indicates the axis. It's not a perfect heuristic – very fast entities could end up overlapping in any arrangement by the time the collision is detected – but it works well enough. The overlap value also lets us immediately move entities safely outside of collision bounds. Lots of buggy behavior just vanished when I figured this out.
 
-There are a couple of interesting loops to notice in the reboundSystem. First of all, we're not applying the new position/velocity values as soon as we discover them. If we did, entities that get checked later in the `reboundSystem` wouldn't be responding to their counterpart's velocity at the time of impact, but to the velocity they themselves had imparted! So we collect all the updates and apply them in a second loop.
+There are a couple of interesting loops to notice in the reboundSystem. First of all, we're not applying the new position/velocity values as soon as we discover them. If we did, entities that get checked later in the `reboundSystem` wouldn't be responding to their counterpart's velocity at the time of impact, but to the velocity they themselves had imparted! So we collect all the updates and apply them in a separate loop.
 
-There's also a loop over multiple collisions accrued on a single entity, like when an entity runs directly into a corner formed by 2 walls. Though the collisions may be simultaneous, we can treat them sequentially: Wall-X reverses X velocity, then wall-Y reverses the Y velocity, and the entity flies back in the opposite direction.
+There's also a loop over multiple collisions accrued on a single entity, like when an entity runs directly into a corner formed by 2 walls. Though the collisions are simultaneous, we can treat them sequentially: Wall-X reverses X velocity, then wall-Y reverses the Y velocity, and the entity flies back in the opposite direction.
 
-It was a lot of work, but things are getting interesting in there. We can bounce other entities around and keep everything contained to the canvas with walls, which came practically for free.
+It was a lot of work, but things are getting interesting in there. We can bounce other entities around and keep everything contained to the canvas with walls.
 
 <Sandbox
   template="vanilla-ts"
@@ -234,21 +236,21 @@ options={{
 
 ## Win Condition
 
-It's finally time to make the game winnable. Here's the setup: Three pink squares are hiding in a broom-closet while zombies lurch around outside. You win if you can bounce one of them into the yellow safe-zone. You lose if zombies get them all. You (red) are immune to zombies and can safely shove them.
+It's finally time to make the game winnable. Here's the setup: Three pink squares are hiding in a broom-closet while zombies lurch around outside. You (red) win if you can bounce one of them into the yellow safe-zone. You lose if zombies get them all. You are immune to zombies and can safely shove them.
 
-Three new systems are needed here:
+We'll need a lot of entities for this, so I've added some utility functions to reduce boilerplate, `makeSquare` and `makeWall`.
+
+Three new systems are in play:
 
 - `infectionSystem`: Convert pink squares to green on contact with zombies.
 - `lurchSystem`: Give zombies a bit of random movement when they run out of momentum.
 - `gameOverSystem`: Detect win/loss conditions and show a message. We'll update `appearance` and `renderSystem` with some _very_ basic text rendering to support this.
 
-We'll also want some new components. We could handle all of the logic above using `appearance.color`, but better to be explicit.
+We'll also want some new components. We could handle all of the logic above using `appearance.color`, but better to be explicit:
 
 - `infectious`: A flag to indicate a zombie.
 - `infectable`: A flag to indicate that a square can become a zombie.
 - `goal`: A flag to indicate the goal box.
-
-We'll need a lot of entities for this, so I've added some utility functions to reduce boilerplate, `makeSquare` and `makeWall`.
 
 <Sandbox
   template="vanilla-ts"
@@ -279,13 +281,21 @@ We'll need a lot of entities for this, so I've added some utility functions to r
 
 }}
 options={{
-    visibleFiles: ["/src/infectionSystem.ts", "/src/gameOverSystem.ts", "/src/utils.ts", "/src/entities.ts"],
+    visibleFiles: ["/src/infectionSystem.ts", "/src/lurchSystem.ts", "/src/gameOverSystem.ts", "/src/utils.ts", "/src/entities.ts"],
     activeFile: "/src/infectionSystem.ts",
     classes: {
       "sp-layout": "custom-layout",
     },
   }}
 />
+
+A few nice surprises showed up when everything was working together. Zombie movement looks good and feels unpredictable: you wait and hope they won't lurch your way, and bouncing off walls is a free solution to keeping them "in-play" without any directional guidance. I like that you can stand guard in the broom-closet entrance while you get a sense for how they move.
+
+Higher-level, there seem to be two main approaches you can take to the game: billiards-style, focused on shooting a survivor into the goal quickly, or bodyguard style, inching them along and shoving zombies away.
+
+These things fell out of the interacting systems without advance planning. Maybe that's just the magic of game-dev, but I think the ECS pattern did make it easier to throw new systems into the mix.
+
+At no point did I feel like the complexity was getting out of hand. The collision and rebound systems gave me some trouble, but it never felt like their issues or compromises were spilling into other systems. There are some projects that you shove across the finish line and never want to look at again, but I actually feel excited to keep adding features to this thing.
 
 export default function MDXPage({ children }) {
   return <MdxLayout>{children}</MdxLayout>;
