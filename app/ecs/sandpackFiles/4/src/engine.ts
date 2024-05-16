@@ -11,7 +11,6 @@ const systems = [
   reboundSystem,
   momentumSystem,
   collisionSystem,
-  // collisionLogSystem,
 ];
 
 // At each tick, run all systems against all entities.
