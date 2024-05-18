@@ -38,7 +38,11 @@ export const Block = ({ media, title, children, href }: BlockProps) => {
         className="background"
         style={{ background: media.color || "black" }}
       >
-        <VideoPlayer src={media.src} />
+        <VideoPlayer
+          src={media.src}
+          fit={media.fit}
+          position={media.position}
+        />
       </div>
     ) : media ? (
       <div

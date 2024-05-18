@@ -3,6 +3,7 @@ import Intro from "./intro.mdx";
 
 import picadilly_radiator from "./home-deep-learning/assets/picadilly_radiator.png";
 import twisted from "./fonting-with-gans/assets/twisted.png";
+import ecs_game from "./ecs/assets/ecs-game.gif";
 
 export default function Home() {
   return (
@@ -10,6 +11,19 @@ export default function Home() {
       <div className="grid">
         <Block>
           <Intro />
+        </Block>
+
+        <Block
+          title="Entity + Component + System"
+          media={{
+            src: "/images/ecs_gameplay.mp4",
+            alt: "Gameplay video showing a tomato red square pushing pink squares around while defending them from green squares.",
+            fit: "contain",
+            color: "white",
+          }}
+          href="/ecs"
+        >
+          How I built a tiny little game in TypeScript on the ECS pattern.
         </Block>
 
         <Block

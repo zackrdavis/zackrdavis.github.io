@@ -2,7 +2,15 @@
 
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
 
-export const VideoPlayer = ({ src }: { src: string }) => {
+export const VideoPlayer = ({
+  src,
+  fit = "cover",
+  position = "center center",
+}: {
+  src: string;
+  fit?: "fill" | "contain" | "cover" | "none" | "scale-down";
+  position?: string;
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [paused, setPaused] = useState(false);
   const [didRender, setDidRender] = useState(false);
@@ -23,7 +31,18 @@ export const VideoPlayer = ({ src }: { src: string }) => {
 
   return (
     <>
-      <video src={src} ref={videoRef} autoPlay muted loop playsInline />
+      <video
+        src={src}
+        ref={videoRef}
+        autoPlay
+        muted
+        loop
+        playsInline
+        style={{
+          objectFit: fit,
+          objectPosition: position,
+        }}
+      />
       {didRender && (
         <button
           className="playPause"
