@@ -50,15 +50,15 @@ import entitiesTs5 from "!!raw-loader!./sandpackFiles/5/src/entities.ts";
 
 If you're looking for a programming project that's as far as possible from building a React app, may I suggest handcrafting a tiny game engine and setting a universe in motion?
 
-That's what I was after when I came across a handful of blog posts about the Entity-Component-System pattern, or ECS. First it was the [Starmancer devblog](https://www.playstarmancer.com/devblog/2018/9/25/component-system-same-face-new-engine), which didn't reference ECS directly but gave a feel for the pleasure of a radically extensible game. Then I found Maxwell Forbes' magisterial sequence on [building an ECS in Typescript](https://maxwellforbes.com/posts/typescript-ecs-what/), and decided to do the same on a much smaller scale.
+That's what I was after when I came across a handful of blog posts about the Entity-Component-System pattern, or ECS. First it was the [Starmancer devblog](https://www.playstarmancer.com/devblog/2018/9/25/component-system-same-face-new-engine), which didn't reference ECS directly but gave a feel for the pleasure of building a radically extensible game. Then I found Maxwell Forbes' magisterial sequence on [building an ECS in Typescript](https://maxwellforbes.com/posts/typescript-ecs-what/), and decided to do the same on a much smaller scale.
 
 Proponents say that ECS manages the complexity of interacting game systems by keeping them decoupled as single-responsibility systems. If I'm less worried about what breaks when I add or edit a game system, then I'm closer to an open-ended, additive process – my ideal of recreational programming.
 
-There are lots of ECS engines out there, and lots of optimization tricks to make it work at scale. I made mine up as I went along and didn't do any optimization, but within that ad-hoc framework, and having never made a game before, I noodled my way to something pretty fun.
+There are lots of ECS engines out there, and lots of optimization tricks to make it work at scale. This was an attempt to do it dead-simple and get a sense of the appeal, so I made mine up as I went along and didn't do any optimization. Within my ad-hoc framework, having never made a game before, I noodled my way to something pretty fun.
 
 ## The Core
 
-_Entities_ are just bags of data. These data are called _components_, and they store the state of the game. They change over time thanks to _systems_. A system is concerned with only a few components. At every tick of game time, each system takes its turn processing the entities relevant to it. Here's how that looks in my implementation:
+_Entities_ are just bags of data. These data are called _components_, and they store the state of the game. They change over time thanks to _systems_. A system is concerned with only a few components. At every tick of game time, each system takes its turn processing the entities relevant to it. Here's the core loop in my implementaton – all other logic is in individual systems:
 
 ```
 const tick = () => {
@@ -66,8 +66,6 @@ const tick = () => {
     system(entities);
   }
 };
-
-setInterval(tick, 33);
 ```
 
 It really is miles from a React app, where we wait for user input and cascade through all the outcomes as quickly as possible. This is a continuous hum of processing. It's refreshing.
@@ -111,7 +109,7 @@ options={{
 
 Notice how there's not a 1-to-1 mapping of systems to components. Systems generally act as causal links _between_ bits of state. More than once I added a system with a matching component to hold its data, then renamed one or the other when I realized the component naturally served multiple systems.
 
-One thing missing from my implementation is a way for systems to efficiently query for entities they should act on, a basic affordance of any real engine. I just rummage through the properties of all my entities, which are simple objects. At the tiny scale I was building on, I never encountered any performance issues, so I couldn't bring myself to obscure the beautiful simplicity of the core loops.
+One thing missing from my implementation is a way for systems to efficiently query for entities they should act on. This is a basic affordance of any real ECS engine. I just rummage through all my entities, which are simple objects, and ignore the entities without the requisite properties. Could be much faster, but I thought the simplicity of that core loop was pretty neat, and I didn't encounter any performance issues to convince me otherwise.
 
 ## Universe Input/Output
 
@@ -155,13 +153,15 @@ Already fun! Students of _our_ universe might notice that all of these systems t
 
 Collision-detection is the basis of all interaction between entities. On my first pass I thought collision and rebound would be a single system, but then I considered game conditions triggered by an invisible box and decided to keep them separate.
 
-I'm used to thinking of collision as a broadcast event, like the browser's `mouseEnter`, but event APIs differ between platforms, and in any case the event would have to be saved for other systems for an entire tick, likely as a component. A broadcast-free pattern emerged: the `collisionSystem` looks at entity edges and adds collison data to the `collisionBox` component of overlapping entities. Other systems can use these however they need to.
+I'm used to thinking of collision as a broadcast event, like the browser's `mouseEnter`, but event APIs differ between platforms, and in any case the event would have to be saved for other systems for an entire tick, likely as a component. A broadcast-free pattern emerged:
 
-The first thing the `collisionSytem` does is clear any existing collision events from the previous tick. Because systems always run in the same order, all the other systems have had a chance to see them already. Then it compares the left, right, top, and bottom edges of every entity, and if there's overlap on both axes it knows they're occupying some of the same space. If so, it adds a collision to the `collisionBox` component, containing the following data:
+The `collisionSytem` compares the left, right, top, and bottom edges between every `collisionBox` entity. If there's overlap on both axes it knows they're occupying some of the same space. If so, it pushes a new collision to `collisionBox.collisions`, containing:
 
 - `otherEntId`: The other driver's ID. This lets us get data for rebounds and more.
 - `xOverlap`: Overlap on the X axis.
 - `yOverlap`: Overlap on the Y axis.
+
+But first, it clears old collision events created in the previous tick. Because systems always run in the same order, any systems "subscribed" to these transient-component "events" have already had a chance to use them.
 
 I'm still on the fence about whether the overlap values should be included there. The `collisionSystem` has the information handy just in proving a collision happened, and it would require more loops in another system to derive the same data. On the other hand, it's only used for rebounds and strains the single-responsibility of `collisionSystem`.
 
@@ -205,13 +205,19 @@ Getting that impact axis is a little counterintuitive. If you explore collisions
 
 The overlap value also turns out to have another use: it lets the `reboundSystem` immediately move entities safely outside of collision bounds. Multiple bugs just vanished when I figured this out.
 
-There are a couple of interesting loops to notice in the reboundSystem. First of all, it doesn't set the new position/velocity values as soon as it discovers them. If it did, entities that get checked later wouldn't be responding to their counterpart's velocity at the time of impact, but to the velocity they themselves had imparted! So it collects all the updates and applies them in a separate loop.
+There are a couple of interesting loops in this system. First of all, it doesn't set the new position/velocity values as soon as it discovers them. If it did, entities that get checked later wouldn't be responding to their counterpart's velocity at the time of impact, but to the velocity they themselves had imparted! So it collects all the updates and applies them in a separate loop.
 
 There's also a loop over multiple collisions accrued on a single entity, like when an entity runs directly into a corner formed by 2 walls. Though the collisions are simultaneous, we treat them as if they're sequential: Wall-X reverses X velocity, then wall-Y reverses the Y velocity, and the entity flies back in the opposite direction.
 
-Walls are such an important element to the game, but I wasn't thinking about them when I first made the `reboundSystem`. Luckily they fell into my lap with just a little tweak: when an entity crashes into something flagged as `stuck`, it just reverses its velocity on the impact axis.
+Walls are such an important element to the game, but I wasn't thinking about them when I first made the `reboundSystem`. They fell into my lap with just a little tweak: when an entity crashes into something flagged as `stuck`, it just reverses its velocity on the impact axis. Such a nice surprise.
 
-I mentioned earlier that systems always run in the same order, but I built most of this thinking the specific order didn't matter. It turns out physics can feel slightly different or quite broken with different orders, and a good rule of thumb was to run the `collisionSystem` immediately before the `reboundSystem`.
+I mentioned earlier that systems always run in the same order, and I built most of this thinking the specific order didn't matter. In fact, the physics can feel slightly different or quite broken with different orders. For instance, I like how `inputSystem` before `momentumSystem` lets the player drive right up against a wall without bouncing off, by canceling bounce velocity before it's applied to position. The alternative doesn't feel broken, but you have less control.
+
+The most broken sub-sequence was this:
+
+`collisionSystem` → `momentumSystem` → `reboundSystem`
+
+If entities overlap even further after a collision is recorded, the `reboundSystem` can't accurately cancel the overlap and send them off again.
 
 <Sandbox
   template="vanilla-ts"
@@ -238,24 +244,22 @@ I mentioned earlier that systems always run in the same order, but I built most 
 
 }}
 options={{
-    visibleFiles: ["/src/reboundSystem.ts", "/src/collisionSystem.ts", "/src/entities.ts"],
-    activeFile: "/src/reboundSystem.ts",
+    visibleFiles: ["/src/engine.ts", "/src/reboundSystem.ts", "/src/collisionSystem.ts", "/src/entities.ts"],
+    activeFile: "/src/engine.ts",
   }}
 />
 
-## Win Condition
+## You Win!
 
-Here's the setup: Three pink squares are hiding in a broom-closet while zombies lurch around outside. You (red) win if you can bounce one of them into the yellow safe-zone. You lose if zombies get them all. You are immune to zombies and can safely shove them.
+Games have lots of state outside of their physics, and win/loss conditions seemed like a great final test for the framework. Here's the game: Three pink squares are hiding in a broom-closet while zombies lurch around outside. You (red) win if you can bounce one of them into the yellow safe-zone. You lose if zombies get them all. You are immune to zombies and can safely shove everyone.
 
-We'll need a lot of entities for this, so I've added some utility functions to reduce boilerplate, `makeSquare` and `makeWall`.
-
-Three new systems are in play:
+I needed lots of entities for this, so I added some utils to reduce boilerplate, `makeSquare` and `makeWall`. There are also three new systems in play:
 
 - `infectionSystem`: Convert pink squares to green on contact with zombies.
 - `lurchSystem`: Give zombies a bit of random movement when they run out of momentum.
 - `gameOverSystem`: Detect win/loss conditions and show a message. We'll update `appearance` and `renderSystem` with some _very_ basic text rendering to support this.
 
-We'll also want some new components. We could handle all of the logic above using `appearance.color`, but better to be explicit:
+I also needed some new components. I could handle all of the logic above using `appearance.color`, but better to be explicit:
 
 - `infectious`: A flag to indicate a zombie.
 - `infectable`: A flag to indicate that a square can become a zombie.
@@ -298,15 +302,13 @@ options={{
   }}
 />
 
-A few nice surprises showed up when everything was working together. Zombie movement looks good and feels unpredictable: you wait and hope they won't lurch your way, and bouncing off walls is a free solution to keeping them "in-play" without any directional guidance. I like that you can stand guard in the broom-closet entrance while you get a sense for how they move.
+A few nice surprises showed up when everything was working together. Zombie movement looks good and feels unpredictable – you wait and hope they won't lurch your way. Bouncing off walls is a free solution to keeping zombies in the mix without any directional guidance. Higher-level, there seem to be two main approaches you can take to the game: billiards-style, focused on shooting a survivor into the goal quickly, or bodyguard style, inching them along and shoving zombies away. And I like that you can stand guard in the broom-closet entrance while you get a sense for how zombies move.
 
-Higher-level, there seem to be two main approaches you can take to the game: billiards-style, focused on shooting a survivor into the goal quickly, or bodyguard style, inching them along and shoving zombies away.
-
-These things fell out of the interacting systems without advance planning. Maybe that's just the magic of game-dev, but I think the ECS pattern did make it easier to throw new systems into the mix.
+These things fell out of the interacting systems without advance planning. Maybe that's just the magic of game-dev, but I think the ECS pattern did make it easier to throw new systems into the mix and trust that they'd work together.
 
 At no point did I feel like the complexity was getting out of hand. The collision and rebound systems gave me some trouble, but it never felt like their issues or compromises were spilling into other systems. There are some projects that you shove across the finish line and never want to look at again, but I actually feel excited to keep adding features to this thing.
 
-Thanks to the Recursers who encouraged me after I presented an early version of this project, and who paired with me on the tricky logic: Stella Choi, Michelle Bernstein, and Samuel Selleck. And thanks to Joseph Jorgensen for his idea for the game objective!
+Thanks to those who helped this project along with pair-programming, writing advice and gameplay ideas: [Stella Choi](https://www.stellalchoi.com/), [Michelle Bernstein](https://github.com/plocket), [Samuel Selleck](https://samuelselleck.com/), Reed Spoole, Joseph Jorgensen and Zach Rose.
 
 export default function MDXPage({ children }) {
   return <MdxLayout>{children}</MdxLayout>;

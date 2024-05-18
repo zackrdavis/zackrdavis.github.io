@@ -9,11 +9,11 @@ import { gameOverSystem } from "./gameOverSystem";
 import { entities } from "./entities";
 
 const systems = [
-  inputSystem,
   renderSystem,
-  reboundSystem,
+  inputSystem,
   momentumSystem,
   collisionSystem,
+  reboundSystem,
   infectionSystem,
   lurchSystem,
   gameOverSystem,

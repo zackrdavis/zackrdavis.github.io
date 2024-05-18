@@ -6,11 +6,11 @@ import { reboundSystem } from "./reboundSystem";
 import { entities } from "./entities";
 
 const systems = [
-  inputSystem,
   renderSystem,
-  reboundSystem,
+  inputSystem,
   momentumSystem,
   collisionSystem,
+  reboundSystem,
 ];
 
 // At each tick, run all systems against all entities.

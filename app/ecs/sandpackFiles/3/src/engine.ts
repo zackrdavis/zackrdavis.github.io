@@ -6,9 +6,9 @@ import { collisionLogSystem } from "./collisionLogSystem";
 import { entities } from "./entities";
 
 const systems = [
-  inputSystem,
   renderSystem,
   momentumSystem,
+  inputSystem,
   collisionSystem,
   collisionLogSystem,
 ];
