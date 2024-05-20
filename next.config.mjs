@@ -15,8 +15,8 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/minimal-ecs",
-        destination: "/minimal-ecs/index.html",
+        source: "/ecs-demo",
+        destination: "/ecs-demo/index.html",
         permanent: true,
       },
       {
