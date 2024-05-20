@@ -54,7 +54,7 @@ That's what I was after when I came across a handful of blog posts about the Ent
 
 Proponents say that ECS manages the complexity of interacting game systems by keeping them decoupled as single-responsibility systems. If I'm less worried about what breaks when I add or edit a game system, then I'm closer to an open-ended, additive process – my ideal of recreational programming.
 
-There are lots of ECS engines out there, and lots of optimization tricks to make it work at scale. This was an attempt to do it dead-simple and get a sense of the appeal, so I made mine up as I went along and didn't do any optimization. Within my ad-hoc framework, having never made a game before, I noodled my way to something pretty fun.
+There are lots of ECS engines out there, and lots of optimization tricks to make it work at scale. This was an attempt to do it dead-simple and get a sense of the appeal, so I made mine up as I went along and didn't do any optimization. Within my ad-hoc framework, having never made a game before, I noodled my way to something [pretty fun](/minimal-ecs).
 
 ## The Core
 
@@ -307,6 +307,8 @@ A few nice surprises showed up when everything was working together. Zombie move
 These things fell out of the interacting systems without advance planning. Maybe that's just the magic of game-dev, but I think the ECS pattern did make it easier to throw new systems into the mix and trust that they'd work together.
 
 At no point did I feel like the complexity was getting out of hand. The collision and rebound systems gave me some trouble, but it never felt like their issues or compromises were spilling into other systems. There are some projects that you shove across the finish line and never want to look at again, but I feel excited to keep playing with this thing.
+
+If you do too, check out [Episode 2: More Zombies in a Bigger Room](/minimal-ecs)
 
 Thanks to those who helped this project along with pair-programming, writing advice and gameplay ideas: [Stella Choi](https://www.stellalchoi.com/), [Michelle Bernstein](https://github.com/plocket), [Samuel Selleck](https://samuelselleck.com/), [Reed Spoole](https://reeds.website/), Joseph Jorgensen and Zach Rose.
 
