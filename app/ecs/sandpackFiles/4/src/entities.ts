@@ -41,7 +41,7 @@ const red = {
   appearance: {
     width: 20,
     height: 20,
-    color: "tomato",
+    color: "red",
   },
   position: {
     x: 260,
