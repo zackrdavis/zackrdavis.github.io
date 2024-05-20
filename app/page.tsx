@@ -16,10 +16,10 @@ export default function Home() {
         <Block
           title="Entity + Component + System"
           media={{
-            src: "/images/ecs_gameplay.mp4",
+            src: "/images/ecs_capture.mp4",
             alt: "Gameplay video showing a tomato red square pushing pink squares around while defending them from green squares.",
             fit: "contain",
-            color: "white",
+            color: "black",
           }}
           href="/ecs"
         >
