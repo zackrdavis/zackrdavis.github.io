@@ -33,7 +33,7 @@ export const Block = ({ media, title, children, href }: BlockProps) => {
           title="Homunculus House"
         ></iframe>
       </div>
-    ) : media && media.src.includes(".mp4") ? (
+    ) : media && (media.src.includes(".mp4") || media.src.includes(".mov")) ? (
       <div
         className="background"
         style={{ background: media.color || "black" }}

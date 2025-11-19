@@ -14,10 +14,26 @@ export default function Home() {
         </Block>
 
         <Block
+          title="WTFestival.org"
+          media={{
+            src: "/images/stage-trimmed.mov",
+            alt: "A photo carousel animated with moving perspective lines resembling a stage.",
+            fit: "contain",
+            color: "white",
+          }}
+          href="https://www.wtfestival.org/"
+        >
+          A new website for the Williamstown Theatre Festival, providing a
+          custom ticketing and hosting more than 70 years worth of archives.
+          With{" "}
+          <a href="https://www.sanctuary.computer/wtf">Sanctuary Computer</a>.
+        </Block>
+
+        <Block
           title="Entity + Component + System"
           media={{
             src: "/images/ecs_capture.mp4",
-            alt: "Gameplay video showing a tomato red square pushing pink squares around while defending them from green squares.",
+            alt: "Gameplay video showing a white square pushing through a field of bouncing green squares.",
             fit: "contain",
             color: "black",
           }}
