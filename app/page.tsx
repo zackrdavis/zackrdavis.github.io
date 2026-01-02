@@ -23,9 +23,8 @@ export default function Home() {
           }}
           href="https://www.wtfestival.org/"
         >
-          A new website for the Williamstown Theatre Festival, providing a
-          custom ticketing and hosting more than 70 years worth of archives.
-          With{" "}
+          A new website for the Williamstown Theatre Festival. Custom ticketing
+          and an archive of 70 years worth of content. With{" "}
           <a href="https://www.sanctuary.computer/wtf">Sanctuary Computer</a>.
         </Block>
 
