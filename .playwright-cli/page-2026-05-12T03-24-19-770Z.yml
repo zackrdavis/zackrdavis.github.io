@@ -1,0 +1,83 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "Zack R. Davis" [ref=e3] [cursor=pointer]:
+      - /url: /
+      - heading "Zack R. Davis" [level=1] [ref=e4]
+  - main [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e8]:
+        - paragraph [ref=e9]: I'm a software engineer with lots of experience building fast, fun, accessible user-interfaces. I've worked with data-intensive enterprise projects, startups, museums and theater companies.
+        - paragraph [ref=e10]:
+          - text: Outside of work, I'm an
+          - link "artist" [ref=e11] [cursor=pointer]:
+            - /url: http://zackdavis.net
+          - text: and a gardener. I live in Portland, Oregon.
+        - paragraph [ref=e12]: "I'd love to hear from you:"
+        - paragraph [ref=e13]:
+          - link "zackrdavis@gmail.com" [ref=e14] [cursor=pointer]:
+            - /url: mailto:zackrdavis@gmail.com
+          - text: •
+          - link "GitHub" [ref=e15] [cursor=pointer]:
+            - /url: https://github.com/zackrdavis
+          - text: •
+          - link "Linkedin" [ref=e16] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/zackrdavis
+      - generic [ref=e17]:
+        - link "WTFestival.org ➚" [ref=e18] [cursor=pointer]:
+          - /url: https://www.wtfestival.org/
+          - heading "WTFestival.org ➚" [level=2] [ref=e19]
+        - generic [ref=e22]:
+          - text: A new website for the Williamstown Theatre Festival. Custom ticketing and an archive of 70 years worth of content. With
+          - link "Sanctuary Computer" [ref=e23] [cursor=pointer]:
+            - /url: https://www.sanctuary.computer/wtf
+          - text: .
+      - generic [ref=e24]:
+        - link "Entity + Component + System" [ref=e25] [cursor=pointer]:
+          - /url: /ecs
+          - heading "Entity + Component + System" [level=2] [ref=e26]
+        - generic [ref=e29]: How I built a tiny little game in TypeScript on the ECS pattern.
+      - generic [ref=e30]:
+        - link "Home Deep Learning An ornate silver steam radiator" [ref=e31] [cursor=pointer]:
+          - /url: /home-deep-learning
+          - heading "Home Deep Learning" [level=2] [ref=e32]
+          - img "An ornate silver steam radiator" [ref=e34]
+        - generic [ref=e35]: Tools and workflow for desktop-GPU training from the comfort of my MacBook.
+      - generic [ref=e36]:
+        - link "Fonting with GANs" [ref=e37] [cursor=pointer]:
+          - /url: /fonting-with-gans
+          - heading "Fonting with GANs" [level=2] [ref=e38]
+        - generic [ref=e40]: Learning the space of handwritten letters and numbers with PyTorch, then inverting to find the best match for each character.
+      - generic [ref=e41]:
+        - 'link "Fonting with GANs #2" [ref=e42] [cursor=pointer]':
+          - /url: /fonting-with-gans-2
+          - 'heading "Fonting with GANs #2" [level=2] [ref=e43]'
+        - generic [ref=e46]: Building a weird text input with client-side generative glyphs.
+      - generic [ref=e47]:
+        - link "Museum of Us ➚" [ref=e48] [cursor=pointer]:
+          - /url: https://museumofus.org/
+          - heading "Museum of Us ➚" [level=2] [ref=e49]
+        - generic [ref=e51]: A new website for the Museum of Us in San Diego, designed by Rebecca Friedman. Built for speed, accessibility, and pleasant editing with Next.js and Sanity CMS.
+      - generic [ref=e52]:
+        - link "A Robot Actor ➚" [ref=e53] [cursor=pointer]:
+          - /url: https://greenenaftaligallery.com/exhibitions/richard-maxwell#1
+          - heading "A Robot Actor ➚" [level=2] [ref=e54]
+        - generic [ref=e56]:
+          - text: Developed for Richard Maxwell’s Paradiso, the robot delivers lines, visually tracks fellow actors, and generates a unique script during each performance. Paradiso was a
+          - link "NYT Critic’s Pick" [ref=e57] [cursor=pointer]:
+            - /url: https://www.nytimes.com/2018/01/16/theater/paradiso-richard-maxwell-review.html
+          - text: .
+      - generic [ref=e58]:
+        - link "New York City Players ➚" [ref=e59] [cursor=pointer]:
+          - /url: https://nycplayers.org/
+          - heading "New York City Players ➚" [level=2] [ref=e60]
+        - generic [ref=e62]: Typed-while-you-watch homepage for the New York City Players theater company. Designed by Scott Ponik.
+      - generic [ref=e63]:
+        - link "Homunculus House ➚" [ref=e64] [cursor=pointer]:
+          - /url: https://zackdavis.net/homunculus_house/
+          - heading "Homunculus House ➚" [level=2] [ref=e65]
+        - generic [ref=e68]: Simulated views and illumination for a house rolling downhill. Presented at the Portland2014 Biennial. 4-channel projected video, no sound.
+      - generic [ref=e69]:
+        - link "Artspeak ➚" [ref=e70] [cursor=pointer]:
+          - /url: https://artspeak.ca/
+          - heading "Artspeak ➚" [level=2] [ref=e71]
+        - generic [ref=e73]: Website for a beloved Vancouver arts institution. Designed by Scott Ponik and Julie Peeters.

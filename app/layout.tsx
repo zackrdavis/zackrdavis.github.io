@@ -29,14 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${rasa.variable} ${open_sans.variable}`}>
-      <body>
-        <header>
-          <Link href="/">
-            <h1>Zack R. Davis</h1>
-          </Link>
-        </header>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

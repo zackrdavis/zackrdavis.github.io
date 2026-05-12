@@ -58,8 +58,10 @@ a {
     transition: all 0.1s;
 
     &:hover {
-      text-shadow: -0.3px 0px 0px rgba(0, 0, 255, 1),
-        0.3px 0px 0px rgba(0, 0, 255, 1), 1px 2px 2px rgba(0, 0, 0, 0.2);
+      text-shadow:
+        -0.3px 0px 0px rgba(0, 0, 255, 1),
+        0.3px 0px 0px rgba(0, 0, 255, 1),
+        1px 2px 2px rgba(0, 0, 0, 0.2);
 
       .background {
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
@@ -101,7 +103,7 @@ header {
   grid-template-columns: repeat(auto-fit, minmax(var(--block-min-width), 1fr));
   column-gap: var(--grid-col-gap);
   row-gap: var(--grid-col-gap);
-  padding: 0 var(--grid-col-gap) var(--grid-col-gap);
+  padding: var(--grid-col-gap) var(--grid-col-gap);
 }
 
 .block:first-child {
@@ -119,8 +121,11 @@ header {
     margin-top: 0;
   }
 
-  .main {
+  &:not(.is-h1) .main {
     flex-grow: 1;
+  }
+
+  .main {
     display: flex;
     flex-direction: column;
 
@@ -128,7 +133,7 @@ header {
       flex-grow: 1;
       position: relative;
       min-height: 150px;
-      margin: 5px 0 0;
+      margin: 15px 0 0;
       transition: all 0.1s;
 
       .playPause {
@@ -174,7 +179,9 @@ header {
       }
     }
 
+    h1,
     h2 {
+      font-size: 3rem;
       margin: 0;
       position: relative;
     }

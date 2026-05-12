@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main>
       <div className="grid">
-        <Block>
+        <Block isH1 title="Zack Davis">
           <Intro />
         </Block>
 

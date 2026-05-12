@@ -6,6 +6,7 @@ type BlockProps = {
   title?: string;
   children?: ReactNode;
   href?: string;
+  isH1?: boolean;
   media?: {
     src: string;
     alt: string;
@@ -15,7 +16,7 @@ type BlockProps = {
   };
 };
 
-export const Block = ({ media, title, children, href }: BlockProps) => {
+export const Block = ({ media, title, children, href, isH1 }: BlockProps) => {
   const WrapTag = href ? "a" : "div";
 
   const mediaNode =
@@ -63,10 +64,10 @@ export const Block = ({ media, title, children, href }: BlockProps) => {
     ) : null;
 
   return (
-    <div className="block">
+    <div className={`block ${isH1 ? "is-h1" : ""}`}>
       {(title || media) && (
         <WrapTag className="main" href={href}>
-          {title && <h2>{title}</h2>}
+          {title && (isH1 ? <h1>{title}</h1> : <h2>{title}</h2>)}
           {media && mediaNode}
         </WrapTag>
       )}
